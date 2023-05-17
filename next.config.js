@@ -5,6 +5,10 @@ const nextConfig = {
       transform: 'lodash/{{member}}',
       preventFullImport: true,
     },
+    'date-fns': {
+      transform: 'date-fns/{{member}}',
+      preventFullImport: true,
+    },
   },
 }
 
