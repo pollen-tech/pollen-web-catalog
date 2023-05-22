@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <h1 className="text-3xl">Hello from layoutr</h1>
         <ApolloWrapper>{children}</ApolloWrapper>
       </body>
     </html>

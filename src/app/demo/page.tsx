@@ -28,6 +28,7 @@
 import { getClient } from '~/lib/client'
 
 import { gql } from '@apollo/client'
+import ClientComponent from './ClientComponent'
 
 const query = gql`
   query Catalog {
@@ -50,6 +51,7 @@ export default async function DemoServer() {
 
   return (
     <main>
+      <ClientComponent />
       <ul>
         {data.getCatalog.map((item: any) => (
           <li key={item.id}>
