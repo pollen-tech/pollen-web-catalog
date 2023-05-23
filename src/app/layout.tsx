@@ -1,6 +1,7 @@
 import { ApolloWrapper } from '~/lib/apollo-wrapper'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,8 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <h1 className="text-3xl">Hello from layoutr</h1>
+        <h1 className="text-3xl">Hello from layout</h1>
         <ApolloWrapper>{children}</ApolloWrapper>
+        <Link href="/">Back</Link>
       </body>
     </html>
   )
