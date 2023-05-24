@@ -1,11 +1,12 @@
-import { Card } from '~/components/common/card'
+import dummy_catalog from './dummy-catalog.json'
+
+import { CatalogInfo } from './components/catalog-info'
 
 export default function CatalogPage() {
+  const { catalog_info: catalogInfo } = dummy_catalog
   return (
     <div className="catalog-page container mx-auto">
-      <Card className="my-8">
-        <h1 className="text-3xl font-bold">Catalog Page</h1>
-      </Card>
+      <CatalogInfo catalogInfo={catalogInfo} />
     </div>
   )
 }

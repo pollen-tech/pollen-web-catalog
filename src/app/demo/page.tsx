@@ -28,7 +28,7 @@
 import { getClient } from '~/lib/client'
 
 import { gql } from '@apollo/client'
-import ClientComponent from './ClientComponent'
+import ClientComponent from './client-component'
 
 const query = gql`
   query Catalog {
