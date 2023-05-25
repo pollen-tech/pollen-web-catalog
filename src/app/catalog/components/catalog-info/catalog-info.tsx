@@ -13,11 +13,13 @@ import {
 import { format } from 'date-fns'
 import accounting from 'accounting'
 
-import type dummy_catalog from '../../dummy-catalog.json'
 import { Button } from '~/components/common/button'
 
+// TODO: remove dummy data and use real type checking from codegen
+import type dummy_catalog from '../../dummy-catalog.json'
+
 type TCatalogInfoProps = {
-  catalogInfo: typeof dummy_catalog.catalog_info
+  catalogInfo: typeof dummy_catalog.info
 }
 
 export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
@@ -44,14 +46,14 @@ export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
             <MapPinIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Warehouse Location</span>
             <span className="text-sm font-semibold">
-              {catalogInfo.warehouse_location}
+              {catalogInfo.warehouseLocation}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <CurrencyDollarIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Total Asking Price</span>
             <span className="text-sm font-semibold">
-              {accounting.formatMoney(catalogInfo.total_asking_price_usd)}
+              {accounting.formatMoney(catalogInfo.totalAskingPriceUsd)}
             </span>
           </div>
         </div>
@@ -61,14 +63,14 @@ export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
             <ClockIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Last Updated</span>
             <span className="text-sm font-semibold">
-              {format(new Date(catalogInfo.last_updated), 'dd MMMM yyyy')}
+              {format(new Date(catalogInfo.lastUpdated), 'dd MMMM yyyy')}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <ScaleIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Total Weight (KG)</span>
             <span className="text-sm font-semibold">
-              {accounting.formatNumber(catalogInfo.weight_kg)}
+              {accounting.formatNumber(catalogInfo.weightKg)}
             </span>
           </div>
         </div>
