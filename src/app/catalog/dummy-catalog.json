@@ -1,10 +1,22 @@
 {
-  "catalog_info": {
+  "info": {
     "name": "P1 Near Expiry Food",
     "company": "Unilever Indonesia",
-    "warehouse_location": "Jakarta, Indonesia",
-    "total_asking_price_usd": 3000000,
-    "last_updated": "2023-04-29",
-    "weight_kg": 1000
-  }
+    "warehouseLocation": "Jakarta, Indonesia",
+    "totalAskingPriceUsd": 3000000,
+    "lastUpdated": "2023-04-29",
+    "weightKg": 1000
+  },
+  "products": [
+    {
+      "name": "Wall’s Magnum Mini Classic Almond Brownie Mix Ice Cream",
+      "expiryDate": "2023-09-06",
+      "barcode": "123456789",
+      "sku": "123456789",
+      "availableUnit": 100,
+      "sellingUnit": "carton",
+      "retailPriceUsd": 1000,
+      "askingPriceUsd": 500
+    }
+  ]
 }
