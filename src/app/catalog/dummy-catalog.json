@@ -9,6 +9,7 @@
   },
   "products": [
     {
+      "thumbnail": "/dummy_thumbnail.jpg",
       "name": "Wall’s Magnum Mini Classic Almond Brownie Mix Ice Cream",
       "expiryDate": "2023-09-06",
       "barcode": "123456789",
