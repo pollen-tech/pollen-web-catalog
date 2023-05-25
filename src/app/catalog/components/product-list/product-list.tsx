@@ -13,6 +13,7 @@ import {
 
 // TODO: remove dummy data and use real type checking from codegen
 import dummy_catalog from '../../dummy-catalog.json'
+import Image from 'next/image'
 
 type TProductNameCellProps = {
   name: string
@@ -26,11 +27,18 @@ function ProductNameCell({
   expiryDate,
 }: TProductNameCellProps) {
   return (
-    <div>
-      <h3 className="text-sm font-semibold text-gray-900">{name}</h3>
-      <p className="text-sm text-red-500">
-        Expiring in {format(expiryDate, 'dd MMM yyyy')}
-      </p>
+    <div className="flex">
+      {thumbnail && (
+        <div className="mr-3 h-12 w-12 shrink-0 items-center object-contain">
+          <Image src={thumbnail} alt={name} width={48} height={48} />
+        </div>
+      )}
+      <div>
+        <h3 className="text-sm font-semibold text-gray-900">{name}</h3>
+        <p className="text-sm text-red-500">
+          Expiring in {format(expiryDate, 'dd MMM yyyy')}
+        </p>
+      </div>
     </div>
   )
 }
@@ -42,6 +50,7 @@ const columns = [
     header: () => 'Name',
     cell: (props) => (
       <ProductNameCell
+        thumbnail={props.row.original.thumbnail}
         name={props.getValue()}
         expiryDate={new Date(props.row.original.expiryDate)}
       />
