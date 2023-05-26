@@ -5,14 +5,10 @@ module.exports = {
       extends: [
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
       ],
-      files: ['*.ts', '*.tsx'],
+      files: ['./**/*.{ts,tsx}'],
       parserOptions: {
         project: 'tsconfig.json',
       },
-    },
-    {
-      extends: ['plugin:@typescript-eslint/disable-type-checked'],
-      files: ['./**/*.js'],
     },
   ],
   parser: '@typescript-eslint/parser',
