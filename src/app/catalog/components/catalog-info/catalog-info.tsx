@@ -17,6 +17,7 @@ import { Button } from '~/components/common/button'
 
 // TODO: remove dummy data and use real type checking from codegen
 import dummy_catalog from '../../dummy-catalog.json'
+import { MakeOfferModal } from '../make-offer-modal'
 
 type TCatalogInfoProps = {
   catalogInfo: typeof dummy_catalog.info
@@ -76,12 +77,7 @@ export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
         </div>
 
         <div className="grow px-5">
-          <Button
-            className="mb-2 block w-full"
-            onClick={() => console.log('hey')}
-          >
-            Make an Offer
-          </Button>
+          <MakeOfferModal />
           <Button variant="secondary" className="block w-full">
             Download Catalog
           </Button>
