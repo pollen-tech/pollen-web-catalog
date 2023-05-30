@@ -1,8 +1,19 @@
-import { ApolloWrapper } from '~/lib/apollo-wrapper'
 import './globals.css'
+
+import Link from 'next/link'
+import Image from 'next/image'
 import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+import classNames from 'classnames'
+
+import { ApolloWrapper } from '~/lib/apollo-wrapper'
+
+import { Navbar } from '~/components/navigation/navbar'
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -16,9 +27,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <h1 className="text-3xl">Hello from layoutr</h1>
-        <ApolloWrapper>{children}</ApolloWrapper>
+      <body className={classNames(inter.className, 'bg-gray-50')}>
+        {/* navbar */}
+        <Navbar />
+        <div>
+          <ApolloWrapper>{children}</ApolloWrapper>
+          <Link href="/" className="text-pollen-purple">
+            Back
+          </Link>
+        </div>
       </body>
     </html>
   )
