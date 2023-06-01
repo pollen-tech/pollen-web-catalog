@@ -128,6 +128,7 @@ export function Notifications({ items = [] }: TNotificationsProps) {
                   <NotificationsTabContent
                     category={category}
                     items={items.filter((item) => item.category === category)}
+                    key={`tab-${category}`}
                   />
                 ))}
               </div>
