@@ -93,8 +93,11 @@ export function NotificationsTabContent({
 export function Notifications({ items = [] }: TNotificationsProps) {
   return (
     <Menu>
-      <Trigger aria-label="notifications">
-        <BellIcon className="h-6 w-6 text-gray-600" />
+      <Trigger
+        aria-label="notifications"
+        className=" text-gray-600 data-[state=open]:text-pollen-purple"
+      >
+        <BellIcon className="h-6 w-6" />
       </Trigger>
       <Portal>
         <Content align="end">

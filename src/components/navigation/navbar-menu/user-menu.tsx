@@ -47,8 +47,11 @@ const USER_MENU_ITEMS = [
 export function UserMenu({ id, username, avatarUrl, company }: TUserMenuProps) {
   return (
     <Menu>
-      <Trigger aria-label="user menu">
-        <UserIcon className="h-6 w-6 text-gray-600" />
+      <Trigger
+        aria-label="user menu"
+        className=" text-gray-600 data-[state=open]:text-pollen-purple"
+      >
+        <UserIcon className="h-6 w-6" />
       </Trigger>
       <Portal>
         <Content
