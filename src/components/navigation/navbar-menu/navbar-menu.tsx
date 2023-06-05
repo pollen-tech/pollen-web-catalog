@@ -1,52 +1,45 @@
 'use client'
 
-import * as Menubar from '@radix-ui/react-menubar'
+import { Root as MenuRoot } from '@radix-ui/react-menubar'
 
-import { BellIcon, UserIcon } from '@heroicons/react/24/outline'
+import { UserMenu } from './user-menu'
+import { Notifications } from './notifications'
+
+const dummyNotifs = [
+  {
+    id: 'notif-1',
+    title: 'Your offer has been sent to seller',
+    content:
+      'Your offer to catalog “P1 Near Expiry Food Products” has been sent.',
+    date: '2021-08-01T00:00:00.000Z',
+    read: false,
+    category: 'notif-offer',
+  },
+  {
+    id: 'notif-2',
+    title: 'Your order has been processed',
+    content:
+      'Your offer to catalog “P1 Near Expiry Food Products” has been processed.',
+    date: '2021-08-01T00:00:00.000Z',
+    read: false,
+    category: 'notif-order',
+  },
+  {
+    id: 'notif-3',
+    title: 'Your offer has been sent to seller',
+    content:
+      'Your offer to catalog “P2 Near Expiry Food Products” has been sent.',
+    date: '2021-08-01T00:00:00.000Z',
+    read: false,
+    category: 'notif-offer',
+  },
+]
 
 export function NavbarMenu() {
   return (
-    <Menubar.Root className="flex items-center gap-x-8">
-      <Menubar.Menu>
-        <Menubar.Trigger aria-label="notifications">
-          <BellIcon className="h-6 w-6 text-gray-600" />
-        </Menubar.Trigger>
-        <Menubar.Portal>
-          <Menubar.Content align="end">
-            <Menubar.Content
-              className="rounded bg-white p-4 drop-shadow"
-              align="end"
-              sideOffset={10}
-              alignOffset={-10}
-            >
-              <p>Placeholder content for notifications</p>
-            </Menubar.Content>
-          </Menubar.Content>
-        </Menubar.Portal>
-      </Menubar.Menu>
-      <Menubar.Menu>
-        <Menubar.Trigger aria-label="user menu">
-          <UserIcon className="h-6 w-6 text-gray-600" />
-        </Menubar.Trigger>
-        <Menubar.Portal>
-          <Menubar.Content
-            className="rounded bg-white p-4 drop-shadow"
-            align="end"
-            sideOffset={10}
-            alignOffset={-10}
-          >
-            <Menubar.Item className="cursor-pointer p-2 text-gray-600 hover:bg-gray-50">
-              Profile
-            </Menubar.Item>
-            <Menubar.Item className="cursor-pointer p-2 text-gray-600 hover:bg-gray-50">
-              Settings
-            </Menubar.Item>
-            <Menubar.Item className="cursor-pointer p-2 text-gray-600 hover:bg-gray-50">
-              Logout
-            </Menubar.Item>
-          </Menubar.Content>
-        </Menubar.Portal>
-      </Menubar.Menu>
-    </Menubar.Root>
+    <MenuRoot className="flex items-center gap-x-8">
+      <Notifications items={dummyNotifs} />
+      <UserMenu id="buyer-id" username="Buyer Name" company="Buyer company" />
+    </MenuRoot>
   )
 }
