@@ -1,7 +1,6 @@
 import './globals.css'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
 
 import classNames from 'classnames'

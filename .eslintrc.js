@@ -10,11 +10,8 @@ module.exports = {
         project: 'tsconfig.json',
       },
     },
-    {
-      extends: ['plugin:@typescript-eslint/disable-type-checked'],
-      files: ['./**/*.js'],
-    },
   ],
+  ignorePatterns:["node_modules/**/*.js", "src/aws-exports.js"],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',

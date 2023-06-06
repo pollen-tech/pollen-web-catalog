@@ -44,7 +44,7 @@ const USER_MENU_ITEMS = [
   },
 ]
 
-export function UserMenu({ id, username, avatarUrl, company }: TUserMenuProps) {
+export function UserMenu({ username, avatarUrl, company }: TUserMenuProps) {
   return (
     <Menu>
       <Trigger

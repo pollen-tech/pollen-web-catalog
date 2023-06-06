@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pollenwebcatalog-dev-123919-authRole",
+      "UnauthRoleArn": "arn:aws:iam::314943610943:role/amplify-pollenwebcatalog-dev-123919-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::314943610943:role/amplify-pollenwebcatalog-dev-123919-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-pollenwebcatalog-dev-123919-deployment",
+      "UnauthRoleName": "amplify-pollenwebcatalog-dev-123919-unauthRole",
+      "StackName": "amplify-pollenwebcatalog-dev-123919",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:314943610943:stack/amplify-pollenwebcatalog-dev-123919/7c389860-042c-11ee-a664-06a74e85bcc4",
+      "AmplifyAppId": "dyle4rzsw1ayf"
+    }
+  }
+}
