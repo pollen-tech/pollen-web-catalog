@@ -11,5 +11,26 @@
       "StackId": "arn:aws:cloudformation:ap-southeast-1:314943610943:stack/amplify-pollenwebcatalog-dev-123919/7c389860-042c-11ee-a664-06a74e85bcc4",
       "AmplifyAppId": "dyle4rzsw1ayf"
     }
+  },
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pollenwebcatalog-production-125401-authRole",
+      "UnauthRoleArn": "arn:aws:iam::314943610943:role/amplify-pollenwebcatalog-production-125401-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::314943610943:role/amplify-pollenwebcatalog-production-125401-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-pollenwebcatalog-production-125401-deployment",
+      "UnauthRoleName": "amplify-pollenwebcatalog-production-125401-unauthRole",
+      "StackName": "amplify-pollenwebcatalog-production-125401",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:314943610943:stack/amplify-pollenwebcatalog-production-125401/8a10fd40-042e-11ee-96ba-0a6dbb70df8e",
+      "AmplifyAppId": "dyle4rzsw1ayf"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dyle4rzsw1ayf",
+          "type": "cicd"
+        }
+      }
+    }
   }
 }
