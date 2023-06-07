@@ -13,11 +13,11 @@ import {
 import { format } from 'date-fns'
 import accounting from 'accounting'
 
-import dummy_catalog from '../../dummy-catalog.json'
+import { dummy_catalog } from '../../dummy-catalog.json'
 import { Button } from '~/components/common/button'
 
 type TCatalogInfoProps = {
-  catalogInfo: typeof dummy_catalog.catalog_info
+  catalogInfo: any
 }
 
 export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
