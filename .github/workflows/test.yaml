@@ -1,12 +1,5 @@
 name: Unit tests with jest
-
-on:
-  push:
-    branches:
-      - '**'
-      - '!staging'
-      - '!master'
-
+on: push
 jobs:
   test:
     runs-on: ubuntu-latest
