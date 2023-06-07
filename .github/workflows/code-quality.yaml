@@ -30,6 +30,9 @@ jobs:
       - name: install node dependecies
         run: yarn
 
+      - name: test with coverage
+        run: yarn test:coverage
+
       - name: Check if this action has open PR
         id: check-pr
         run: |
