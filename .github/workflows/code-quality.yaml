@@ -1,0 +1,36 @@
+name: Check Code Quality with Sonarcloud
+
+on: push
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  build:
+    name: Sonarcloud Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # should not run more than 15 minutes max
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: install node dependecies
+        run: yarn
+
+      - name: Check if this action has open PR
+        id: check-pr
+        run: |
+          gh pr view > .pr || echo ''
+          echo "PR=\"$(cat .pr | grep OPEN)\"" >> $GITHUB_OUTPUT
+
+      - name: Scan
+        if: ${{ steps.check-pr.outputs.PR != '' }}
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.CI_SONAR_TOKEN }}
