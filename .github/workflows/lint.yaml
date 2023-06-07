@@ -1,4 +1,4 @@
-name: Lint and Test
+name: Lint
 
 on:
   push:
@@ -24,13 +24,8 @@ jobs:
           node-version: 18
           cache: 'yarn'
 
-      - name: install dependecies
+      - name: Install dependecies
         run: yarn
 
       - name: Run ESLint
-        uses: sibiraj-s/action-eslint@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional
-          eslint-args: '--ignore-path=.gitignore --quiet'
-          extensions: 'js,jsx,ts,tsx'
-          annotations: true
+        run: yarn lint
