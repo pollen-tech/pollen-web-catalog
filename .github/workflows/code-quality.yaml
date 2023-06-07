@@ -10,7 +10,7 @@ env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build:
-    name: Sonarcloud Scan
+    name: Scan
     runs-on: ubuntu-latest
     timeout-minutes: 15 # should not run more than 15 minutes max
 
@@ -33,14 +33,7 @@ jobs:
       - name: test with coverage
         run: yarn test:coverage
 
-      - name: Check if this action has open PR
-        id: check-pr
-        run: |
-          gh pr view > .pr || echo ''
-          echo "PR=\"$(cat .pr | grep OPEN)\"" >> $GITHUB_OUTPUT
-
-      - name: Scan
-        if: ${{ steps.check-pr.outputs.PR != '' }}
+      - name: Scan with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
