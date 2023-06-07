@@ -2,7 +2,6 @@ name: Check Code Quality with Sonarcloud
 
 on:
   pull_request:
-  push:
     branches:
       - master
       - staging
