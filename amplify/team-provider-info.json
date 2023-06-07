@@ -10,6 +10,14 @@
       "StackName": "amplify-pollenwebcatalog-dev-123919",
       "StackId": "arn:aws:cloudformation:ap-southeast-1:314943610943:stack/amplify-pollenwebcatalog-dev-123919/7c389860-042c-11ee-a664-06a74e85bcc4",
       "AmplifyAppId": "dyle4rzsw1ayf"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dyle4rzsw1ayf",
+          "type": "cicd"
+        }
+      }
     }
   },
   "production": {
