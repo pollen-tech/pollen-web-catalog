@@ -13,7 +13,7 @@ import {
 import { format } from 'date-fns'
 import accounting from 'accounting'
 
-import dummy_catalog from '../../dummy-catalog.json'
+import type dummy_catalog from '../../dummy-catalog.json'
 import { Button } from '~/components/common/button'
 
 type TCatalogInfoProps = {
