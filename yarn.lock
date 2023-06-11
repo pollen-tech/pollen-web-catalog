@@ -805,10 +805,10 @@
     picocolors "^1.0.0"
     tslib "^2.5.0"
 
-"@pollen-tech/appsync-schema@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.0.3.tgz#e484da9887649503102baf3a3997e05c1fd291cb"
-  integrity sha512-HUVBmDr5L+Fic/9A3tZOZCffvHZt+svXtYqjUzUYUq4RGjHjRhtgqOawVPMb83tUHP6JIH4l+p+H/TAWzA4H+w==
+"@pollen-tech/appsync-schema@^1.0.5":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.0.4.tgz#dc0f5c74f13888aed93e5cc41eaef7b232589295"
+  integrity sha512-4vStb0/5QSc2p7fDWU5OZ5laF4DJi6pSixICCE5QIWCI7gzgnV8KoYk90Bb0e4NmK/hogWGy7bpYk2inokT62g==
   dependencies:
     graphql "^16.6.0"
 
