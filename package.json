@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest src",
-    "test:ci": "jest src --ci --coverage"
+    "test:ci": "yarn test --ci",
+    "test:coverage": "yarn test --coverage"
   },
   "dependencies": {
     "@apollo/client": "^3.8.0-alpha.14",
