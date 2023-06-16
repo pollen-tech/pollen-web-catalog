@@ -1,7 +1,9 @@
+//TEMPORARY FILE, ONLY FOR DEVELOPMENT PURPOSE
 import { NextResponse } from 'next/server'
 
 const GQL_ENDPOINT = process.env.APP_SYNC_ENDPOINT as string
-const GQL_API_KEY = process.env.APP_SYNC_API_KEY as string
+// const GQL_API_KEY = process.env.APP_SYNC_API_KEY as string
+const GQL_AUTH_TOKEN = process.env.AUTH_TOKEN as string
 
 interface GraphQLRequest {
   query: string
@@ -15,7 +17,7 @@ export async function POST(request: Request) {
   const reqOptions = {
     method: 'POST',
     headers: {
-      'x-api-key': GQL_API_KEY,
+      Authorization: GQL_AUTH_TOKEN,
     },
     body: JSON.stringify(reqBody),
   }
