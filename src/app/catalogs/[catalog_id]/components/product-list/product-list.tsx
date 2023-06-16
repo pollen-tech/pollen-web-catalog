@@ -31,19 +31,19 @@ const columns = [
   }),
   columnHelper.accessor('barcode', {
     header: () => 'Barcode Number',
-    cell: (props) => props.getValue(),
+    cell: (props) => props.getValue() || '-',
   }),
   columnHelper.accessor('skuNumber', {
     header: () => 'SKU Number',
-    cell: (props) => props.getValue(),
+    cell: (props) => props.getValue() || '-',
   }),
   columnHelper.accessor('availableUnit', {
     header: () => 'Available Unit',
-    cell: (props) => props.getValue(),
+    cell: (props) => props.getValue() || '-',
   }),
   columnHelper.accessor('sellingUnit', {
     header: () => 'Selling Unit',
-    cell: (props) => props.getValue(),
+    cell: (props) => props.getValue() || '-',
   }),
   columnHelper.accessor('retailPrice', {
     header: () => 'Retail Price',
