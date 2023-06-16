@@ -14,6 +14,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.0-alpha.14",
     "@apollo/experimental-nextjs-app-support": "^0.1.0",
+    "@auth0/nextjs-auth0": "^2.6.2",
     "@heroicons/react": "^2.0.18",
     "@pollen-tech/appsync-schema": "^1.1.6",
     "@radix-ui/react-avatar": "^1.0.3",
@@ -22,8 +23,8 @@
     "@tanstack/react-query": "^4.29.7",
     "@tanstack/react-table": "^8.9.1",
     "@types/lodash": "^4.14.194",
-    "@types/node": "20.1.4",
-    "@types/react": "18.2.6",
+    "@types/node": "20.3.1",
+    "@types/react": "18.2.12",
     "@types/react-dom": "18.2.4",
     "accounting": "^0.4.1",
     "autoprefixer": "10.4.14",
