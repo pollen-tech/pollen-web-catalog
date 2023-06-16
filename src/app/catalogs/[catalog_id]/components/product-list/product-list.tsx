@@ -10,37 +10,9 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 
-import Image from 'next/image'
-
 import type { Batches } from '@pollen-tech/appsync-schema'
 
-type TProductNameCellProps = {
-  name: string
-  thumbnail?: string
-  shelfLifeRemainingDay: number
-}
-
-function ProductNameCell({
-  name,
-  thumbnail,
-  shelfLifeRemainingDay,
-}: TProductNameCellProps) {
-  return (
-    <div className="flex">
-      {thumbnail && (
-        <div className="mr-3 h-12 w-12 shrink-0 items-center object-contain">
-          <Image src={thumbnail} alt={name} width={48} height={48} />
-        </div>
-      )}
-      <div>
-        <h3 className="text-sm font-semibold text-gray-900">{name}</h3>
-        <p className="text-sm text-red-500">
-          Expiring in {shelfLifeRemainingDay} days
-        </p>
-      </div>
-    </div>
-  )
-}
+import { ProductNameCell } from './'
 
 const columnHelper = createColumnHelper<Batches[][0]>()
 
