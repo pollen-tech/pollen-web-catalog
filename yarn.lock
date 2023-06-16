@@ -805,6 +805,13 @@
     picocolors "^1.0.0"
     tslib "^2.5.0"
 
+"@pollen-tech/appsync-schema@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.1.6.tgz#0b9e301cccf6963cd450d79f5d27ed07d2e0d0fd"
+  integrity sha512-yvxJH/m+aFccBIO6jXT+NvOw2elDefxTbmBPo989vp573eAvWopqBwlrJMbKoJ7T07TeNwUfEnIZsq8VzCVBUA==
+  dependencies:
+    graphql "^16.6.0"
+
 "@radix-ui/primitive@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/primitive/-/primitive-1.0.0.tgz#e1d8ef30b10ea10e69c76e896f608d9276352253"

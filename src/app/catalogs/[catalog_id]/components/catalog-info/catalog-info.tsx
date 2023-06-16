@@ -1,4 +1,5 @@
 'use client'
+import type { Catalog, Seller } from '@pollen-tech/appsync-schema'
 
 import { Card } from '~/components/common/card'
 
@@ -13,14 +14,27 @@ import {
 import { format } from 'date-fns'
 import accounting from 'accounting'
 
-import type dummy_catalog from '../../dummy-catalog.json'
 import { Button } from '~/components/common/button'
 
 type TCatalogInfoProps = {
-  catalogInfo: typeof dummy_catalog.catalog_info
+  catalogId: Catalog['id']
+  catalogName?: Catalog['name']
+  companyName?: Seller['companyName']
+  totalAskingPriceUsd?: Catalog['totalAskingPriceUsd']
+  totalWeight?: Catalog['totalWeight']
+  warehouseLocation?: Catalog['warehouseLocation']
+  updatedAt?: Catalog['createdAt']
 }
 
-export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
+export function CatalogInfo({
+  catalogId,
+  catalogName,
+  companyName,
+  totalAskingPriceUsd,
+  updatedAt,
+  totalWeight,
+  warehouseLocation,
+}: TCatalogInfoProps) {
   return (
     <Card className="my-8 text-gray-900">
       <div className="flex items-center">
@@ -29,14 +43,14 @@ export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
             src={'/unilever-logo.png'}
             width={56}
             height={56}
-            alt={catalogInfo.company}
+            alt={companyName || 'Company Logo'}
             className="object-contain"
           />
         </div>
 
         <div className="grow-2 px-5">
-          <h2 className="text-lg font-semibold">{catalogInfo.name}</h2>
-          <p className="text-xs">{catalogInfo.company}</p>
+          <h2 className="text-lg font-semibold">{catalogName}</h2>
+          <p className="text-xs">{companyName || '-'}</p>
         </div>
 
         <div className="grow border-r border-gray-300 px-5">
@@ -44,14 +58,16 @@ export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
             <MapPinIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Warehouse Location</span>
             <span className="text-sm font-semibold">
-              {catalogInfo.warehouse_location}
+              {warehouseLocation || '-'}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <CurrencyDollarIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Total Asking Price</span>
             <span className="text-sm font-semibold">
-              {accounting.formatMoney(catalogInfo.total_asking_price_usd)}
+              {totalAskingPriceUsd
+                ? accounting.formatMoney(totalAskingPriceUsd)
+                : '-'}
             </span>
           </div>
         </div>
@@ -61,14 +77,14 @@ export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
             <ClockIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Last Updated</span>
             <span className="text-sm font-semibold">
-              {format(new Date(catalogInfo.last_updated), 'dd MMMM yyyy')}
+              {updatedAt ? format(new Date(updatedAt), 'dd MMMM yyyy') : '-'}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <ScaleIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Total Weight (KG)</span>
             <span className="text-sm font-semibold">
-              {accounting.formatNumber(catalogInfo.weight_kg)}
+              {totalWeight ? accounting.formatNumber(totalWeight) : '-'}
             </span>
           </div>
         </div>
@@ -76,7 +92,7 @@ export function CatalogInfo({ catalogInfo }: TCatalogInfoProps) {
         <div className="grow px-5">
           <Button
             className="mb-2 block w-full"
-            onClick={() => console.log('hey')}
+            onClick={() => console.log('hey', catalogId)}
           >
             Make an Offer
           </Button>

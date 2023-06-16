@@ -2,6 +2,7 @@ name: Run ESLint and check offenses
 on: push
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
   lint:
