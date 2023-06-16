@@ -57,7 +57,9 @@ export function CatalogInfo({
           <div className="mb-4 flex items-center gap-2">
             <MapPinIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Warehouse Location</span>
-            <span className="text-sm font-semibold">{warehouseLocation}</span>
+            <span className="text-sm font-semibold">
+              {warehouseLocation || '-'}
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <CurrencyDollarIcon className="h-4 w-4 text-gray-500" />

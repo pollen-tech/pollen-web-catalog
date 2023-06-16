@@ -56,7 +56,7 @@ export default async function CatalogPage({
         companyName={data.catalog.seller?.companyName}
         totalAskingPriceUsd={data.catalog.totalAskingPriceUsd}
         totalWeightsKg={1000}
-        warehouseLocation="Jakarta, Indonesia"
+        warehouseLocation={data.catalog.warehouseLocation}
         updatedAt={data.catalog.createdAt}
       />
       <ProductList products={(data.catalog.batches as Batches[]) || []} />
