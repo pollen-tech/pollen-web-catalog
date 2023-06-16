@@ -21,8 +21,8 @@ type TCatalogInfoProps = {
   catalogName?: Catalog['name']
   companyName?: Seller['companyName']
   totalAskingPriceUsd?: Catalog['totalAskingPriceUsd']
-  totalWeightsKg?: number
-  warehouseLocation?: string
+  totalWeight?: Catalog['totalWeight']
+  warehouseLocation?: Catalog['warehouseLocation']
   updatedAt?: Catalog['createdAt']
 }
 
@@ -32,7 +32,7 @@ export function CatalogInfo({
   companyName,
   totalAskingPriceUsd,
   updatedAt,
-  totalWeightsKg,
+  totalWeight,
   warehouseLocation,
 }: TCatalogInfoProps) {
   return (
@@ -84,7 +84,7 @@ export function CatalogInfo({
             <ScaleIcon className="h-4 w-4 text-gray-500" />
             <span className="text-xs">Total Weight (KG)</span>
             <span className="text-sm font-semibold">
-              {totalWeightsKg ? accounting.formatNumber(totalWeightsKg) : '-'}
+              {totalWeight ? accounting.formatNumber(totalWeight) : '-'}
             </span>
           </div>
         </div>

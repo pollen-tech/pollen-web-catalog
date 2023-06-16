@@ -15,6 +15,7 @@ const CATALOG_DETAIL_QUERY = gql`
       totalAskingPriceUsd
       warehouseLocation
       createdAt
+      totalWeight
       seller {
         companyName
       }
@@ -49,14 +50,13 @@ export default async function CatalogPage({
 
   return (
     <div className="catalog-page container mx-auto">
-      {/* {JSON.stringify(data)} */}
       <CatalogInfo
         catalogId={data.catalog.id}
         catalogName={data.catalog.name}
         companyName={data.catalog.seller?.companyName}
         totalAskingPriceUsd={data.catalog.totalAskingPriceUsd}
-        totalWeightsKg={1000}
-        warehouseLocation={data.catalog.warehouseLocation}
+        totalWeight={data.catalog.totalWeight}
+        warehouseLocation={data.catalog.warehouseLocation ?? '-'}
         updatedAt={data.catalog.createdAt}
       />
       <ProductList products={(data.catalog.batches as Batches[]) || []} />
