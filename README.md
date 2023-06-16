@@ -2,14 +2,25 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Contact the other dev teams to get ENV values needed and NPM_TOKEN to access our private registry.
+
+Create you own `.env` file in you local machine, refer to `.env.example` for ENV keys and value needed.
+
+Export the NPM_TOKEN value to your environment variable. You may also add this to you `.bashrc` or `.zshrc` to avoid running it every time.
+
+```
+export NPM_TOKEN=<token_value>
+```
+
+Install Dependencies:
+```
+yarn
+```
+
+Run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
