@@ -2,6 +2,7 @@ name: Run ESLint and check offenses
 on: push
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
   lint:
@@ -11,6 +12,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Create .npmrc
+        run: cat .npmrc.example | sed "s/{{token}}/$NPM_TOKEN/g" > .npmrc 
 
       - name: Use Node.js v18
         uses: actions/setup-node@v3

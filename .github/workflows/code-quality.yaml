@@ -7,6 +7,7 @@ on:
       - staging
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 jobs:
   build:
     name: Scan
@@ -19,6 +20,9 @@ jobs:
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
+
+      - name: Create .npmrc
+        run: cat .npmrc.example | sed "s/{{token}}/$NPM_TOKEN/g" > .npmrc 
 
       - name: Use Node.js v18
         uses: actions/setup-node@v3

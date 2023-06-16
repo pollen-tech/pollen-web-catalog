@@ -15,7 +15,7 @@
     "@apollo/client": "^3.8.0-alpha.14",
     "@apollo/experimental-nextjs-app-support": "^0.1.0",
     "@heroicons/react": "^2.0.18",
-    "@pollen-tech/appsync-schema": "^1.1.5",
+    "@pollen-tech/appsync-schema": "^1.1.6",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-menubar": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
