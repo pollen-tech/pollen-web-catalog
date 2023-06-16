@@ -1,4 +1,4 @@
-import type { Catalog } from '@pollen-tech/appsync-schema'
+import type { Batches, Catalog } from '@pollen-tech/appsync-schema'
 
 import { CatalogInfo } from './components/catalog-info'
 import { ProductList } from './components/product-list'
@@ -26,8 +26,10 @@ const CATALOG_DETAIL_QUERY = gql`
         shelfLifeRemainingDay
         barcode
         skuNumber
+        availableUnit
         sellingUnit
         askingPrice
+        retailPrice
       }
     }
   }
@@ -47,7 +49,7 @@ export default async function CatalogPage({
 
   return (
     <div className="catalog-page container mx-auto">
-      {JSON.stringify(data)}
+      {/* {JSON.stringify(data)} */}
       <CatalogInfo
         catalogId={data.catalog.id}
         catalogName={data.catalog.name}
@@ -57,7 +59,7 @@ export default async function CatalogPage({
         warehouseLocation="Jakarta, Indonesia"
         updatedAt={data.catalog.createdAt}
       />
-      {/* <ProductList products={products} /> */}
+      <ProductList products={(data.catalog.batches as Batches[]) || []} />
     </div>
   )
 }

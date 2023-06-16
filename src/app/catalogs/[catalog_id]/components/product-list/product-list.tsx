@@ -1,6 +1,5 @@
 'use client'
 
-import format from 'date-fns/format'
 import classNames from 'classnames'
 import accounting from 'accounting'
 
@@ -11,20 +10,20 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 
-// TODO: remove dummy data and use real type checking from codegen
-import dummy_catalog from '../../dummy-catalog.json'
 import Image from 'next/image'
+
+import type { Batches } from '@pollen-tech/appsync-schema'
 
 type TProductNameCellProps = {
   name: string
   thumbnail?: string
-  expiryDate: Date
+  shelfLifeRemainingDay: number
 }
 
 function ProductNameCell({
   name,
   thumbnail,
-  expiryDate,
+  shelfLifeRemainingDay,
 }: TProductNameCellProps) {
   return (
     <div className="flex">
@@ -36,23 +35,25 @@ function ProductNameCell({
       <div>
         <h3 className="text-sm font-semibold text-gray-900">{name}</h3>
         <p className="text-sm text-red-500">
-          Expiring in {format(expiryDate, 'dd MMM yyyy')}
+          Expiring in {shelfLifeRemainingDay} days
         </p>
       </div>
     </div>
   )
 }
 
-const columnHelper = createColumnHelper<(typeof dummy_catalog.products)[0]>()
+const columnHelper = createColumnHelper<Batches[][0]>()
 
 const columns = [
-  columnHelper.accessor('name', {
+  columnHelper.accessor('productName', {
     header: () => 'Name',
     cell: (props) => (
       <ProductNameCell
-        thumbnail={props.row.original.thumbnail}
-        name={props.getValue()}
-        expiryDate={new Date(props.row.original.expiryDate)}
+        thumbnail={props.row.original.image as string}
+        name={props.getValue() as string}
+        shelfLifeRemainingDay={
+          props.row.original.shelfLifeRemainingDay as number
+        }
       />
     ),
   }),
@@ -60,7 +61,7 @@ const columns = [
     header: () => 'Barcode Number',
     cell: (props) => props.getValue(),
   }),
-  columnHelper.accessor('sku', {
+  columnHelper.accessor('skuNumber', {
     header: () => 'SKU Number',
     cell: (props) => props.getValue(),
   }),
@@ -72,18 +73,18 @@ const columns = [
     header: () => 'Selling Unit',
     cell: (props) => props.getValue(),
   }),
-  columnHelper.accessor('retailPriceUsd', {
+  columnHelper.accessor('retailPrice', {
     header: () => 'Retail Price',
     cell: (props) =>
-      accounting.formatMoney(props.getValue(), {
+      accounting.formatMoney(props.getValue() as number, {
         symbol: 'USD ',
         precision: 0,
       }),
   }),
-  columnHelper.accessor('askingPriceUsd', {
+  columnHelper.accessor('askingPrice', {
     header: () => 'Asking Price',
     cell: (askingPriceUsd) =>
-      accounting.formatMoney(askingPriceUsd.getValue(), {
+      accounting.formatMoney(askingPriceUsd.getValue() as number, {
         symbol: 'USD ',
         precision: 0,
       }),
@@ -91,7 +92,7 @@ const columns = [
 ]
 
 type TProductListProps = {
-  products: typeof dummy_catalog.products
+  products: Batches[]
 }
 
 export function ProductList({ products }: TProductListProps) {
