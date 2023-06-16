@@ -1,6 +1,0 @@
-// ============================
-// DO NOT REMOVE {{token}} TAG!
-// ============================
-registry=https://registry.npmjs.org
-@pollen-tech:registry=https://registry.npmjs.org
-//registry.npmjs.org/:_authToken={{token}}

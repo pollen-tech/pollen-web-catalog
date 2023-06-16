@@ -1,4 +1,4 @@
-import type { Batches, Catalog } from '@pollen-tech/appsync-schema'
+import type { Batch, Catalog } from '@pollen-tech/appsync-schema'
 
 import { CatalogInfo } from './components/catalog-info'
 import { ProductList } from './components/product-list'
@@ -59,7 +59,7 @@ export default async function CatalogPage({
         warehouseLocation={data.catalog.warehouseLocation ?? '-'}
         updatedAt={data.catalog.createdAt}
       />
-      <ProductList products={(data.catalog.batches as Batches[]) || []} />
+      <ProductList products={(data.catalog.batches as Batch[]) || []} />
     </div>
   )
 }

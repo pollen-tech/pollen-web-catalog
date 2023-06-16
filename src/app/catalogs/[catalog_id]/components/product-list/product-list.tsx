@@ -10,11 +10,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 
-import type { Batches } from '@pollen-tech/appsync-schema'
+import type { Batch } from '@pollen-tech/appsync-schema'
 
 import { ProductNameCell } from './'
 
-const columnHelper = createColumnHelper<Batches[][0]>()
+const columnHelper = createColumnHelper<Batch[][0]>()
 
 const columns = [
   columnHelper.accessor('productName', {
@@ -31,19 +31,19 @@ const columns = [
   }),
   columnHelper.accessor('barcode', {
     header: () => 'Barcode Number',
-    cell: (props) => props.getValue() || '-',
+    cell: (props) => props.getValue() ?? '-',
   }),
   columnHelper.accessor('skuNumber', {
     header: () => 'SKU Number',
-    cell: (props) => props.getValue() || '-',
+    cell: (props) => props.getValue() ?? '-',
   }),
   columnHelper.accessor('availableUnit', {
     header: () => 'Available Unit',
-    cell: (props) => props.getValue() || '-',
+    cell: (props) => props.getValue() ?? '-',
   }),
   columnHelper.accessor('sellingUnit', {
     header: () => 'Selling Unit',
-    cell: (props) => props.getValue() || '-',
+    cell: (props) => props.getValue() ?? '-',
   }),
   columnHelper.accessor('retailPrice', {
     header: () => 'Retail Price',
@@ -64,7 +64,7 @@ const columns = [
 ]
 
 type TProductListProps = {
-  products: Batches[]
+  products: Batch[]
 }
 
 export function ProductList({ products }: TProductListProps) {
