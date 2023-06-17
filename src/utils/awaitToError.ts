@@ -1,5 +1,5 @@
 type WhenTypeNull<TCheck, TReturn> = TCheck extends null ? null : TReturn
-const awaitToError = async <E = Error, T = any>(
+const awaitToError = async <E = Error, T = unknown>(
   p: Promise<T>
 ): Promise<[WhenTypeNull<T, E>, WhenTypeNull<E, T>]> => {
   try {
