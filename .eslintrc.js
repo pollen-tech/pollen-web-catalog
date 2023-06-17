@@ -11,7 +11,7 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns:["node_modules/**/*.js", "src/aws-exports.js"],
+  ignorePatterns: ['node_modules/**/*.js', 'src/aws-exports.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',

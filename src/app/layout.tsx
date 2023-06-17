@@ -5,9 +5,10 @@ import { Inter } from 'next/font/google'
 
 import classNames from 'classnames'
 
-import { ApolloWrapper } from '~/lib/apollo-wrapper'
-
+import { UserProvider } from '@auth0/nextjs-auth0/client'
+import React from 'react'
 import { Navbar } from '~/components/navigation/navbar'
+import { ApolloWrapper } from '~/lib/apollo-wrapper'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,7 +31,10 @@ export default function RootLayout({
         {/* navbar */}
         <Navbar />
         <div>
-          <ApolloWrapper>{children}</ApolloWrapper>
+          {' '}
+          <UserProvider>
+            <ApolloWrapper>{children}</ApolloWrapper>
+          </UserProvider>
           <Link href="/" className="text-pollen-purple">
             Back
           </Link>
