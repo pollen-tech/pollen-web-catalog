@@ -9,7 +9,7 @@ const { getClient: getApolloClient } = registerApolloClient(() => {
   const link = new HttpLink({
     uri: config.appsync.endpoint,
   })
-  return new ApolloClient<{}>({
+  return new ApolloClient<Query>({
     cache: new InMemoryCache(),
     link: concat(authMiddleware, link),
   })
@@ -17,9 +17,9 @@ const { getClient: getApolloClient } = registerApolloClient(() => {
 
 export const query = async <R>(q: Query) => {
   const client = getApolloClient()
-  const [err, result] = await awaitToError(client.query<R>(q))
-  if(err) {
-    if(err.message.includes('401')) {
+  const [err, result] = await awaitToError({ p: client.query<R>(q) })
+  if (err) {
+    if (err.message.includes('401')) {
       redirect('/api/auth/login')
     }
     throw err

@@ -19,7 +19,10 @@ export default handleAuth({
     await handleCallback(req, res, { afterCallback })
   },
   async login(req, res) {
-    await handleLogin(req, res, { returnTo: req.cookies.currentUrl, authorizationParams: { prompt: 'login' } })
+    await handleLogin(req, res, {
+      returnTo: req.cookies.currentUrl,
+      authorizationParams: { prompt: 'login' },
+    })
   },
   async logout(req, res) {
     deleteCookie(ID_TOKEN_COOKIE_KEY, { req, res })

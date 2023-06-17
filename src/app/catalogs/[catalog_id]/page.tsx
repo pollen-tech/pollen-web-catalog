@@ -3,10 +3,9 @@ import type { Batch, Catalog } from '@pollen-tech/appsync-schema'
 import { CatalogInfo } from './components/catalog-info'
 import { ProductList } from './components/product-list'
 
-import { getClient, query } from '~/lib/client'
+import { query } from '~/lib/client'
 
 import { gql } from '@apollo/client'
-import { redirect } from 'next/navigation'
 
 const CATALOG_DETAIL_QUERY = gql`
   query Catalog($catalogId: ID!) {
