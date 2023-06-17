@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import { UserProvider } from '@auth0/nextjs-auth0/client'
 import React from 'react'
 import { Navbar } from '~/components/navigation/navbar'
+import { ApolloWrapper } from '~/lib/apollo-wrapper'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,8 +32,9 @@ export default function RootLayout({
         <Navbar />
         <div>
           {' '}
-          <UserProvider>{children}</UserProvider>
-          {/* <ApolloWrapper>{children}</ApolloWrapper> */}
+          <UserProvider>
+            <ApolloWrapper>{children}</ApolloWrapper>
+          </UserProvider>
           <Link href="/" className="text-pollen-purple">
             Back
           </Link>
