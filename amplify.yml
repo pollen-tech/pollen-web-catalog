@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - env | grep -e AUTH0_ >> .env.production
         - yarn install
     build:
       commands:
