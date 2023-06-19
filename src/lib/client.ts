@@ -1,23 +1,28 @@
-import { ApolloClient, concat, HttpLink, InMemoryCache } from '@apollo/client'
+import {
+  ApolloClient,
+  concat,
+  HttpLink,
+  InMemoryCache,
+  type QueryOptions,
+} from '@apollo/client'
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
 import { config } from '~/config'
 import { authMiddleware } from './auth-middleware'
-import { type Query } from '@pollen-tech/appsync-schema'
 import awaitToError from '~/utils/awaitToError'
 import { redirect } from 'next/navigation'
 const { getClient: getApolloClient } = registerApolloClient(() => {
   const link = new HttpLink({
     uri: config.appsync.endpoint,
   })
-  return new ApolloClient<Query>({
+  return new ApolloClient({
     cache: new InMemoryCache(),
     link: concat(authMiddleware, link),
   })
 })
 
-export const query = async <R>(q: Query) => {
+export const query = async (q: QueryOptions) => {
   const client = getApolloClient()
-  const [err, result] = await awaitToError(client.query<R>(q))
+  const [err, result] = await awaitToError(client.query(q))
   if (err) {
     if (err.message.includes('401')) {
       redirect('/api/auth/login')
