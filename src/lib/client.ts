@@ -3,6 +3,7 @@ import {
   concat,
   HttpLink,
   InMemoryCache,
+  type OperationVariables,
   type QueryOptions,
 } from '@apollo/client'
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
@@ -20,9 +21,9 @@ const { getClient: getApolloClient } = registerApolloClient(() => {
   })
 })
 
-export const query = async (q: QueryOptions) => {
+export const query = async <T>(q: QueryOptions<OperationVariables, T>) => {
   const client = getApolloClient()
-  const [err, result] = await awaitToError(client.query(q))
+  const [err, result] = await awaitToError(client.query<T>(q))
   if (err) {
     if (err.message.includes('401')) {
       redirect('/api/auth/login')

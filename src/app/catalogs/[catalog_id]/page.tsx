@@ -35,6 +35,7 @@ const CATALOG_DETAIL_QUERY = gql`
     }
   }
 `
+
 export default async function CatalogPage({
   params,
 }: {
