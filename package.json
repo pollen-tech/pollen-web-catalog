@@ -16,7 +16,7 @@
     "@apollo/experimental-nextjs-app-support": "^0.1.0",
     "@auth0/nextjs-auth0": "^2.6.2",
     "@heroicons/react": "^2.0.18",
-    "@pollen-tech/appsync-schema": "^1.1.6",
+    "@pollen-tech/appsync-schema": "^1.1.7",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-menubar": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
