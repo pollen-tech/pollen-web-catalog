@@ -20,6 +20,7 @@ type TCatalogInfoProps = {
   catalogId: Catalog['id']
   catalogName?: Catalog['name']
   companyName?: Seller['companyName']
+  companyLogo?: Seller['logo']
   totalAskingPriceUsd?: Catalog['totalAskingPriceUsd']
   totalWeight?: Catalog['totalWeight']
   warehouseLocation?: Catalog['warehouseLocation']
@@ -30,6 +31,7 @@ export function CatalogInfo({
   catalogId,
   catalogName,
   companyName,
+  companyLogo,
   totalAskingPriceUsd,
   updatedAt,
   totalWeight,
@@ -40,7 +42,7 @@ export function CatalogInfo({
       <div className="flex items-center">
         <div className="rounded-full p-4">
           <Image
-            src={'/unilever-logo.png'}
+            src={companyLogo || 'https://placehold.co/48@2x.jpg?text=No+Image'}
             width={56}
             height={56}
             alt={companyName || 'Company Logo'}
