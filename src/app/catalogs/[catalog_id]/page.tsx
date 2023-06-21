@@ -1,40 +1,30 @@
-import type { Batch, Catalog } from '@pollen-tech/appsync-schema'
+import type { Batch } from '@pollen-tech/appsync-schema'
+
+import { fetchCatalogDetail } from '~/services/catalog-detail/catalog-detail'
 
 import { CatalogInfo } from './components/catalog-info'
 import { ProductList } from './components/product-list'
 
-import { query } from '~/lib/client'
-
-import { GET_CATALOG_QUERY } from './query.gql'
-
-type TQueryResponse = {
-  catalog: Catalog
+type TCatalogPageProps = {
+  params: { catalog_id: string }
 }
 
-export default async function CatalogPage({
-  params,
-}: {
-  params: { catalog_id: string }
-}) {
-  const { data } = await query<TQueryResponse>({
-    query: GET_CATALOG_QUERY,
-    variables: {
-      catalogId: params.catalog_id,
-    },
-  })
+export default async function CatalogPage({ params }: TCatalogPageProps) {
+  const catalog = await fetchCatalogDetail(params.catalog_id)
+
   return (
     <div className="catalog-page container mx-auto">
       <CatalogInfo
-        catalogId={data.catalog.id}
-        catalogName={data.catalog.name}
-        companyName={data.catalog.seller?.companyName}
-        companyLogo={data.catalog.seller?.logo}
-        totalAskingPriceUsd={data.catalog.totalAskingPriceUsd}
-        totalWeight={data.catalog.totalWeight}
-        warehouseLocation={data.catalog.warehouseLocation ?? '-'}
-        updatedAt={data.catalog.createdAt}
+        catalogId={catalog.id}
+        catalogName={catalog.name}
+        companyName={catalog.seller?.companyName}
+        companyLogo={catalog.seller?.logo}
+        totalAskingPriceUsd={catalog.totalAskingPriceUsd}
+        totalWeight={catalog.totalWeight}
+        warehouseLocation={catalog.warehouseLocation ?? '-'}
+        updatedAt={catalog.createdAt}
       />
-      <ProductList products={(data.catalog.batches as Batch[]) || []} />
+      <ProductList products={(catalog.batches as Batch[]) || []} />
     </div>
   )
 }
