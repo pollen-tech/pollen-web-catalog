@@ -5,44 +5,19 @@ import { ProductList } from './components/product-list'
 
 import { query } from '~/lib/client'
 
-import { gql } from '@apollo/client'
+import { GET_CATALOG_QUERY } from './query.gql'
 
-const CATALOG_DETAIL_QUERY = gql`
-  query Catalog($catalogId: ID!) {
-    catalog(catalogId: $catalogId) {
-      id
-      name
-      totalAskingPriceUsd
-      warehouseLocation
-      createdAt
-      totalWeight
-      seller {
-        companyName
-      }
-      batches {
-        id
-        productName
-        image
-        brand
-        shelfLifeRemainingDay
-        barcode
-        skuNumber
-        availableUnit
-        sellingUnit
-        askingPrice
-        retailPrice
-      }
-    }
-  }
-`
+type TQueryResponse = {
+  catalog: Catalog
+}
 
 export default async function CatalogPage({
   params,
 }: {
   params: { catalog_id: string }
 }) {
-  const { data }: { data: { catalog: Catalog } } = await query({
-    query: CATALOG_DETAIL_QUERY,
+  const { data } = await query<TQueryResponse>({
+    query: GET_CATALOG_QUERY,
     variables: {
       catalogId: params.catalog_id,
     },
@@ -53,6 +28,7 @@ export default async function CatalogPage({
         catalogId={data.catalog.id}
         catalogName={data.catalog.name}
         companyName={data.catalog.seller?.companyName}
+        companyLogo={data.catalog.seller?.logo}
         totalAskingPriceUsd={data.catalog.totalAskingPriceUsd}
         totalWeight={data.catalog.totalWeight}
         warehouseLocation={data.catalog.warehouseLocation ?? '-'}
