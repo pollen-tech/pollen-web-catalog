@@ -30,12 +30,9 @@ export default function RootLayout({
       <body className={classNames(inter.className, 'bg-gray-50')}>
         {/* navbar */}
         <Navbar />
-        <div>
-          {' '}
-          <UserProvider>
-            <ApolloWrapper>{children}</ApolloWrapper>
-          </UserProvider>
-        </div>
+        <UserProvider>
+          <ApolloWrapper>{children}</ApolloWrapper>
+        </UserProvider>
       </body>
     </html>
   )
