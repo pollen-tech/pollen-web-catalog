@@ -35,9 +35,9 @@ export default function RootLayout({
           <UserProvider>
             <ApolloWrapper>{children}</ApolloWrapper>
           </UserProvider>
-          <Link href="/" className="text-pollen-purple">
+          {/* <Link href="/" className="text-pollen-purple">
             Back
-          </Link>
+          </Link> */}
         </div>
       </body>
     </html>
