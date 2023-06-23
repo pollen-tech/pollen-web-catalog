@@ -76,7 +76,10 @@ export function ProductList({ products }: TProductListProps) {
 
   return (
     <>
-      <table className="w-full table-auto border-collapse bg-white">
+      <table
+        data-testid="product-list-table"
+        className="w-full table-auto border-collapse bg-white"
+      >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
@@ -102,7 +105,7 @@ export function ProductList({ products }: TProductListProps) {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody data-testid="product-list-table-body">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell, idx) => (
