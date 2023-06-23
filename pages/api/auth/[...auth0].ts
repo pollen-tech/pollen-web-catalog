@@ -6,7 +6,7 @@ import {
   handleLogin,
 } from '@auth0/nextjs-auth0'
 import { setCookie, deleteCookie } from 'cookies-next'
-export const ID_TOKEN_COOKIE_KEY = 'id_token'
+import { ID_TOKEN_COOKIE_KEY } from './constant'
 const afterCallback: AfterCallback = (req, res, session) => {
   setCookie(ID_TOKEN_COOKIE_KEY, session.idToken, {
     req,
@@ -20,7 +20,7 @@ export default handleAuth({
   },
   async login(req, res) {
     await handleLogin(req, res, {
-      returnTo: req.cookies.currentUrl,
+      returnTo: (req.query.currentUrl as string) || req.cookies.currentUrl,
       authorizationParams: { prompt: 'login' },
     })
   },
