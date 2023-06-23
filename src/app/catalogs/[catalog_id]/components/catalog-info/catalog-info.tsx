@@ -45,7 +45,7 @@ export function CatalogInfo({
           <div className="rounded-full p-4">
             <Image
               src={
-                companyLogo || 'https://placehold.co/48@2x.jpg?text=No+Image'
+                companyLogo ?? 'https://placehold.co/48@2x.jpg?text=No+Image'
               }
               width={56}
               height={56}
