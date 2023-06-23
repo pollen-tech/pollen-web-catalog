@@ -837,10 +837,10 @@
     picocolors "^1.0.0"
     tslib "^2.5.0"
 
-"@pollen-tech/appsync-schema@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.1.6.tgz#0b9e301cccf6963cd450d79f5d27ed07d2e0d0fd"
-  integrity sha512-yvxJH/m+aFccBIO6jXT+NvOw2elDefxTbmBPo989vp573eAvWopqBwlrJMbKoJ7T07TeNwUfEnIZsq8VzCVBUA==
+"@pollen-tech/appsync-schema@^1.1.7":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.1.7.tgz#9fb6650030e9e2f9024b43e0fa42a4698e8f3528"
+  integrity sha512-ymHYbH6WNOSDKNvOeEA4DwsABEef4ZIeM6PPUguj751zyyPoc6h5R30iVj0YRD4HUlRfTdNFOrJyizjCkEM8qA==
   dependencies:
     graphql "^16.6.0"
 

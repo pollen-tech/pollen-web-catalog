@@ -15,6 +15,9 @@ module.exports = {
       colors: {
         'pollen-purple': '#8431E7',
       },
+      container: {
+        padding: '2rem',
+      },
     },
   },
   plugins: [],
