@@ -12,8 +12,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // amplify does not support s3 reverse proxy,
   // for now use the plain redericion
   // should be changed in the future
+  const catalogId = req.query.catalogId as string
   res.setHeader(`API_KEY`, config.lms.apiKey)
-  res.redirect(
-    `${config.lms.endpoint}/catalogs/export-data/${req.query.catalog_id}`
-  )
+  res.redirect(`${config.lms.endpoint}/catalogs/export-data/${catalogId}`)
 }
