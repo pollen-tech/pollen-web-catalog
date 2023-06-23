@@ -1,7 +1,6 @@
 // middleware.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { setCookie } from 'cookies-next'
 
 export function middleware(request: NextRequest) {
   // ignoring api routes and static files
@@ -9,6 +8,7 @@ export function middleware(request: NextRequest) {
   if (
     !request.nextUrl.pathname.includes('/api') &&
     !request.nextUrl.pathname.includes('/_next') &&
+    !request.nextUrl.pathname.includes('/__webpack_hmr') &&
     !request.nextUrl.pathname.includes('.')
   ) {
     res.cookies.set('currentUrl', request.nextUrl.pathname)
