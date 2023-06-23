@@ -13,5 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // for now use the plain redericion
   // should be changed in the future
   res.setHeader(`API_KEY`, config.lms.apiKey)
-  res.redirect(`${config.lms.endpoint}/catalogs/export-data/${req.query.catalog_id}`)
+  res.redirect(
+    `${config.lms.endpoint}/catalogs/export-data/${req.query.catalog_id}`
+  )
 }
