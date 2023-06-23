@@ -3,7 +3,7 @@ import handler from './excel-file'
 var getCookieMock: NonNullable<string>
 jest.mock('./proxy', () => {
   return {
-    proxy: jest.fn().mockImplementation((req, res, next) => {}),
+    proxy: jest.fn().mockImplementation(() => {}),
   }
 })
 jest.mock('cookies-next', () => ({
