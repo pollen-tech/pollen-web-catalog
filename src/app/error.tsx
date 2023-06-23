@@ -4,7 +4,12 @@ import { notFound } from 'next/navigation'
 import InternalServerError from './errors/500'
 import ForbiddenError from './errors/403'
 
-const error = ({ error, reset }: { error: Error; reset: () => void }) => {
+export interface IErrorHandler {
+  error: Error
+  reset: () => void
+}
+
+const error = ({ error }: IErrorHandler) => {
   if (error.message.includes('500')) {
     return InternalServerError()
   }
