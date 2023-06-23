@@ -13,7 +13,7 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button className="mb-2 block w-full">Make an Offer</Button>
+        <Button data-testid="trigger-dialog-button" className="mb-2 block w-full">Make an Offer</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/40" />
@@ -55,6 +55,7 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
           </div>
           <Dialog.Close asChild>
             <button
+              data-testid="close-dialog-button"
               className="absolute right-6 top-6 h-4 w-4 text-gray-900"
               aria-label="Close"
             >

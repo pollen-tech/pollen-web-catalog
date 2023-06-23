@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { ProductList } from '.'
 
 describe('ProductList', () => {
-  it('should renders <ProductNameCell/> with proper content', () => {
+  it('should renders <ProductList/> with proper content', () => {
     render(
       <ProductList
         products={[
