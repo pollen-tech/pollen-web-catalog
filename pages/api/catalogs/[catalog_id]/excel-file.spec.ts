@@ -21,7 +21,6 @@ const response = {
 } as unknown as NextApiResponse
 
 describe('pages/api/catalogs/[catalog_id]/excel-file.ts', () => {
-  
   describe(`.handler()`, () => {
     const request: NextApiRequest = {
       url: 'api/catalogs/1/excel-file',

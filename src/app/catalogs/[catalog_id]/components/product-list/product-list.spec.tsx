@@ -3,14 +3,19 @@ import { ProductList } from '.'
 
 describe('ProductList', () => {
   it('should renders <ProductNameCell/> with proper content', () => {
-    render(<ProductList products={[{
-        productName: 'test',
-        currency: 'IDR',
-        availableUnit: 20,
-        totalUnits: 30,
-        totalAskingPrice: 10000,
-    }]}
-    />)
+    render(
+      <ProductList
+        products={[
+          {
+            productName: 'test',
+            currency: 'IDR',
+            availableUnit: 20,
+            totalUnits: 30,
+            totalAskingPrice: 10000,
+          },
+        ]}
+      />
+    )
     const productListComponent = screen.getByTestId('product-list-table')
     expect(productListComponent).toBeInTheDocument()
     const bodyComponent = screen.getByTestId('product-list-table-body')

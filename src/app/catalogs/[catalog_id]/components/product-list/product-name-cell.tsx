@@ -23,9 +23,16 @@ export function ProductNameCell({
         />
       </div>
       <div className="flex flex-col justify-center">
-        <h3 data-testid="product-name" className="text-sm font-semibold text-gray-900">{name}</h3>
-        <p className="text-sm text-red-500"
-          data-testid="product-shelfLifeRemainingDay">
+        <h3
+          data-testid="product-name"
+          className="text-sm font-semibold text-gray-900"
+        >
+          {name}
+        </h3>
+        <p
+          className="text-sm text-red-500"
+          data-testid="product-shelfLifeRemainingDay"
+        >
           Expiring in {shelfLifeRemainingDay} days
         </p>
       </div>

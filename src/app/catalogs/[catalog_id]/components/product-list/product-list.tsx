@@ -76,7 +76,10 @@ export function ProductList({ products }: TProductListProps) {
 
   return (
     <>
-      <table data-testid="product-list-table" className="w-full table-auto border-collapse bg-white">
+      <table
+        data-testid="product-list-table"
+        className="w-full table-auto border-collapse bg-white"
+      >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
