@@ -1,7 +1,7 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { getCookie } from 'cookies-next'
 import { ID_TOKEN_COOKIE_KEY } from '../../auth/constant'
-import { proxy } from './proxy'
+import { config } from '~/config'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const cookie = getCookie(ID_TOKEN_COOKIE_KEY, { req, res })
@@ -9,10 +9,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!cookie?.toString()) {
     return res.redirect(`/api/auth/login?returnTo=/${path}`)
   }
-
-  proxy(req, res, (error: Error) => {
-    res.status(500).end('Proxy Error')
-    if (error) {
-    }
-  })
+  // amplify does not support s3 reverse proxy,
+  // for now use the plain redericion
+  // should be changed in the future
+  res.setHeader(`API_KEY`, config.lms.apiKey)
+  res.redirect(`${config.lms.endpoint}/catalogs/export-data/${req.query.catalog_id}`)
 }
