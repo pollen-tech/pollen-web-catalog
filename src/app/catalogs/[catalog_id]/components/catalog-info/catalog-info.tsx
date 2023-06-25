@@ -15,7 +15,7 @@ import { format } from 'date-fns'
 import accounting from 'accounting'
 
 import { Button } from '~/components/common/button'
-import { MakeOfferModal } from '~/app/catalog/components/make-offer-modal'
+import { MakeOfferModal } from '~/app/catalogs/[catalog_id]/components/make-offer-modal'
 
 type TCatalogInfoProps = {
   catalogId: Catalog['id']
