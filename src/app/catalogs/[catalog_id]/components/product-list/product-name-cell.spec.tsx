@@ -7,7 +7,7 @@ describe('ProductNameCell', () => {
       <ProductNameCell
         name="test"
         shelfLifeRemainingDay={20}
-        thumbnail="https://some-domain.com/some-thumbnail"
+        thumbnails={['https://some-domain.com/some-thumbnail']}
       />
     )
     screen.getByTestId('product-thumbnail')

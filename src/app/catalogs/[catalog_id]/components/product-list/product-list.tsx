@@ -21,7 +21,7 @@ const columns = [
     header: () => 'Name',
     cell: (props) => (
       <ProductNameCell
-        thumbnail={props.row.original.image as string}
+        thumbnails={(props.row.original.images as string[]) || []}
         name={props.getValue() as string}
         shelfLifeRemainingDay={
           props.row.original.shelfLifeRemainingDay as number

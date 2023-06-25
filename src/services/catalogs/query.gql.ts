@@ -16,7 +16,7 @@ export const GET_CATALOG_QUERY = gql`
       batches {
         id
         productName
-        image
+        images
         brand
         shelfLifeRemainingDay
         barcode

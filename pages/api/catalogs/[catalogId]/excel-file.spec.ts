@@ -18,6 +18,9 @@ const response = {
       // do nothing
     },
   }),
+  setHeader: () => {
+    // do nothing
+  },
 } as unknown as NextApiResponse
 
 describe('pages/api/catalogs/[catalog_id]/excel-file.ts', () => {
