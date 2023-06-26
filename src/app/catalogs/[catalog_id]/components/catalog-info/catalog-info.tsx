@@ -24,6 +24,7 @@ type TCatalogInfoProps = {
   companyName?: Seller['companyName']
   companyLogo?: Seller['logo']
   totalAskingPriceUsd?: Catalog['totalAskingPriceUsd']
+  totalAskingPrice?: Catalog['totalAskingPrice']
   totalWeight?: Catalog['totalWeight']
   warehouseLocation?: Catalog['warehouseLocation']
   updatedAt?: Catalog['createdAt']
@@ -35,6 +36,7 @@ export function CatalogInfo({
   companyName,
   companyLogo,
   totalAskingPriceUsd,
+  totalAskingPrice,
   updatedAt,
   totalWeight,
   warehouseLocation,
@@ -72,7 +74,10 @@ export function CatalogInfo({
               <CurrencyDollarIcon className="h-4 w-4 text-gray-500" />
               <span className="text-xs">Total Asking Price</span>
               <span className="text-sm font-semibold">
-                {totalAskingPriceUsd
+                {totalAskingPrice
+                  ? accounting.formatMoney(totalAskingPrice)
+                  : '-'}
+                  {totalAskingPriceUsd
                   ? accounting.formatMoney(totalAskingPriceUsd)
                   : '-'}
               </span>
@@ -99,7 +104,7 @@ export function CatalogInfo({
           <div className="grow px-5">
             <MakeOfferModal catalogId={catalogId} />
             <Link href={`/api/catalogs/${catalogId}/excel-file`}>
-              <Button variant="secondary" className="block">
+              <Button variant="secondary" className="block w-full">
                 Download Catalog
               </Button>
             </Link>
