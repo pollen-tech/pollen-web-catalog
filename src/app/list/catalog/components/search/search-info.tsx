@@ -6,7 +6,7 @@ import { Card } from '~/components/common/card'
 export function SearchInfo() {
   return (
     <>
-      <Card className="mt-4 bg-transparent text-gray-900	">
+      <div className="my-4 bg-transparent text-gray-900	">
         <div className="flex items-center py-2">
           <p className="text-sm font-bold">Welcome to Pollen! 🎉</p>
         </div>
@@ -15,7 +15,7 @@ export function SearchInfo() {
             Feel free to explore our various catalog curated only for you!
           </p>
         </div>
-      </Card>
+      </div>
 
       <Card className="container mx-auto py-0 text-gray-900">
         <div className="grid grid-cols-1 gap-6 py-8 md:grid-cols-2 lg:grid-cols-2">
@@ -39,7 +39,7 @@ export function SearchInfo() {
                 </div>
                 <input
                   type="text"
-                  className="block w-full rounded-lg border border-gray-300  bg-gray-100 p-2.5 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300  bg-gray-100 p-2.5 pl-10 text-sm text-gray-900 focus:border-purple-600 focus:ring-purple-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
                   placeholder="Search "
                   required
                 />
@@ -47,7 +47,7 @@ export function SearchInfo() {
             </form>
           </div>
           <div className="flex justify-end sm:w-full md:w-full  ">
-            <button className="focus:shadow-outline mx-1 inline-flex h-10 items-center rounded-lg border border-slate-300 px-5  transition-colors duration-150 hover:border-slate-100 hover:bg-purple-100">
+            <button className="focus:shadow-outline mx-1 inline-flex  h-10 items-center rounded-lg border border-slate-300 px-5 transition-colors duration-150  hover:border-slate-100 hover:bg-purple-100 sm:w-full md:w-28">
               <span>Sort</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ export function SearchInfo() {
               </svg>
             </button>
 
-            <button className="focus:shadow-outline mx-1 inline-flex h-10 items-center rounded-lg border border-slate-300 px-5  transition-colors duration-150 hover:border-slate-100 hover:bg-purple-100">
+            <button className="focus:shadow-outline mx-1 inline-flex  h-10 items-center rounded-lg border border-slate-300 px-5 transition-colors duration-150  hover:border-slate-100 hover:bg-purple-100 sm:w-full md:w-28">
               <span>Filter</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
