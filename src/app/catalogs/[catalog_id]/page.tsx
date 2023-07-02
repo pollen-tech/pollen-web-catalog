@@ -1,6 +1,6 @@
 import type { Batch } from '@pollen-tech/appsync-schema'
 
-import { fetchCatalogDetail } from '~/services/catalogs/catalog-detail'
+import { fetchCatalogDetail } from '~/services/catalogs/catalog'
 
 import { CatalogInfo } from './components/catalog-info'
 import { ProductList } from './components/product-list'

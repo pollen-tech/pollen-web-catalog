@@ -77,7 +77,7 @@ export function CatalogInfo({
                 {totalAskingPrice
                   ? accounting.formatMoney(totalAskingPrice)
                   : '-'}
-                  {totalAskingPriceUsd
+                {totalAskingPriceUsd
                   ? accounting.formatMoney(totalAskingPriceUsd)
                   : '-'}
               </span>

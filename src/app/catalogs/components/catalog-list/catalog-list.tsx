@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-table'
 
 import type { Catalog } from '@pollen-tech/appsync-schema'
+import Link from 'next/link'
 
 const columnHelper = createColumnHelper<Catalog[][0]>()
 
@@ -21,7 +22,7 @@ const columns = [
   }),
   columnHelper.accessor('seller', {
     header: () => 'Seller Name',
-    cell: (props) => props.getValue() ?? '-',
+    cell: (props) => props.getValue()?.companyName ?? '-',
   }),
   columnHelper.accessor('warehouseLocation', {
     header: () => 'Warehouse Location',
@@ -42,6 +43,18 @@ const columns = [
   columnHelper.accessor('totalWeight', {
     header: () => 'Total Weight',
     cell: (props) => props.getValue() ?? '-',
+  }),
+  columnHelper.accessor('id', {
+    header: () => 'Action',
+    cell: (props) => (
+      <Link
+        data-testid="detail-button"
+        className="text-pollen-purple"
+        href={`/catalogs/${props.getValue()}`}
+      >
+        View Detail
+      </Link>
+    ),
   }),
 ]
 
