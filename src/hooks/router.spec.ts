@@ -7,16 +7,18 @@ jest.mock(`next/navigation`, () => ({
   usePathname: jest.fn().mockReturnValue('/current-path'),
 }))
 describe(`src/hooks/router.ts`, () => {
-    mockPushRouter.mockReturnValue(undefined)
-    describe('.useRouter()', () => {
-        describe('.pushQuery()', ()=> {
-            it(`should trigger push with compiled query params when request is valid`, () =>{ 
-                const router = useRouter()
-                router.pushQuery({
-                    someQuery: 'someValue'
-                })
-                expect(mockPushRouter).toBeCalledWith('/current-path?someQuery=someValue')
-            })
+  mockPushRouter.mockReturnValue(undefined)
+  describe('.useRouter()', () => {
+    describe('.pushQuery()', () => {
+      it(`should trigger push with compiled query params when request is valid`, () => {
+        const router = useRouter()
+        router.pushQuery({
+          someQuery: 'someValue',
         })
+        expect(mockPushRouter).toBeCalledWith(
+          '/current-path?someQuery=someValue'
+        )
+      })
     })
+  })
 })

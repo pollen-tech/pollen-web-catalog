@@ -6,10 +6,12 @@ describe('CatalogList', () => {
   it('should renders <CatalogList/> with proper content', () => {
     render(
       <CatalogList
-        catalogs={[{
+        catalogs={[
+          {
             name: 'some-name',
-            id: 'some-id'
-        }]}
+            id: 'some-id',
+          },
+        ]}
       />
     )
     const productListComponent = screen.getByTestId('product-list-table')
