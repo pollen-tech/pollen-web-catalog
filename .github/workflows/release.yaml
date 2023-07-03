@@ -5,8 +5,8 @@ on:
       - 'master'      
 
 env:
-  AWS_REGION: ap-southeast-1 # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: pollen/pollen-pass-api # set this to your Amazon ECR repository name
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 jobs:
   release:
     name: Release
