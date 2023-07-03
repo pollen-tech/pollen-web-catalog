@@ -13,6 +13,16 @@ export function middleware(request: NextRequest) {
   ) {
     res.cookies.set('currentUrl', request.nextUrl.pathname)
   }
+  // on home, remove the cookie
+  if (request.nextUrl.pathname === '/') {
+    request.cookies.delete([
+      'currentUrl',
+      'appSesion',
+      'idToken',
+      'nonce',
+      'state',
+    ])
+  }
   return res
 }
 
