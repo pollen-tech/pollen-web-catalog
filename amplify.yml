@@ -3,6 +3,8 @@ frontend:
   phases:
     preBuild:
       commands:
+        - env | grep -e AUTH0_ >> .env.production
+        - env | grep -e LMS_ >> .env.production
         - yarn install
     build:
       commands:
