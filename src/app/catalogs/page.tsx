@@ -18,8 +18,8 @@ export default async function CatalogListPage({
   return (
     <div className="catalog-page container mx-auto">
       <SearchInfo />
-      <Card className="mt-6">
-        <div className="container mx-auto p-4">
+      <Card className="mt-6 border-collapse border-collapse border  border-slate-300 bg-white">
+        <div className="container mx-auto p-2">
           <CatalogList catalogs={catalogs.data} />
         </div>
       </Card>

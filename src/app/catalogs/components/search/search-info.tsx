@@ -26,7 +26,7 @@ export function SearchInfo() {
       </div>
 
       <Card className="container mx-auto py-0 text-gray-900">
-        <div className="grid grid-cols-1 gap-6 py-8 md:grid-cols-2 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
           <div className="content-start justify-center rounded-xl text-6xl ">
             <form
               onSubmit={submit}
@@ -61,7 +61,7 @@ export function SearchInfo() {
             </form>
           </div>
           <div className="flex justify-end sm:w-full md:w-full  ">
-            <button className="focus:shadow-outline mx-1 inline-flex  h-10 items-center rounded-lg border border-slate-300 px-5 transition-colors duration-150  hover:border-slate-100 hover:bg-purple-100 sm:w-full md:w-28">
+            <button className="focus:shadow-outline mx-1 inline-flex  h-10 items-center rounded-lg border border-slate-300 px-5 transition-colors duration-150  hover:border-slate-100 hover:bg-purple-600 hover:text-white sm:w-full md:w-28">
               <span>Sort</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export function SearchInfo() {
               </svg>
             </button>
 
-            <button className="focus:shadow-outline mx-1 inline-flex  h-10 items-center rounded-lg border border-slate-300 px-5 transition-colors duration-150  hover:border-slate-100 hover:bg-purple-100 sm:w-full md:w-28">
+            <button className="focus:shadow-outline mx-1 inline-flex  h-10 items-center rounded-lg border border-slate-300 px-5 transition-colors duration-150  hover:border-slate-100 hover:bg-purple-600 hover:text-white  sm:w-full  md:w-28">
               <span>Filter</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
