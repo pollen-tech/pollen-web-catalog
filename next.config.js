@@ -26,6 +26,14 @@ const nextConfig = {
       },
     ],
   },
+  rewrites: async () => {
+    return [
+      {
+        source: '/',
+        destination: 'https://market.pollen.tech',
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
