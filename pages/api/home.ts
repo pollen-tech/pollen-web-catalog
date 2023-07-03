@@ -1,8 +1,9 @@
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { type NextApiRequest, type NextApiResponse } from 'next'
+import { config } from '~/config'
 
 export const proxy = createProxyMiddleware({
-  target: 'https://market.pollen.tech',
+  target: config.marketingUrl,
   headers: {},
   changeOrigin: true,
   autoRewrite: true,
