@@ -97,7 +97,7 @@ export function CatalogList({ catalogs }: TCatalogListProps) {
             </tr>
           ))}
         </thead>
-        <tbody data-testid="product-list-table-body px-5">
+        <tbody data-testid="product-list-table-body">
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
