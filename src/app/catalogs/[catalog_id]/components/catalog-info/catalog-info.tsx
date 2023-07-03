@@ -54,6 +54,11 @@ export function CatalogInfo({
               height={56}
               alt={companyName || 'Company Logo'}
               className="object-contain"
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null // prevents looping
+                currentTarget.src =
+                  'https://placehold.co/48@2x.jpg?text=No+Image'
+              }}
             />
           </div>
 
