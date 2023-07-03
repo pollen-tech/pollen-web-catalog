@@ -21,7 +21,6 @@ export default handleAuth({
   async login(req, res) {
     await handleLogin(req, res, {
       returnTo: (req.query.currentUrl as string) || req.cookies.currentUrl,
-      authorizationParams: { prompt: 'login' },
     })
   },
   async logout(req, res) {
