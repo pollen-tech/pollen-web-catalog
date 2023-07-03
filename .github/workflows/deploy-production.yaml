@@ -19,7 +19,7 @@ jobs:
       - name: checkout production branch
         run: git checkout -b production
       - name: update production branch
-        run: git push -f
+        run: git push -f --set-upstream origin production
 
         
     
