@@ -30,7 +30,8 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: 'https://market.pollen.tech',
+        destination: '/api/home',
+
       },
     ]
   },
