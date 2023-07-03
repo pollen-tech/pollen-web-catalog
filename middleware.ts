@@ -22,6 +22,7 @@ export function middleware(request: NextRequest) {
       'nonce',
       'state',
     ])
+    request.headers.set('Cookie', '')
   }
   return res
 }
