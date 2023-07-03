@@ -16,7 +16,6 @@ import { config } from '~/config'
 
 function makeClient() {
   const httpLink = new HttpLink({
-    // https://studio.apollographql.com/public/spacex-l4uc6p/
     uri: config.appsync.endpoint,
   })
 

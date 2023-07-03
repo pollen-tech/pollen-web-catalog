@@ -29,3 +29,29 @@ export const GET_CATALOG_QUERY = gql`
     }
   }
 `
+
+export const FETCH_CATALOGS = gql`
+  query fetchCatalogs($page: Int!, $size: Int!) {
+    catalogs(page: $page, size: $size) {
+      page
+      size
+      totalItems
+      totalPages
+      data {
+        createdAt
+        description
+        id
+        name
+        totalAskingPrice
+        totalAskingPriceUsd
+        totalWeight
+        updatedAt
+        warehouseLocation
+        seller {
+          companyName
+          logo
+        }
+      }
+    }
+  }
+`

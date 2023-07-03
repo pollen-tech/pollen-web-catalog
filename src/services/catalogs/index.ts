@@ -1,1 +1,1 @@
-export { fetchCatalogDetail } from './catalog-detail'
+export { fetchCatalogDetail } from './catalog'

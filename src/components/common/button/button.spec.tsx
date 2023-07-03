@@ -7,7 +7,6 @@ describe('Button', () => {
   it('should renders <Button/> with', () => {
     render(<Button>Click Me!</Button>)
     const button = screen.getByText('Click Me!')
-
     expect(button).toBeInTheDocument()
   })
   it('should call onClick when clicked', () => {
