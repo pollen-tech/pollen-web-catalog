@@ -71,10 +71,7 @@ export function CatalogList({ catalogs }: TCatalogListProps) {
 
   return (
     <>
-      <table
-        data-testid="product-list-table"
-        className="w-full table-auto border-collapse bg-white"
-      >
+      <table data-testid="product-list-table" className="w-full table-auto ">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
@@ -84,7 +81,7 @@ export function CatalogList({ catalogs }: TCatalogListProps) {
               {headerGroup.headers.map((header, idx) => (
                 <th
                   className={classNames(
-                    'px-8 py-3 text-sm uppercase text-gray-700',
+                    'border-b border-slate-300 px-5 pb-4 text-sm font-semibold uppercase text-gray-700',
                     { 'text-left': idx === 0 }
                   )}
                   key={header.id}
@@ -102,11 +99,14 @@ export function CatalogList({ catalogs }: TCatalogListProps) {
         </thead>
         <tbody data-testid="product-list-table-body">
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr
+              key={row.id}
+              className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+            >
               {row.getVisibleCells().map((cell, idx) => (
                 <td
                   className={classNames(
-                    'px-8 py-3 text-sm font-normal text-gray-700',
+                    'border-b border-slate-200 p-6 text-sm font-normal text-gray-700',
                     { 'text-center': idx > 0 }
                   )}
                   key={cell.id}
