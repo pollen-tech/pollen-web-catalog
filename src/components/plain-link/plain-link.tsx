@@ -6,5 +6,5 @@ export default function PlainLink(
     HTMLAnchorElement
   >
 ) {
-  return <a {...props} />
+  return <a data-testid="plain-link" {...props} />
 }
