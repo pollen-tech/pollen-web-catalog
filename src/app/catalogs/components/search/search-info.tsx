@@ -144,7 +144,7 @@ export function SearchInfo() {
                   {filterList.map((d, i) => (
                     <>
                       <SortOption
-                        key={i}
+                        key={d.id}
                         val={d.val}
                         onClick={() => onSort(d.id)}
                       />
