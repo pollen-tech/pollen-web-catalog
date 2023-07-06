@@ -8,6 +8,9 @@ Create you own `.env` file in you local machine, refer to `.env.example` for ENV
 
 Export the NPM_TOKEN value to your environment variable. You may also add this to you `.bashrc` or `.zshrc` to avoid running it every time.
 
+You can find the credentials [here](https://www.notion.so/pollentech/Tech-Stack-Credentials-0740805d86504e28b95d3c3fd8db82ed)
+
+
 ```
 export NPM_TOKEN=<token_value>
 ```

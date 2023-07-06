@@ -8,13 +8,15 @@ export interface CatalogListPageProps {
     search?: string
     page?: number
     size?: number
+    sort?: string
+    sortDirection?: string
   }
 }
 export default async function CatalogListPage({
   searchParams,
 }: CatalogListPageProps) {
-  const { search, page, size } = searchParams
-  const catalogs = await fetchCatalogs(search, page, size)
+  const { search, page, size, sort, sortDirection } = searchParams
+  const catalogs = await fetchCatalogs(search, page, size, sort, sortDirection)
   return (
     <div className="catalog-page container mx-auto">
       <SearchInfo />
