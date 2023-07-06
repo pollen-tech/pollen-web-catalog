@@ -9,6 +9,7 @@ import {
   ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import PlainLink from '~/components/plain-link'
 
 type TUserMenuProps = {
   id: string
@@ -20,27 +21,31 @@ type TUserMenuProps = {
 const USER_MENU_ITEMS = [
   {
     id: 'user-offer',
-    label: 'Offer',
+    label: 'Offer (Comming Soon)',
     icon: CurrencyDollarIcon,
     target: '/offers',
+    component: Link,
   },
   {
     id: 'user-order',
     label: 'Order (Coming Soon)',
     icon: TruckIcon,
     target: '/orders',
+    component: Link,
   },
   {
     id: 'user-settings',
-    label: 'Settings',
+    label: 'Settings (Comming Soon)',
     icon: Cog8ToothIcon,
     target: '/settings',
+    component: Link,
   },
   {
     id: 'user-logout',
     label: 'Logout',
     icon: ArrowRightOnRectangleIcon,
-    target: '/logout',
+    target: '/api/auth/logout',
+    component: PlainLink,
   },
 ]
 
@@ -77,13 +82,15 @@ export function UserMenu({ username, avatarUrl, company }: TUserMenuProps) {
             </div>
           </div>
           <div className="rounded-b-lg bg-white p-2">
-            {USER_MENU_ITEMS.map(({ id, label, target, icon: Icon }) => (
-              <Link href={target} key={id}>
-                <Item className="flex cursor-pointer items-center px-4 py-2 text-sm text-gray-600 hover:border-none hover:bg-purple-50 hover:text-gray-900">
-                  <Icon className="mr-4 h-4 w-4" /> {label}
-                </Item>
-              </Link>
-            ))}
+            {USER_MENU_ITEMS.map(
+              ({ id, label, target, icon: Icon, component: LinkComponent }) => (
+                <LinkComponent href={target} key={id}>
+                  <Item className="flex cursor-pointer items-center px-4 py-2 text-sm text-gray-600 hover:border-none hover:bg-purple-50 hover:text-gray-900">
+                    <Icon className="mr-4 h-4 w-4" /> {label}
+                  </Item>
+                </LinkComponent>
+              )
+            )}
           </div>
         </Content>
       </Portal>
