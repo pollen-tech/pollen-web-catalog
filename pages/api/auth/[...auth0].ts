@@ -25,6 +25,9 @@ export default handleAuth({
   },
   async logout(req, res) {
     deleteCookie(ID_TOKEN_COOKIE_KEY, { req, res })
-    await handleLogout(req, res)
+    await handleLogout(req, res, {
+      returnTo: '/',
+      logoutParams: {},
+    })
   },
 })
