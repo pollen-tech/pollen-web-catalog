@@ -2,6 +2,7 @@ name: Unit tests with jest
 on: 
   push:
     branches:
+      - '**'
       - '!master'
       - '!staging'
 env:

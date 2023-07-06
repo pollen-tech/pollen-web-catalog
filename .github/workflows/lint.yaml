@@ -2,6 +2,7 @@ name: Run ESLint and check offenses
 on: 
   push:
     branches:
+      - '**'
       - '!master'
       - '!staging'
 
