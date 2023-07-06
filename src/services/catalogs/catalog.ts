@@ -22,13 +22,21 @@ export async function fetchCatalogDetail(catalogId: string) {
 export interface TQueryCatalogsResponse {
   catalogs: Paginated<Catalog>
 }
-export async function fetchCatalogs(search = '', page = 1, size = 10) {
+export async function fetchCatalogs(
+  search = '',
+  page = 1,
+  size = 10,
+  sort = 'updatedAt',
+  sortDirection = 'asc'
+) {
   const response = await query<TQueryCatalogsResponse>({
     query: FETCH_CATALOGS,
     variables: {
       page,
       size,
       search,
+      sort,
+      sortDirection,
     },
   })
   return response.data.catalogs
