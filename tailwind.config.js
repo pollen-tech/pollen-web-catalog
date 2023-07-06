@@ -22,4 +22,9 @@ module.exports = {
     },
   },
   plugins: [],
+  daisyui: {
+		themes: ["light"]
+  },
+  darkMode: 'class',
+
 }
