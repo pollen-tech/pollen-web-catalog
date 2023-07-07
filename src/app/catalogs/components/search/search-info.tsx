@@ -59,7 +59,7 @@ const SellerSearch = ({}) => {
       <input
         data-testid="search-field"
         type="text"
-        className="block w-full rounded-lg border border-gray-300 bg-gray-100 p-2.5 pr-10 text-sm text-gray-900 focus:border-purple-600 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
+        className="block w-full rounded-lg border border-gray-300 p-2.5 pr-10 text-sm text-gray-900 focus:border-purple-600 focus:ring-purple-500"
         placeholder="Find a Seller"
         required
         onChange={({ target: { value } }) => value}
@@ -84,27 +84,42 @@ const SellerSearch = ({}) => {
 }
 
 const SellerList = ({}) => {
-  const data = Array.from({ length: 50 })
+  const data = Array.from({ length: 50 }).map((_, i, a) => ({
+    id: i + 1,
+    label: `Seller - ${a.length - i}`,
+    checked: false,
+  }))
+  const [sellers, setSellers] = useState(data)
+
+  const handleCheckboxChange = (checkboxId: number | string) => {
+    setSellers((prevCheckboxes) =>
+      prevCheckboxes.map((checkbox) =>
+        checkbox.id === checkboxId
+          ? { ...checkbox, checked: !checkbox.checked }
+          : checkbox
+      )
+    )
+  }
+
   return (
     <>
-      {data
-        .map((_, i, a) => `v1.2.0-beta.${a.length - i}`)
-        .map((tag, i) => (
-          <>
-            <div className="my-2 flex items-center">
-              <input
-                type="checkbox"
-                className="h-5 w-5 rounded border-gray-300 text-purple-600 accent-purple-600 focus:ring-purple-500 dark:border-gray-600 dark:text-white dark:focus:border-purple-500"
-              />
-              <label className="ml-4 text-gray-700 dark:text-gray-300">
-                Example Seller
-              </label>
-            </div>
-            {i !== data.length - 1 && (
-              <hr className="h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
-            )}
-          </>
-        ))}
+      {sellers.map((seller, i) => (
+        <div key={seller.id}>
+          <div className="my-2 flex items-center">
+            <input
+              type="checkbox"
+              className="h-5 w-5 rounded border-gray-300 text-purple-600 accent-purple-600 focus:ring-purple-500 dark:border-gray-600 dark:text-white dark:focus:border-purple-500"
+              onChange={() => handleCheckboxChange(seller.id)}
+            />
+            <label className="ml-4 text-gray-700 dark:text-gray-300">
+              {seller.label}
+            </label>
+          </div>
+          {i !== data.length - 1 && (
+            <hr className="h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
+          )}
+        </div>
+      ))}
     </>
   )
 }
@@ -241,14 +256,16 @@ export function SearchInfo() {
               <Popover.Portal>
                 <Popover.Content
                   sideOffset={10}
-                  className={`max-h-[500px] w-80 rounded border border-slate-300 bg-white`}
+                  className={`max-h-[600px] w-80 rounded border border-slate-300 bg-white`}
                 >
                   <ScrollArea.Root className={`${style['ScrollAreaRoot']}`}>
+                    <div style={{ padding: '15px 20px 0px 15px' }}>
+                      <SellerSearch />
+                    </div>
                     <ScrollArea.Viewport
                       className={`${style['ScrollAreaViewport']}`}
                     >
-                      <div style={{ padding: '15px 20px' }}>
-                        <SellerSearch />
+                      <div style={{ padding: '0px 20px 15px 20px' }}>
                         <SellerList />
                       </div>
                     </ScrollArea.Viewport>
