@@ -15,7 +15,7 @@ export const FETCH_SELLERS = gql`
       page
       size
       totalItems
-      totalPage
+      totalPages
     }
   }
 `

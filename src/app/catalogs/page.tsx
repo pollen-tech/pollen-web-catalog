@@ -11,18 +11,20 @@ export interface CatalogListPageProps {
     size?: number
     sort?: string
     sortDirection?: string
+    sellerId?: string
   }
 }
 export default async function CatalogListPage({
   searchParams,
 }: CatalogListPageProps) {
-  const { search, page, size, sort, sortDirection } = searchParams
+  const { search, page, size, sort, sortDirection, sellerId } = searchParams
   const catalogs = await fetchCatalogs(
     search,
     page,
     size,
     sort,
     sortDirection,
+    sellerId,
     {
       cookies: cookies(),
     }

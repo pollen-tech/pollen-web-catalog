@@ -9,8 +9,9 @@ import {
 import { useRouter as useNextRouter } from '~/hooks/router'
 import style from './seller-filter.module.css'
 import { fetchSellers } from '~/services/sellers'
+import { Seller } from '@pollen-tech/appsync-schema'
 
-const SellerSearch = ({}) => {
+const SellerSearch = ({ onClick }: { onClick: (value: any) => void }) => {
   return (
     <div className="relative mb-3 w-full">
       <input
@@ -19,7 +20,7 @@ const SellerSearch = ({}) => {
         className="block w-full rounded-lg border border-gray-300 p-2.5 pr-10 text-sm text-gray-900 focus:border-purple-600 focus:ring-purple-500"
         placeholder="Find a Seller"
         required
-        onChange={({ target: { value } }) => value}
+        onChange={({ target: { value } }) => onClick(value)}
       />
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
         <svg
@@ -40,39 +41,53 @@ const SellerSearch = ({}) => {
   )
 }
 
-const SellerList = ({}) => {
-  const data = Array.from({ length: 50 }).map((_, i, a) => ({
-    id: i + 1,
-    label: `Seller - ${a.length - i}`,
-    checked: false,
-  }))
-  const [sellers, setSellers] = useState(data)
+const SellerList = ({
+  sellers: s,
+  onSelect,
+}: {
+  sellers: Seller[]
+  onSelect: (list: string[]) => void
+}) => {
+  const [sellers, setSellers] = useState<(Seller & { selected: boolean })[]>([])
+  const handleCheckboxChange = (id: string) => {
+    const _s = [...sellers]
+    const sIdx = _s.findIndex((d) => d.id == id)
+    if (sIdx > -1) {
+      _s[sIdx].selected = !_s[sIdx].selected
+    }
+    setSellers(_s)
+  }
 
-  const handleCheckboxChange = (checkboxId: number | string) => {
-    setSellers((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) =>
-        checkbox.id === checkboxId
-          ? { ...checkbox, checked: !checkbox.checked }
-          : checkbox
-      )
-    )
+  useEffect(() => {
+    const selected = sellers.filter((d) => d.selected).map((d) => d.id)
+    onSelect(selected)
+  }, [sellers])
+
+  useEffect(() => {
+    setSellers(s.map((d) => ({ ...d, selected: false })))
+  }, [s])
+
+  const checked = (id: string) => {
+    const ss = sellers.find((d) => d.id == id)
+    return ss?.selected ? ss.selected : false
   }
 
   return (
     <>
       {sellers.map((seller, i) => (
-        <div key={seller.id}>
+        <div key={`${seller.id + i}`}>
           <div className="my-2 flex items-center">
             <input
               type="checkbox"
               className="h-5 w-5 rounded border-gray-300 text-purple-600 accent-purple-600 focus:ring-purple-500 dark:border-gray-600 dark:text-white dark:focus:border-purple-500"
+              checked={checked(seller.id)}
               onChange={() => handleCheckboxChange(seller.id)}
             />
             <label className="ml-4 text-gray-700 dark:text-gray-300">
-              {seller.label}
+              {seller.companyName}
             </label>
           </div>
-          {i !== data.length - 1 && (
+          {i !== sellers.length - 1 && (
             <hr className="h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
           )}
         </div>
@@ -83,23 +98,36 @@ const SellerList = ({}) => {
 
 export function SellerFilter() {
   const { pushQuery } = useNextRouter()
+  const [sellers, setSellers] = useState<Seller[]>([])
+  const [search, setSearch] = useState<string>('')
   useEffect(() => {
-    fetchSellers()
+    fetchSellers(search)
       .then((d) => {
-        console.log(d)
+        setSellers(d.data)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        setSellers([])
       })
-  }, [])
+  }, [search])
+
+  const onSelectHandler = (filter: string[]) => {
+    pushQuery({
+      sellerId: filter.join(','),
+    })
+  }
+
   return (
     <ScrollArea.Root className={`${style['ScrollAreaRoot']}`}>
       <div style={{ padding: '15px 20px 0px 15px' }}>
-        <SellerSearch />
+        <SellerSearch
+          onClick={(val) => {
+            setSearch(val)
+          }}
+        />
       </div>
       <ScrollArea.Viewport className={`${style['ScrollAreaViewport']}`}>
         <div style={{ padding: '0px 20px 15px 20px' }}>
-          <SellerList />
+          <SellerList sellers={sellers} onSelect={onSelectHandler} />
         </div>
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar

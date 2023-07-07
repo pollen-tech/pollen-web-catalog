@@ -35,6 +35,7 @@ export async function fetchCatalogs(
   size = 10,
   sort = 'updatedAt',
   sortDirection = 'asc',
+  sellerId = '',
   context?: RequestContext
 ) {
   const response = await query<TQueryCatalogsResponse>(
@@ -46,6 +47,7 @@ export async function fetchCatalogs(
         search,
         sort,
         sortDirection,
+        sellerId: sellerId.split(','),
       },
     },
     context

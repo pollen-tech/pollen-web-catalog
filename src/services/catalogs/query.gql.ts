@@ -36,12 +36,14 @@ export const FETCH_CATALOGS = gql`
     $size: Int!
     $sort: String!
     $sortDirection: String!
+    $sellerId: [String]!
   ) {
     catalogs(
       page: $page
       size: $size
       sort: $sort
       sortDirection: $sortDirection
+      sellerId: $sellerId
     ) {
       page
       size
