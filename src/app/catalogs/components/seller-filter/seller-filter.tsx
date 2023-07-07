@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { useRouter as useNextRouter } from '~/hooks/router'
 import style from './seller-filter.module.css'
-// import { fetchSellers } from '~/services/sellers'
+import { fetchSellers } from '~/services/sellers'
 
 const SellerSearch = ({}) => {
   return (
@@ -83,15 +83,15 @@ const SellerList = ({}) => {
 
 export function SellerFilter() {
   const { pushQuery } = useNextRouter()
-  // useEffect(() => {
-  //   fetchSellers()
-  //     .then((d) => {
-  //       console.log(d)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }, [])
+  useEffect(() => {
+    fetchSellers()
+      .then((d) => {
+        console.log(d)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
   return (
     <ScrollArea.Root className={`${style['ScrollAreaRoot']}`}>
       <div style={{ padding: '15px 20px 0px 15px' }}>

@@ -16,5 +16,6 @@ export async function fetchSellers(search = '', page = 1, size = 10) {
       search,
     },
   })
+  console.log(response)
   return response.data.sellers
 }
