@@ -1420,10 +1420,10 @@
     "@pnpm/network.ca-file" "^1.0.1"
     config-chain "^1.1.11"
 
-"@pollen-tech/appsync-schema@1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.1.13.tgz#40445f4846bd0a723470e267e404a3b0022d98c3"
-  integrity sha512-7wyDSaZxmrIynX+nF6lu+KmAFMidKx2J6fHikzIlWw8UzpUlUjlRpA1rMBGOJ2PtJhgz6hbVsit2zdBNX0IVjg==
+"@pollen-tech/appsync-schema@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.2.3.tgz#c574905f0036c4d76c67e57b0a462e88a3113303"
+  integrity sha512-FNvPO5aoDUxtFJnTxrsTeBllRdadURboazHxIQC/iNXALfp5Z+VYFLz/canEdg4yDz0DYcpxP4PA8xgPmXJKpQ==
   dependencies:
     graphql "^16.6.0"
 
