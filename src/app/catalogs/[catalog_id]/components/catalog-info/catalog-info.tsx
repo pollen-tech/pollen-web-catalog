@@ -15,8 +15,8 @@ import { format } from 'date-fns'
 import accounting from 'accounting'
 
 import { Button } from '~/components/common/button'
-import { MakeOfferModal } from '~/app/catalogs/[catalog_id]/components/make-offer-modal'
 import Link from 'next/link'
+import ContactSalesModal from '../contact-sales-modal'
 
 type TCatalogInfoProps = {
   catalogId: Catalog['id']
@@ -107,7 +107,7 @@ export function CatalogInfo({
           </div>
 
           <div className="grow px-5">
-            <MakeOfferModal catalogId={catalogId} />
+            <ContactSalesModal catalogId={catalogId} />
             <Link href={`/api/catalogs/${catalogId}/excel-file`}>
               <Button variant="secondary" className="block w-full">
                 Download Catalog
