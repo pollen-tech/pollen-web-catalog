@@ -47,7 +47,7 @@ export async function fetchCatalogs(
         search,
         sort,
         sortDirection,
-        sellerId: sellerId.split(','),
+        sellerId: sellerId ? sellerId.split(',') : null,
       },
     },
     context

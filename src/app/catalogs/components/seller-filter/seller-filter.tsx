@@ -75,7 +75,7 @@ const SellerList = ({
   return (
     <>
       {sellers.map((seller, i) => (
-        <div key={`${seller.id + i}`}>
+        <div key={`${seller.id}`}>
           <div className="my-2 flex items-center">
             <input
               type="checkbox"
@@ -120,7 +120,7 @@ export function SellerFilter() {
     <ScrollArea.Root className={`${style['ScrollAreaRoot']}`}>
       <div style={{ padding: '15px 20px 0px 15px' }}>
         <SellerSearch
-          onClick={(val) => {
+          onClick={(val: string) => {
             setSearch(val)
           }}
         />
