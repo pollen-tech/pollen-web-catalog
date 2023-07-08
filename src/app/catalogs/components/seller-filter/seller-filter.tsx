@@ -83,11 +83,12 @@ const SellerList = ({
   }
 
   return (
-    <div>
+    <>
       {sellers.map((seller, i) => (
         <div key={`${seller.id + String(i)}`}>
           <div className="my-2 flex items-center">
             <input
+              data-testid="seller-checkboxes"
               type="checkbox"
               className="h-5 w-5 rounded border-gray-300 text-purple-600 accent-purple-600 focus:ring-purple-500 dark:border-gray-600 dark:text-white dark:focus:border-purple-500"
               checked={checked(seller.id)}
@@ -102,7 +103,7 @@ const SellerList = ({
           )}
         </div>
       ))}
-    </div>
+    </>
   )
 }
 
@@ -154,7 +155,10 @@ export function SellerFilter() {
   }
 
   return (
-    <ScrollArea.Root className={`${style['ScrollAreaRoot']}`}>
+    <ScrollArea.Root
+      data-testid="seller-list"
+      className={`${style['ScrollAreaRoot']}`}
+    >
       <div style={{ padding: '15px 20px 0px 15px' }}>
         <SellerSearch
           onClick={(val: string) => {

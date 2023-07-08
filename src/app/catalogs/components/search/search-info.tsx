@@ -162,7 +162,7 @@ export function SearchInfo() {
             </Popover.Root>
             <Popover.Root>
               <Popover.Trigger
-                data-testid="sort-options-button"
+                data-testid="filter-options-button"
                 className="focus:shadow-outline mx-1 inline-flex  h-10 items-center rounded-lg border border-slate-300 px-5 transition-colors duration-150  hover:border-slate-100 hover:bg-purple-600 hover:text-white  sm:w-full  md:w-28"
               >
                 <span>Filter</span>
