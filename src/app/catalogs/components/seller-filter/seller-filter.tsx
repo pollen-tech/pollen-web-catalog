@@ -48,7 +48,8 @@ export const SellerList = ({
   onSelect: (list: string[]) => void
 }) => {
   const { pushQuery, searchParams } = useNextRouter()
-  const [sellers, setSellers] = useState<(Seller & { selected: boolean })[]>([])
+  const [sellers, setSellers] = useState<Seller[]>([])
+  const [selectedSellers, setSelectedSellers] = useState<string[]>([])
 
   useEffect(() => {
     const existingSellerId = searchParams?.get('sellerId')
@@ -58,32 +59,26 @@ export const SellerList = ({
   }, [])
 
   const handleCheckboxChange = (id: string) => {
-    const _s = [...sellers]
-    const sIdx = _s.findIndex((d) => d.id == id)
-    if (sIdx > -1) {
-      _s[sIdx].selected = !_s[sIdx].selected
+    if (selectedSellers.includes(id)) {
+      const _s = [...selectedSellers]
+      const sIdx = _s.findIndex((d) => d == id)
+      _s.splice(sIdx, 1)
+      setSelectedSellers(_s)
+    } else {
+      setSelectedSellers([...selectedSellers, id])
     }
-    setSellers(_s)
   }
 
   useEffect(() => {
-    const selected = sellers.filter((d) => d.selected).map((d) => d.id)
-    onSelect(selected)
-  }, [sellers])
+    onSelect(selectedSellers)
+  }, [selectedSellers])
 
   useEffect(() => {
-    const existingSellerId = searchParams?.get('sellerId')?.split(',')
-    setSellers(
-      s.map((d) => ({
-        ...d,
-        selected: existingSellerId?.includes(d.id) ?? false,
-      }))
-    )
+    setSellers(s)
   }, [s])
 
   const checked = (id: string) => {
-    const ss = sellers.find((d) => d.id == id)
-    return ss?.selected ? ss.selected : false
+    return selectedSellers.includes(id)
   }
 
   return (
@@ -150,11 +145,8 @@ export function SellerFilter() {
   }, [search, sellerSize])
 
   const onSelectHandler = (filter: string[]) => {
-    if (!filter.length) {
-      return
-    }
     pushQuery({
-      sellerId: filter.join(','),
+      sellerId: filter.length ? filter.join(',') : '',
     })
   }
 
