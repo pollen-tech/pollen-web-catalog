@@ -6,8 +6,8 @@ import { useRouter as useNextRouter } from '~/hooks/router'
 import { SellerFilter } from '../seller-filter/seller-filter'
 
 const filterList = [
-  { id: 1, val: 'Last Updated', sort: 'updatedAt', sortDirection: 'asc' },
-  { id: 2, val: 'Oldest', sort: 'updatedAt', sortDirection: 'desc' },
+  { id: 1, val: 'Last Updated', sort: 'updatedAt', sortDirection: 'desc' },
+  { id: 2, val: 'Oldest', sort: 'updatedAt', sortDirection: 'asc' },
   {
     id: 3,
     val: 'Total Asking Price Lowest to Highest',

@@ -34,6 +34,7 @@ export const FETCH_CATALOGS = gql`
   query fetchCatalogs(
     $page: Int!
     $size: Int!
+    $search: String!
     $sort: String!
     $sortDirection: String!
     $sellerId: [String]
@@ -42,6 +43,7 @@ export const FETCH_CATALOGS = gql`
       page: $page
       size: $size
       sort: $sort
+      search: $search
       sortDirection: $sortDirection
       sellerId: $sellerId
     ) {
