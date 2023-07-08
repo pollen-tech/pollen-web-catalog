@@ -7,7 +7,7 @@ import { type Paginated } from '../generic/pagination'
 export interface TQuerySellersResponse {
   sellers: Paginated<Seller>
 }
-export async function fetchSellers(search = '', page = 1, size = 10) {
+export async function fetchSellers(search = '', page = 1, size = 20) {
   const response = await query<TQuerySellersResponse>({
     query: FETCH_SELLERS,
     variables: {

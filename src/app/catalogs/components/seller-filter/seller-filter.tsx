@@ -1,11 +1,6 @@
 'use client'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import {
-  type FormEventHandler,
-  useState,
-  type MouseEventHandler,
-  useEffect,
-} from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter as useNextRouter } from '~/hooks/router'
 import style from './seller-filter.module.css'
 import { fetchSellers } from '~/services/sellers'
@@ -54,7 +49,7 @@ const SellerList = ({
   useEffect(() => {
     const existingSellerId = searchParams?.get('sellerId')
     pushQuery({
-      sellerId: existingSellerId as string,
+      sellerId: existingSellerId ? existingSellerId : '',
     })
   }, [])
 
@@ -88,9 +83,9 @@ const SellerList = ({
   }
 
   return (
-    <>
+    <div>
       {sellers.map((seller, i) => (
-        <div key={`${seller.id}`}>
+        <div key={`${seller.id + String(i)}`}>
           <div className="my-2 flex items-center">
             <input
               type="checkbox"
@@ -107,31 +102,47 @@ const SellerList = ({
           )}
         </div>
       ))}
-    </>
+    </div>
   )
 }
 
 export function SellerFilter() {
   const { pushQuery, searchParams } = useNextRouter()
   const [sellers, setSellers] = useState<Seller[]>([])
+  const [sellerSize, setSellerSize] = useState<number>(20)
   const [search, setSearch] = useState<string>('')
+  const [isBottom, setIsBottom] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = ref.current!
+    setIsBottom(scrollTop + clientHeight >= scrollHeight - 10)
+  }
+
+  useEffect(() => {
+    ref.current?.addEventListener('scroll', handleScroll)
+  }, [])
 
   useEffect(() => {
     const existingSellerId = searchParams?.get('sellerId')
     pushQuery({
-      sellerId: existingSellerId as string,
+      sellerId: existingSellerId ? existingSellerId : '',
     })
   }, [])
 
   useEffect(() => {
-    fetchSellers(search)
+    setSellerSize(sellerSize + 10)
+  }, [isBottom])
+
+  useEffect(() => {
+    fetchSellers(search, undefined, sellerSize)
       .then((d) => {
         setSellers(d.data)
       })
       .catch(() => {
         setSellers([])
       })
-  }, [search])
+  }, [search, sellerSize])
 
   const onSelectHandler = (filter: string[]) => {
     if (!filter.length) {
@@ -151,7 +162,10 @@ export function SellerFilter() {
           }}
         />
       </div>
-      <ScrollArea.Viewport className={`${style['ScrollAreaViewport']}`}>
+      <ScrollArea.Viewport
+        className={`${style['ScrollAreaViewport']}`}
+        ref={ref}
+      >
         <div style={{ padding: '0px 20px 15px 20px' }}>
           <SellerList sellers={sellers} onSelect={onSelectHandler} />
         </div>
