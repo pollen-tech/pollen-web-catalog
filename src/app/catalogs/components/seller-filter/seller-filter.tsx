@@ -6,16 +6,20 @@ import style from './seller-filter.module.css'
 import { fetchSellers } from '~/services/sellers'
 import type { Seller } from '@pollen-tech/appsync-schema'
 
-const SellerSearch = ({ onClick }: { onClick: (value: any) => void }) => {
+export const SellerSearch = ({
+  onChange,
+}: {
+  onChange: (value: any) => void
+}) => {
   return (
     <div className="relative mb-3 w-full">
       <input
-        data-testid="search-field"
+        data-testid="seller-search-field"
         type="text"
         className="block w-full rounded-lg border border-gray-300 p-2.5 pr-10 text-sm text-gray-900 focus:border-purple-600 focus:ring-purple-500"
         placeholder="Find a Seller"
         required
-        onChange={({ target: { value } }) => onClick(value)}
+        onChange={({ target: { value } }) => onChange(value)}
       />
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
         <svg
@@ -36,7 +40,7 @@ const SellerSearch = ({ onClick }: { onClick: (value: any) => void }) => {
   )
 }
 
-const SellerList = ({
+export const SellerList = ({
   sellers: s,
   onSelect,
 }: {
@@ -85,7 +89,7 @@ const SellerList = ({
   return (
     <>
       {sellers.map((seller, i) => (
-        <div key={`${seller.id + String(i)}`}>
+        <div key={`${seller.id + String(i)}`} data-testid="seller-options">
           <div className="my-2 flex items-center">
             <input
               data-testid="seller-checkboxes"
@@ -161,7 +165,7 @@ export function SellerFilter() {
     >
       <div style={{ padding: '15px 20px 0px 15px' }}>
         <SellerSearch
-          onClick={(val: string) => {
+          onChange={(val: string) => {
             setSearch(val)
           }}
         />
