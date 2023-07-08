@@ -1420,12 +1420,19 @@
     "@pnpm/network.ca-file" "^1.0.1"
     config-chain "^1.1.11"
 
-"@pollen-tech/appsync-schema@1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.1.13.tgz#40445f4846bd0a723470e267e404a3b0022d98c3"
-  integrity sha512-7wyDSaZxmrIynX+nF6lu+KmAFMidKx2J6fHikzIlWw8UzpUlUjlRpA1rMBGOJ2PtJhgz6hbVsit2zdBNX0IVjg==
+"@pollen-tech/appsync-schema@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@pollen-tech/appsync-schema/-/appsync-schema-1.2.3.tgz#c574905f0036c4d76c67e57b0a462e88a3113303"
+  integrity sha512-FNvPO5aoDUxtFJnTxrsTeBllRdadURboazHxIQC/iNXALfp5Z+VYFLz/canEdg4yDz0DYcpxP4PA8xgPmXJKpQ==
   dependencies:
     graphql "^16.6.0"
+
+"@radix-ui/number@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@radix-ui/number/-/number-1.0.1.tgz#644161a3557f46ed38a042acf4a770e826021674"
+  integrity sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
 
 "@radix-ui/primitive@1.0.0":
   version "1.0.0"
@@ -1807,6 +1814,22 @@
     "@radix-ui/react-use-callback-ref" "1.0.1"
     "@radix-ui/react-use-controllable-state" "1.0.1"
 
+"@radix-ui/react-scroll-area@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-scroll-area/-/react-scroll-area-1.0.4.tgz#13c36c453b2880aba57df67fb91a1d3f9b18998d"
+  integrity sha512-OIClwBkwPG+FKvC4OMTRaa/3cfD069nkKFFL/TQzRzaO42Ce5ivKU9VMKgT7UU6UIkjcQqKBrDOIzWtPGw6e6w==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/number" "1.0.1"
+    "@radix-ui/primitive" "1.0.1"
+    "@radix-ui/react-compose-refs" "1.0.1"
+    "@radix-ui/react-context" "1.0.1"
+    "@radix-ui/react-direction" "1.0.1"
+    "@radix-ui/react-presence" "1.0.1"
+    "@radix-ui/react-primitive" "1.0.3"
+    "@radix-ui/react-use-callback-ref" "1.0.1"
+    "@radix-ui/react-use-layout-effect" "1.0.1"
+
 "@radix-ui/react-separator@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-separator/-/react-separator-1.0.2.tgz#52417c8bfae1e4ef87356b2f7bffbc3dbbeddf23"
@@ -1853,7 +1876,7 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@radix-ui/react-use-callback-ref@1.0.1":
+"@radix-ui/react-use-callback-ref@1.0.1", "@radix-ui/react-use-callback-ref@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-use-callback-ref/-/react-use-callback-ref-1.0.1.tgz#f4bb1f27f2023c984e6534317ebc411fc181107a"
   integrity sha512-D94LjX4Sp0xJFVaoQOd3OO9k7tpBYNOXdVhkltUbGv2Qb9OXdrg/CpsjlZv7ia14Sylv398LswWBVVu5nqKzAQ==
