@@ -9,7 +9,7 @@ import {
 import { useRouter as useNextRouter } from '~/hooks/router'
 import style from './seller-filter.module.css'
 import { fetchSellers } from '~/services/sellers'
-import { Seller } from '@pollen-tech/appsync-schema'
+import type { Seller } from '@pollen-tech/appsync-schema'
 
 const SellerSearch = ({ onClick }: { onClick: (value: any) => void }) => {
   return (
@@ -48,7 +48,16 @@ const SellerList = ({
   sellers: Seller[]
   onSelect: (list: string[]) => void
 }) => {
+  const { pushQuery, searchParams } = useNextRouter()
   const [sellers, setSellers] = useState<(Seller & { selected: boolean })[]>([])
+
+  useEffect(() => {
+    const existingSellerId = searchParams?.get('sellerId')
+    pushQuery({
+      sellerId: existingSellerId as string,
+    })
+  }, [])
+
   const handleCheckboxChange = (id: string) => {
     const _s = [...sellers]
     const sIdx = _s.findIndex((d) => d.id == id)
@@ -64,7 +73,13 @@ const SellerList = ({
   }, [sellers])
 
   useEffect(() => {
-    setSellers(s.map((d) => ({ ...d, selected: false })))
+    const existingSellerId = searchParams?.get('sellerId')?.split(',')
+    setSellers(
+      s.map((d) => ({
+        ...d,
+        selected: existingSellerId?.includes(d.id) ?? false,
+      }))
+    )
   }, [s])
 
   const checked = (id: string) => {
@@ -97,9 +112,17 @@ const SellerList = ({
 }
 
 export function SellerFilter() {
-  const { pushQuery } = useNextRouter()
+  const { pushQuery, searchParams } = useNextRouter()
   const [sellers, setSellers] = useState<Seller[]>([])
   const [search, setSearch] = useState<string>('')
+
+  useEffect(() => {
+    const existingSellerId = searchParams?.get('sellerId')
+    pushQuery({
+      sellerId: existingSellerId as string,
+    })
+  }, [])
+
   useEffect(() => {
     fetchSellers(search)
       .then((d) => {
@@ -111,6 +134,9 @@ export function SellerFilter() {
   }, [search])
 
   const onSelectHandler = (filter: string[]) => {
+    if (!filter.length) {
+      return
+    }
     pushQuery({
       sellerId: filter.join(','),
     })
