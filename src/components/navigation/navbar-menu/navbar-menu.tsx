@@ -46,8 +46,8 @@ export function NavbarMenu() {
       .then((res) => {
         setBuyer(res)
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        // do nothing
       })
   }, [])
   return (
