@@ -5,6 +5,7 @@ frontend:
       commands:
         - env | grep -e AUTH0_ >> .env.production
         - env | grep -e LMS_ >> .env.production
+        - env | grep -e NEXT_ >> .env.production
         - yarn install
     build:
       commands:

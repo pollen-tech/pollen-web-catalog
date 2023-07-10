@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { SearchInfo } from './search-info'
-export var pushQueryMock = jest.fn()
+export let pushQueryMock = jest.fn()
 
 jest.mock('../../../../hooks/router', () => ({
   useRouter: () => ({
@@ -26,5 +26,20 @@ describe('SearchInfo', () => {
       fireEvent.submit(form)
     })
     expect(pushQueryMock).toBeCalledWith({ search: '123' })
+  })
+  it('should query push search when sort applied', () => {
+    render(<SearchInfo />)
+    const sortOptionsButton = screen.getAllByTestId('sort-options-button')
+    act(() => {
+      fireEvent.click(sortOptionsButton[0])
+    })
+    const sortOptions = screen.getAllByTestId('sort-options')
+    act(() => {
+      fireEvent.click(sortOptions[3])
+    })
+    expect(pushQueryMock).toBeCalledWith({
+      sort: 'totalAskingPrice',
+      sortDirection: 'desc',
+    })
   })
 })

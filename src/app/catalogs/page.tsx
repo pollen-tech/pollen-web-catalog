@@ -3,18 +3,32 @@ import { CatalogList } from './components/catalog-list/catalog-list'
 import { SearchInfo } from './components/search/search-info'
 import { fetchCatalogs } from '~/services/catalogs/catalog'
 import Pagination from '~/components/pagination/pagination'
+import { cookies } from 'next/headers'
 export interface CatalogListPageProps {
   searchParams: {
     search?: string
     page?: number
     size?: number
+    sort?: string
+    sortDirection?: string
+    sellerId?: string
   }
 }
 export default async function CatalogListPage({
   searchParams,
 }: CatalogListPageProps) {
-  const { search, page, size } = searchParams
-  const catalogs = await fetchCatalogs(search, page, size)
+  const { search, page, size, sort, sortDirection, sellerId } = searchParams
+  const catalogs = await fetchCatalogs(
+    search,
+    page,
+    size,
+    sort,
+    sortDirection,
+    sellerId,
+    {
+      cookies: cookies(),
+    }
+  )
   return (
     <div className="catalog-page container mx-auto">
       <SearchInfo />
