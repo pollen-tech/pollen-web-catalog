@@ -53,6 +53,10 @@ export const SellerList = ({
 
   useEffect(() => {
     const existingSellerId = searchParams?.get('sellerId')
+    const existingIds = existingSellerId?.split(',').filter((d) => d !== '')
+    if (existingIds?.length) {
+      setSelectedSellers(existingIds)
+    }
     pushQuery({
       sellerId: existingSellerId ? existingSellerId : '',
     })

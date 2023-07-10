@@ -112,7 +112,6 @@ export function SearchInfo() {
                   type="text"
                   className="block w-full rounded-lg border border-gray-300  bg-gray-100 p-2.5 pl-10 text-sm text-gray-900 focus:border-purple-600 focus:ring-purple-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
                   placeholder="Search "
-                  required
                   onChange={({ target: { value } }) => setSearch(value)}
                 />
               </div>
