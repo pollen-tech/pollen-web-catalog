@@ -3,7 +3,10 @@ import Link from 'next/link'
 
 export default function ForbiddenError() {
   return (
-    <div className="container mx-auto -mt-24 flex h-screen flex-wrap py-24">
+    <div
+      className="container mx-auto -mt-24 flex h-screen flex-wrap py-24"
+      data-testid="forbidden-component"
+    >
       <div className="relative flex h-full w-full flex-col justify-center lg:w-3/4">
         <h1 className="py-5 text-4xl font-bold text-purple-800 sm:text-6xl lg:text-7xl">
           Sorry, Exclusive Access Required
