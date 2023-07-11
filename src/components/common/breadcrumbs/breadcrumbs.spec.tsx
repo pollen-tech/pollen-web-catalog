@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import Breadcrumbs from './breadcrumbs'
+import { Breadcrumbs } from '.'
 const props = {
   items: [
     {

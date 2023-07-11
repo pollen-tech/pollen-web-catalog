@@ -1,14 +1,15 @@
 import Link from 'next/link'
 // defining the Props
-export type CrumbItem = {
+type CrumbItem = {
   label: string
   path: string
 }
-export type BreadcrumbsProps = {
+type BreadcrumbsProps = {
   items: CrumbItem[]
 }
 // components/breadcrumbs/Breadcrumbs.ts
-const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
+
+export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <div className="flex items-start gap-2 text-xs">
       {items.map((crumb, i) => {
@@ -31,4 +32,3 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
     </div>
   )
 }
-export default Breadcrumbs

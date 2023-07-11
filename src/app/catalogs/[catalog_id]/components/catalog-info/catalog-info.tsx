@@ -17,7 +17,7 @@ import accounting from 'accounting'
 import { Button } from '~/components/common/button'
 import Link from 'next/link'
 import ContactSalesModal from '../contact-sales-modal'
-import Breadcrumbs from '~/components/common/breadcrumbs/breadcrumbs'
+import { Breadcrumbs } from '~/components/common/breadcrumbs'
 
 type TCatalogInfoProps = {
   catalogId: Catalog['id']
