@@ -5,9 +5,6 @@ import { useRouter as useNextRouter } from '~/hooks/router'
 import style from './seller-filter.module.css'
 import { fetchSellers } from '~/services/sellers'
 import type { Seller } from '@pollen-tech/appsync-schema'
-import { useLoadingStore } from '~/hooks/states/loading'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 
 export const SellerSearch = ({
   onChange,
@@ -113,15 +110,8 @@ export const SellerList = ({
   )
 }
 
-const SellerLoading = () => {
-  return Array.from(Array(5).keys()).map((row) => (
-    <Skeleton key={row} width={275} height={20} className="my-2" />
-  ))
-}
-
 export function SellerFilter() {
   const { pushQuery, searchParams } = useNextRouter()
-  const { setLoading, loading } = useLoadingStore((state) => state)
   const [sellers, setSellers] = useState<Seller[]>([])
   const [sellerSize, setSellerSize] = useState<number>(20)
   const [search, setSearch] = useState<string>('')
@@ -142,7 +132,6 @@ export function SellerFilter() {
     pushQuery({
       sellerId: existingSellerId ? existingSellerId : '',
     })
-    setLoading(true)
   }, [])
 
   useEffect(() => {
@@ -156,9 +145,6 @@ export function SellerFilter() {
       })
       .catch(() => {
         setSellers([])
-      })
-      .finally(() => {
-        setLoading(false)
       })
   }, [search, sellerSize])
 
@@ -185,11 +171,7 @@ export function SellerFilter() {
         ref={ref}
       >
         <div style={{ padding: '0px 20px 15px 20px' }}>
-          {loading ? (
-            <SellerLoading />
-          ) : (
-            <SellerList sellers={sellers} onSelect={onSelectHandler} />
-          )}
+          <SellerList sellers={sellers} onSelect={onSelectHandler} />
         </div>
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar
