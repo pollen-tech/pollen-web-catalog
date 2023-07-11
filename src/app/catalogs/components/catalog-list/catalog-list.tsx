@@ -12,6 +12,10 @@ import {
 
 import type { Catalog } from '@pollen-tech/appsync-schema'
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { useLoadingStore } from '~/hooks/states/loading'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const columnHelper = createColumnHelper<Catalog[][0]>()
 
@@ -62,7 +66,67 @@ type TCatalogListProps = {
   catalogs: Catalog[]
 }
 
+const LoadingTable = () => {
+  const tableHeads = [
+    { id: 1, header: 'CATALOG NAME' },
+    { id: 2, header: 'SELLER NAME' },
+    { id: 3, header: 'WAREHOUSE LOCATION' },
+    { id: 4, header: 'LAST UPDATE' },
+    { id: 5, header: 'TOTAL ASKING PRICE' },
+    { id: 6, header: 'TOTAL WEIGHT' },
+    { id: 7, header: 'ACTION' },
+  ]
+  return (
+    <>
+      <table
+        data-testid="product-list-table-loading"
+        className="w-full table-auto "
+      >
+        <thead>
+          <tr className="border-b border-solid border-gray-300">
+            {tableHeads.map((header) => (
+              <th
+                className={classNames(
+                  'border-b border-slate-300 px-5 pb-4 text-sm font-semibold uppercase text-gray-700'
+                )}
+                key={header.id}
+              >
+                {header.header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody data-testid="product-list-table-body">
+          {Array.from(Array(5).keys()).map((row) => (
+            <tr
+              key={row}
+              className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+            >
+              {tableHeads.map((header, idx) => (
+                <td
+                  className={classNames(
+                    'border-b border-slate-200 p-6 text-sm font-normal text-gray-700',
+                    { 'text-center': idx > 0 }
+                  )}
+                  key={header.id}
+                >
+                  <Skeleton width={100} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  )
+}
+
 export function CatalogList({ catalogs }: TCatalogListProps) {
+  const { setLoading, loading } = useLoadingStore((state) => state)
+  useEffect(() => {
+    setLoading(false)
+  }, [catalogs])
+
   const table = useReactTable({
     data: catalogs,
     columns,
@@ -71,53 +135,57 @@ export function CatalogList({ catalogs }: TCatalogListProps) {
 
   return (
     <>
-      <table data-testid="product-list-table" className="w-full table-auto ">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr
-              className="border-b border-solid border-gray-300"
-              key={headerGroup.id}
-            >
-              {headerGroup.headers.map((header, idx) => (
-                <th
-                  className={classNames(
-                    'border-b border-slate-300 px-5 pb-4 text-sm font-semibold uppercase text-gray-700',
-                    { 'text-left': idx === 0 }
-                  )}
-                  key={header.id}
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody data-testid="product-list-table-body">
-          {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
-            >
-              {row.getVisibleCells().map((cell, idx) => (
-                <td
-                  className={classNames(
-                    'border-b border-slate-200 p-6 text-sm font-normal text-gray-700',
-                    { 'text-center': idx > 0 }
-                  )}
-                  key={cell.id}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {loading ? (
+        <LoadingTable />
+      ) : (
+        <table data-testid="product-list-table" className="w-full table-auto ">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr
+                className="border-b border-solid border-gray-300"
+                key={headerGroup.id}
+              >
+                {headerGroup.headers.map((header, idx) => (
+                  <th
+                    className={classNames(
+                      'border-b border-slate-300 px-5 pb-4 text-sm font-semibold uppercase text-gray-700',
+                      { 'text-left': idx === 0 }
+                    )}
+                    key={header.id}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody data-testid="product-list-table-body">
+            {table.getRowModel().rows.map((row) => (
+              <tr
+                key={row.id}
+                className="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+              >
+                {row.getVisibleCells().map((cell, idx) => (
+                  <td
+                    className={classNames(
+                      'border-b border-slate-200 p-6 text-sm font-normal text-gray-700',
+                      { 'text-center': idx > 0 }
+                    )}
+                    key={cell.id}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   )
 }

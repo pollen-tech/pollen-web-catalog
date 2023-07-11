@@ -4,6 +4,7 @@ import { type FormEventHandler, useState, type MouseEventHandler } from 'react'
 import { Card } from '~/components/common/card'
 import { useRouter as useNextRouter } from '~/hooks/router'
 import { SellerFilter } from '../seller-filter/seller-filter'
+import { useLoadingStore } from '~/hooks/states/loading'
 
 const filterList = [
   { id: 1, val: 'Last Updated', sort: 'updatedAt', sortDirection: 'desc' },
@@ -55,11 +56,13 @@ const SortOption = ({
 export function SearchInfo() {
   const [search, setSearch] = useState('')
   const { pushQuery } = useNextRouter()
+  const { setLoading } = useLoadingStore((state) => state)
   const submit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     pushQuery({
       search,
     })
+    setLoading(true)
   }
   const onSort = (dataSort: number) => {
     const s = filterList.find((d) => d.id == dataSort)
@@ -68,6 +71,7 @@ export function SearchInfo() {
         sort: s.sort,
         sortDirection: s.sortDirection,
       })
+      setLoading(true)
     }
   }
   return (
@@ -142,7 +146,7 @@ export function SearchInfo() {
               <Popover.Portal>
                 <Popover.Content
                   sideOffset={10}
-                  className="w-80 rounded border border-slate-300 bg-white p-4"
+                  className="z-[100] w-80 rounded border border-slate-300 bg-white p-4"
                 >
                   {filterList.map((d, i) => (
                     <>
@@ -183,7 +187,7 @@ export function SearchInfo() {
               <Popover.Portal>
                 <Popover.Content
                   sideOffset={10}
-                  className={`max-h-[600px] w-80 rounded border border-slate-300 bg-white`}
+                  className={`z-[100] max-h-[600px] w-80 rounded border border-slate-300 bg-white`}
                 >
                   <SellerFilter />
                 </Popover.Content>
