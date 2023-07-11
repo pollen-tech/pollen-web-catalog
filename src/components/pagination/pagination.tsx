@@ -77,7 +77,10 @@ export default function Pagination({ page = 1, totalPages }: PaginationProps) {
         {pages.map((_page, index) => (
           <a
             data-testid="page-links"
-            onClick={() => pushQuery({ page: _page.toString() })}
+            onClick={() => {
+              pushQuery({ page: _page.toString() })
+              setLoading(true)
+            }}
             key={`link-page-${index}`}
             className={classNames(
               isActiveClass(_page),
@@ -94,7 +97,10 @@ export default function Pagination({ page = 1, totalPages }: PaginationProps) {
             </span>
             <a
               data-testid="page-links"
-              onClick={() => pushQuery({ page: totalPages.toString() })}
+              onClick={() => {
+                pushQuery({ page: totalPages.toString() })
+                setLoading(true)
+              }}
               className={classNames(
                 isActiveClass(totalPages),
                 `relative ml-2 mr-2 inline-flex cursor-pointer items-center rounded-lg bg-white px-4 py-2 text-sm`
