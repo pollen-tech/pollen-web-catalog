@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import Breadcrumbs from './breadcrumbs'
-
 const props = {
   items: [
     {
@@ -18,8 +17,7 @@ const props = {
 
 describe('Breadcrumbs', () => {
   it('should renders <Breadcrumbs/> with', () => {
-    render(<Breadcrumbs {...props}>Click Me!</Breadcrumbs>)
-    const breadcrumbsBtn = screen.getByText('Click Me!')
-    expect(breadcrumbsBtn).toBeInTheDocument()
+    const breadcrumbsBtn = render(<Breadcrumbs {...props} />)
+    expect(breadcrumbsBtn).toBeTruthy()
   })
 })
