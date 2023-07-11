@@ -21,11 +21,6 @@ const afterCallback: AfterCallback = (req, res, session) => {
     req,
     res,
   })
-  const statusUser = (session.user.buyerProfile as { status: string }).status
-  if (statusUser !== 'APPROVED') {
-    res.redirect('/403')
-    return
-  }
   return session
 }
 export default handleAuth({

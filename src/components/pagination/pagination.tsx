@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from '~/hooks/router'
 import classNames from 'classnames'
+import { useLoadingStore } from '~/hooks/states/loading'
 
 export interface PaginationProps {
   page: number
@@ -10,6 +11,7 @@ export interface PaginationProps {
 
 export default function Pagination({ page = 1, totalPages }: PaginationProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const { setLoading } = useLoadingStore()
   const [pages, setPages] = useState<number[]>([])
   const { pushQuery } = useRouter()
   const [showCount, setShowCount] = useState(0)
@@ -18,6 +20,7 @@ export default function Pagination({ page = 1, totalPages }: PaginationProps) {
       pushQuery({
         page: (page + 1).toString(),
       })
+    setLoading(true)
   }
 
   const prevPage = () => {
@@ -25,6 +28,7 @@ export default function Pagination({ page = 1, totalPages }: PaginationProps) {
       pushQuery({
         page: (page - 1).toString(),
       })
+    setLoading(true)
   }
   const init = () => {
     if (containerRef.current) {
@@ -73,7 +77,10 @@ export default function Pagination({ page = 1, totalPages }: PaginationProps) {
         {pages.map((_page, index) => (
           <a
             data-testid="page-links"
-            onClick={() => pushQuery({ page: _page.toString() })}
+            onClick={() => {
+              pushQuery({ page: _page.toString() })
+              setLoading(true)
+            }}
             key={`link-page-${index}`}
             className={classNames(
               isActiveClass(_page),
@@ -90,7 +97,10 @@ export default function Pagination({ page = 1, totalPages }: PaginationProps) {
             </span>
             <a
               data-testid="page-links"
-              onClick={() => pushQuery({ page: totalPages.toString() })}
+              onClick={() => {
+                pushQuery({ page: totalPages.toString() })
+                setLoading(true)
+              }}
               className={classNames(
                 isActiveClass(totalPages),
                 `relative ml-2 mr-2 inline-flex cursor-pointer items-center rounded-lg bg-white px-4 py-2 text-sm`
