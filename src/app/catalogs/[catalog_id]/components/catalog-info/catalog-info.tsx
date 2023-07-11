@@ -42,7 +42,6 @@ export function CatalogInfo({
   totalWeight,
   warehouseLocation,
 }: TCatalogInfoProps) {
-  const url = window.location.href
   return (
     <>
       <div className="mx-2 mt-4">
@@ -60,7 +59,7 @@ export function CatalogInfo({
 
             {
               label: 'Catalog Information',
-              path: { url },
+              path: '',
             },
           ]}
         />

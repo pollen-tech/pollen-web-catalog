@@ -17,7 +17,7 @@ const props = {
 }
 
 describe('Breadcrumbs', () => {
-  it('should renders <Button/> with', () => {
+  it('should renders <Breadcrumbs/> with', () => {
     render(<Breadcrumbs {...props}>Click Me!</Breadcrumbs>)
     const breadcrumbsBtn = screen.getByText('Click Me!')
     expect(breadcrumbsBtn).toBeInTheDocument()

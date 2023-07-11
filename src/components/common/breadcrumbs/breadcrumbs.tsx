@@ -1,17 +1,12 @@
-// components/breadcrumbs/Breadcrumbs.ts
-import { type ReactNode } from 'react'
 import Link from 'next/link'
-// ...omitted for brevity
-
 // defining the Props
 export type CrumbItem = {
   label: string
-  path: string // e.g., /development/programming-languages/python
+  path: string
 }
 export type BreadcrumbsProps = {
   items: CrumbItem[]
 }
-// ...omitted for brevity
 // components/breadcrumbs/Breadcrumbs.ts
 const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   return (
