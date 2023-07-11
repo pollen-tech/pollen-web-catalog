@@ -17,6 +17,7 @@ import accounting from 'accounting'
 import { Button } from '~/components/common/button'
 import Link from 'next/link'
 import ContactSalesModal from '../contact-sales-modal'
+import Breadcrumbs from '~/components/common/breadcrumbs/breadcrumbs'
 
 type TCatalogInfoProps = {
   catalogId: Catalog['id']
@@ -41,9 +42,30 @@ export function CatalogInfo({
   totalWeight,
   warehouseLocation,
 }: TCatalogInfoProps) {
+  const url = window.location.href
   return (
     <>
-      <Card className="my-8 text-gray-900">
+      <div className="mx-2 mt-4">
+        <Breadcrumbs
+          items={[
+            {
+              label: 'Home',
+              path: '/',
+            },
+
+            {
+              label: 'Catalogs',
+              path: '/catalogs',
+            },
+
+            {
+              label: 'Catalog Information',
+              path: { url },
+            },
+          ]}
+        />
+      </div>
+      <Card className="my-6 text-gray-900">
         <div className="flex items-center">
           <div className="rounded-full p-4">
             <Image
