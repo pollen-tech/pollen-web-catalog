@@ -33,7 +33,7 @@ const NOTIFICATION_TABS = [
   },
   {
     category: 'notif-order',
-    label: 'Order (Coming Soon)',
+    label: 'Order',
     icon: ArchiveBoxIcon,
   },
   {
@@ -58,7 +58,7 @@ export function NotificationsTabContent({
   return (
     <Tabs.Content value={category} key={`content-${category}`}>
       <div className="divide-y divide-gray-200">
-        {items.length ? (
+        {false ? (
           items.map((item) => (
             // TODO: update to use Link from next/link, on add event handler, depends on the design
             <Item
@@ -82,7 +82,7 @@ export function NotificationsTabContent({
           ))
         ) : (
           <div className="w-full rounded-b-lg py-10 text-center text-xs">
-            No notifications yet
+            Coming Soon
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@ import { useRouter as useNextRouter } from '~/hooks/router'
 import style from './seller-filter.module.css'
 import { fetchSellers } from '~/services/sellers'
 import type { Seller } from '@pollen-tech/appsync-schema'
+import { useLoadingStore } from '~/hooks/states/loading'
 
 export const SellerSearch = ({
   onChange,
@@ -112,6 +113,7 @@ export const SellerList = ({
 
 export function SellerFilter() {
   const { pushQuery, searchParams } = useNextRouter()
+  const { setLoading } = useLoadingStore()
   const [sellers, setSellers] = useState<Seller[]>([])
   const [sellerSize, setSellerSize] = useState<number>(20)
   const [search, setSearch] = useState<string>('')
@@ -146,12 +148,16 @@ export function SellerFilter() {
       .catch(() => {
         setSellers([])
       })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [search, sellerSize])
 
   const onSelectHandler = (filter: string[]) => {
     pushQuery({
       sellerId: filter.length ? filter.join(',') : '',
     })
+    setLoading(true)
   }
 
   return (

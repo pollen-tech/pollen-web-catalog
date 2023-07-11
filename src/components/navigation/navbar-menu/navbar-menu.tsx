@@ -4,6 +4,9 @@ import { Root as MenuRoot } from '@radix-ui/react-menubar'
 
 import { UserMenu } from './user-menu'
 import { Notifications } from './notifications'
+import { useUser } from '~/hooks/user'
+import { useEffect, useState } from 'react'
+import type { User } from '~/@types/user'
 
 const dummyNotifs = [
   {
@@ -36,10 +39,25 @@ const dummyNotifs = [
 ]
 
 export function NavbarMenu() {
+  const { getMe } = useUser()
+  const [buyer, setBuyer] = useState<User & { name: string }>()
+  useEffect(() => {
+    getMe()
+      .then((res) => {
+        setBuyer(res)
+      })
+      .catch(() => {
+        // do nothing
+      })
+  }, [])
   return (
     <MenuRoot className="flex items-center gap-x-8">
       <Notifications items={dummyNotifs} />
-      <UserMenu id="buyer-id" username="Buyer Name" company="Buyer company" />
+      <UserMenu
+        id="buyer-id"
+        username={`${buyer?.firstname || ''} ${buyer?.lastname || ''}`}
+        company={buyer?.buyer.name || ''}
+      />
     </MenuRoot>
   )
 }
