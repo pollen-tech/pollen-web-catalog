@@ -4,12 +4,7 @@ type CrumbItem = {
   label: string
   path: string
 }
-type BreadcrumbsProps = {
-  items: CrumbItem[]
-}
-// components/breadcrumbs/Breadcrumbs.ts
-
-export function Breadcrumbs({ items }: BreadcrumbsProps) {
+export function Breadcrumbs({ items }: { items: CrumbItem[] }) {
   return (
     <div className="flex items-start gap-2 text-xs">
       {items.map((crumb, i) => {
@@ -25,7 +20,6 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
             </>
           )
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return crumb.label
         }
       })}
