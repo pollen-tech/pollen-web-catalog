@@ -12,6 +12,7 @@ export interface MakeOfferModalProps {
 
 export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
   const [dragging, setDragging] = useState(false)
+  const [file, setFile] = useState<File | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
@@ -32,20 +33,21 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
     e.preventDefault()
     setDragging(false)
 
-    const files = e.dataTransfer.files
-    // Process the dropped files here
-    console.log(files)
-
-    // Use the fileInputRef to access the file input element
-    if (fileInputRef.current && files.length > 0) {
-      fileInputRef.current.files = files
-    }
+    const files = e.dataTransfer.files ?? [null]
+    // Process the uploaded files here
+    setFile(files[0])
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
     }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files ?? [null]
+    // Process the uploaded files here
+    setFile(files[0])
   }
 
   return (
@@ -80,30 +82,50 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
           <Separator.Root className="my-4 h-[1px] w-full bg-gray-100" />
           <h3 className="mb-2 text-sm font-semibold text-gray-900">Step 2</h3>
           <p className="mb-2 text-xs">Upload the completed XLS below</p>
-          <div
-            className={`mb-4 flex cursor-pointer flex-col items-center justify-center rounded border border-solid border-gray-200 px-4 py-8 shadow-sm ${
-              dragging ? 'dragging' : ''
-            }`}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            onClick={handleClick}
-          >
-            <input
-              type="file"
-              className="hidden"
-              accept=".xls, .xlsx"
-              data-testid="file-input"
-              ref={fileInputRef}
-            />
-            <DocumentIcon className="mb-4 h-8 w-8 text-pollen-purple" />
-            <p className="mb-1 block">
-              <span className="text-pollen-purple">Upload a file</span> or drag
-              and drop
-            </p>
-            <p className="text-sm text-gray-500">XLS up to 5MB</p>
-          </div>
+          {!file ? (
+            <div
+              className={`mb-4 flex cursor-pointer flex-col items-center justify-center rounded border border-solid border-gray-200 px-4 py-8 shadow-sm ${
+                dragging ? 'dragging' : ''
+              }`}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={handleClick}
+            >
+              <input
+                type="file"
+                className="hidden"
+                accept=".xls, .xlsx"
+                data-testid="file-input"
+                ref={fileInputRef}
+                onChange={handleChange}
+              />
+              <DocumentIcon className="mb-4 h-8 w-8 text-pollen-purple" />
+              <p className="mb-1 block">
+                <span className="text-pollen-purple">Upload a file</span> or
+                drag and drop
+              </p>
+              <p className="text-sm text-gray-500">XLS up to 5MB</p>
+            </div>
+          ) : (
+            <div>
+              <p className="mb-2 text-xs">Added File:</p>
+              <div className="mb-4 flex items-center justify-between py-2">
+                <p className="text-xs">{file.name}</p>
+                <button
+                  type="button"
+                  className="text-sm text-pollen-purple"
+                  onClick={() => {
+                    setFile(null)
+                  }}
+                >
+                  Replace File
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="flex justify-end">
             <Dialog.Close asChild>
               <Button variant="secondary" className="mr-2">
