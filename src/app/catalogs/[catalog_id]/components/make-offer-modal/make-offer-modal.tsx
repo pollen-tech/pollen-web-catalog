@@ -5,11 +5,49 @@ import { DocumentIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Button } from '~/components/common/button'
 import Link from 'next/link'
+import { useRef, useState } from 'react'
 export interface MakeOfferModalProps {
   catalogId: string
 }
 
 export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
+  const [dragging, setDragging] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setDragging(false)
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setDragging(false)
+
+    const files = e.dataTransfer.files
+    // Process the dropped files here
+    console.log(files)
+
+    // Use the fileInputRef to access the file input element
+    if (fileInputRef.current && files.length > 0) {
+      fileInputRef.current.files = files
+    }
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -42,7 +80,23 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
           <Separator.Root className="my-4 h-[1px] w-full bg-gray-100" />
           <h3 className="mb-2 text-sm font-semibold text-gray-900">Step 2</h3>
           <p className="mb-2 text-xs">Upload the completed XLS below</p>
-          <div className="mb-4 flex cursor-pointer flex-col items-center justify-center rounded border border-solid border-gray-200 px-4 py-8 shadow-sm">
+          <div
+            className={`mb-4 flex cursor-pointer flex-col items-center justify-center rounded border border-solid border-gray-200 px-4 py-8 shadow-sm ${
+              dragging ? 'dragging' : ''
+            }`}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={handleClick}
+          >
+            <input
+              type="file"
+              className="hidden"
+              accept=".xls, .xlsx"
+              data-testid="file-input"
+              ref={fileInputRef}
+            />
             <DocumentIcon className="mb-4 h-8 w-8 text-pollen-purple" />
             <p className="mb-1 block">
               <span className="text-pollen-purple">Upload a file</span> or drag
