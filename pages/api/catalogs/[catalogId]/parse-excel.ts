@@ -75,7 +75,7 @@ router
     // check parsing offer excel data
     ;[err, parsed] = await awaitToError(parseOffer(catalog, parsedBody))
     if (err) {
-      res.status(400).send({ message: JSON.stringify(err) })
+      res.status(400).send({ message: err })
       return
     }
 
@@ -87,7 +87,7 @@ router
       s3Svc.uploadFile(file.buffer, `${cfg.environment}/${catalogFile}`)
     )
     if (err) {
-      res.status(400).send({ message: JSON.stringify(err) })
+      res.status(400).send({ message: err })
     }
 
     res.status(200).send({

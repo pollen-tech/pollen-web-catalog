@@ -10,6 +10,7 @@ import { readFromFile } from '~/lib/excel'
 import { useInternalRequest } from '~/hooks/request'
 import { Alert } from '~/components/alert/alert'
 import { useMakeOfferStates } from '~/hooks/states/make-offer'
+import awaitToError from '~/utils/awaitToError'
 
 export interface MakeOfferModalProps {
   catalogId: string
@@ -59,40 +60,25 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
     setFile(files[0])
   }
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     setLoading(true)
-    const parseExcel = readFromFile(file as Blob)
-      .then((data) =>
-        req.post(`/api/catalogs/${catalogId}/parse-excel`, {
-          data: data.json as Record<string, string>[],
-        })
-      )
-      .catch(
-        (err: {
-          message: Record<string, string>[]
-          response: { data: { message: Record<string, string>[] } }
-        }) => {
-          const response = err.response
-          setErrors(response.data.message.map((e) => e.message))
-          setModalOpen(false)
-          setFile(null)
-        }
-      )
-    parseExcel
-      .then((res: unknown) => {
-        const response = res as { data: { catalogFile: string } }
-        const catalogFile = response.data.catalogFile
-        const form = new FormData()
-        form.append('file', file as Blob)
-        form.append('path', `${catalogFile}/${file?.name as string}`)
-        return req.post(`/api/files/s3-upload`, form)
-      })
-      .catch((err) => {
-        // do nothing
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    const formData = new FormData()
+    formData.append('file', file as Blob)
+    const [err, res] = await awaitToError<
+      {
+        message: Record<string, string>[]
+        response: { data: { message: Record<string, string>[] } }
+      },
+      unknown
+    >(req.post(`/api/catalogs/${catalogId}/parse-excel`, formData))
+    if (err) {
+      setErrors(err.response.data.message.map((e) => e.message))
+      setModalOpen(false)
+      setFile(null)
+    } else {
+      console.log(res)
+    }
+    setLoading(false)
   }
 
   const checkFile = () => {

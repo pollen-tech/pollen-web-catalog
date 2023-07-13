@@ -9,7 +9,7 @@ interface IAlert {
 
 const FloatingAlert = ({ message, title, onClose }: IAlert) => (
   <div
-    className="mb-4 inline-flex h-24 w-96 items-start justify-start gap-2 rounded-md border border-red-200 bg-red-50 px-5 py-3"
+    className="mb-4 inline-flex min-h-fit w-96 items-start justify-start gap-2 rounded-md border border-red-200 bg-red-50 px-5 py-3"
     data-testid="floating-alert-wrapper"
   >
     <div className="relative h-5 w-5">

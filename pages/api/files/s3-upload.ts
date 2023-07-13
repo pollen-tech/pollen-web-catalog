@@ -47,7 +47,6 @@ export const config = {
 
 export default router.handler({
   onError: (err, req, res) => {
-    console.log(err)
     if (err instanceof ApiError) {
       res.status(err.statusCode as number).send(err.message)
     }
