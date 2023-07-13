@@ -1,4 +1,3 @@
-import { reject } from 'lodash'
 import { read, utils } from 'xlsx'
 
 export interface FileReader {
@@ -8,7 +7,7 @@ export interface FileReader {
 
 export const readFromFile = async (file: Blob): Promise<FileReader> => {
   const reader = new FileReader()
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     reader.onload = (event) => {
       const result = event.target?.result
       const data = new Uint8Array(result as ArrayBuffer)

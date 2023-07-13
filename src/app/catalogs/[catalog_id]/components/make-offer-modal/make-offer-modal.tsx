@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { readFromFile } from '~/lib/excel'
 import { useInternalRequest } from '~/hooks/request'
-import Alert from '~/components/alert/alert'
+import { Alert } from '~/components/alert/alert'
 import { useMakeOfferStates } from '~/hooks/states/make-offer'
 
 export interface MakeOfferModalProps {

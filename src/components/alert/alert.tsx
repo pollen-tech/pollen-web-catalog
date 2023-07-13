@@ -8,7 +8,10 @@ interface IAlert {
 }
 
 const FloatingAlert = ({ message, title, onClose }: IAlert) => (
-  <div className="mb-4 inline-flex h-24 w-96 items-start justify-start gap-2 rounded-md border border-red-200 bg-red-50 px-5 py-3">
+  <div
+    className="mb-4 inline-flex h-24 w-96 items-start justify-start gap-2 rounded-md border border-red-200 bg-red-50 px-5 py-3"
+    data-testid="floating-alert-wrapper"
+  >
     <div className="relative h-5 w-5">
       <ExclamationTriangleIcon className="stroke-red-900" />
     </div>
@@ -31,7 +34,10 @@ const FloatingAlert = ({ message, title, onClose }: IAlert) => (
 )
 
 const FixedAlert = ({ message }: IAlert) => (
-  <div className="mb-2 inline-flex h-11 w-full items-start justify-start">
+  <div
+    className="mb-2 inline-flex h-11 w-full items-start justify-start"
+    data-testid="fixed-alert-wrapper"
+  >
     <div className="flex h-11 shrink grow basis-0 items-start justify-start">
       <div className="flex h-11 shrink grow basis-0 items-start justify-start gap-2 rounded-md border border-red-200 bg-red-50 px-5 py-3">
         <div className="relative h-5 w-5">
@@ -52,7 +58,7 @@ const FixedAlert = ({ message }: IAlert) => (
   </div>
 )
 
-export default function Alert({ message, title, floating, onClose }: IAlert) {
+export const Alert = ({ message, title, floating, onClose }: IAlert) => {
   return (
     <>
       {floating ? (

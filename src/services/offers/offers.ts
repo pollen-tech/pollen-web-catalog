@@ -2,7 +2,7 @@ import type { Catalog } from '@pollen-tech/appsync-schema'
 import type { OfferError } from '~/@types/catalog'
 import { existsAndNotNaN } from '~/utils/number'
 
-export const parseOffer = async (
+export const parseOffer = (
   catalog: Catalog,
   data: Record<string, string>[]
 ) => {
@@ -49,13 +49,13 @@ export const parseOffer = async (
    * Check if offerPrice and totalUnit is empty
    */
   excelProp.forEach((d) => {
-    if (existsAndNotNaN(d.offerPrice)) {
+    if (!existsAndNotNaN(d.offerPrice)) {
       errors.push({
         sku: d.sku,
         message: `Offer Price / Unit (${d.sku}) is empty`,
       })
     }
-    if (existsAndNotNaN(d.totalUnit)) {
+    if (!existsAndNotNaN(d.totalUnit)) {
       errors.push({
         sku: d.sku,
         message: `# Of Units (${d.sku}) is empty`,
