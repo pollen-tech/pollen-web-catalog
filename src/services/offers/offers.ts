@@ -1,5 +1,4 @@
 import type { Catalog } from '@pollen-tech/appsync-schema'
-import { batch } from 'react-redux'
 import type { OfferError } from '~/@types/catalog'
 import { existsAndNotNaN } from '~/utils/number'
 

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { parseOffer } from '~/services/offers'
 import { parseUsingHeader } from '~/utils/arrayObject'
@@ -15,7 +12,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { method, body, query, cookies } = req
+    const { method, query, cookies } = req
+    const body = req.body as { data: string[][] }
     const allowedMethod = ['POST']
     if (method == 'POST') {
       const catalogId = query.catalogId
@@ -33,7 +31,10 @@ export default async function handler(
       if (!decoded) throw new ApiError('Unauthorized', 401)
 
       // get buyer
-      const buyer = JSON.parse(decoded.buyerProfile)
+      const buyer = JSON.parse(decoded.buyerProfile) as Record<
+        string,
+        { id: string }
+      >
       const buyerId = buyer.buyer.id
       ;[, catalog] = await awaitToError(
         fetchCatalogDetail(catalogId as string, {
@@ -46,9 +47,7 @@ export default async function handler(
       if (err) throw new ApiError(JSON.stringify(err), 400)
 
       res.status(200).send({
-        catalogFile: `/catalogs/${catalogId as string}/offers/${
-          buyerId as string
-        }`,
+        catalogFile: `/catalogs/${catalogId as string}/offers/${buyerId}`,
         offers: parsed,
       })
     } else {
@@ -59,8 +58,10 @@ export default async function handler(
     if (error instanceof ApiError) {
       res
         .status(error.statusCode as number)
-        .send({ message: JSON.parse(error.message) })
+        .send({ message: JSON.parse(error.message) as string })
+    } else {
+      const err = error as { code: number; message: string }
+      res.status(err.code).send({ message: err.message })
     }
-    res.status(error.code).send({ message: error.message })
   }
 }
