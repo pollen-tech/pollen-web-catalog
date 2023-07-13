@@ -1,26 +1,29 @@
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 interface IAlert {
   message: string
+  title?: string
   floating?: boolean
+  onClose?: () => void
 }
 
-const FloatingAlert = ({ message }: IAlert) => (
-  <div className="fixed bottom-0 left-0 right-0 mb-2 flex items-start justify-start">
-    <div className="flex-shrink-0">
-      <div className="flex items-start justify-start gap-2 rounded-md border border-red-200 bg-red-50 px-5 py-3">
-        <div className="relative h-5 w-5">
-          <ExclamationTriangleIcon className="stroke-red-900" />
-        </div>
-        <div className="flex flex-col items-start justify-start gap-2.5">
-          <div className="flex items-start justify-start gap-2">
-            <div className="flex flex-col items-start justify-start gap-2">
-              <div className="text-sm font-medium leading-tight text-red-800">
-                {message}
-              </div>
-            </div>
-            <div className="relative h-5 w-5" />
+const FloatingAlert = ({ message, title, onClose }: IAlert) => (
+  <div className="mb-4 inline-flex h-24 w-96 items-start justify-start gap-2 rounded-md border border-red-200 bg-red-50 px-5 py-3">
+    <div className="relative h-5 w-5">
+      <ExclamationTriangleIcon className="stroke-red-900" />
+    </div>
+    <div className="inline-flex shrink grow basis-0 flex-col items-start justify-start gap-2.5">
+      <div className="inline-flex items-start justify-start gap-2 self-stretch">
+        <div className="inline-flex shrink grow basis-0 flex-col items-start justify-start gap-2">
+          <div className="self-stretch text-sm font-medium leading-tight text-red-800">
+            {title}
           </div>
+          <div className="self-stretch text-sm font-normal leading-tight text-red-700">
+            {message}
+          </div>
+        </div>
+        <div className="relative h-5 w-5" onClick={() => onClose && onClose()}>
+          <XMarkIcon className="stroke-red-900 hover:cursor-pointer" />
         </div>
       </div>
     </div>
@@ -49,10 +52,14 @@ const FixedAlert = ({ message }: IAlert) => (
   </div>
 )
 
-export default function Alert({ message, floating }: IAlert) {
-  if (floating) {
-    return <FloatingAlert message={message} />
-  } else {
-    return <FixedAlert message={message} />
-  }
+export default function Alert({ message, title, floating, onClose }: IAlert) {
+  return (
+    <>
+      {floating ? (
+        <FloatingAlert message={message} title={title} onClose={onClose} />
+      ) : (
+        <FixedAlert message={message} />
+      )}
+    </>
+  )
 }

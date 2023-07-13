@@ -5,15 +5,11 @@ import { DocumentIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Button } from '~/components/common/button'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { readFromFile } from '~/lib/excel'
 import { useInternalRequest } from '~/hooks/request'
-import awaitToError from '~/utils/awaitToError'
 import Alert from '~/components/alert/alert'
-import { s3Service } from '~/lib/s3'
-import { config } from '~/config'
-import { useUser } from '~/hooks/user'
-import { User } from '~/@types/user'
+import { useMakeOfferStates } from '~/hooks/states/make-offer'
 
 export interface MakeOfferModalProps {
   catalogId: string
@@ -21,22 +17,12 @@ export interface MakeOfferModalProps {
 
 export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
   const [dragging, setDragging] = useState(false)
-  const { getMe } = useUser()
-  const [buyer, setBuyer] = useState<User & { name: string }>()
+  const [modalOpen, setModalOpen] = useState(false)
+  const { setLoading, loading } = useMakeOfferStates((state) => state)
   const [file, setFile] = useState<File | null>(null)
   const [errors, setErrors] = useState<string[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { req } = useInternalRequest()
-
-  useEffect(() => {
-    getMe()
-      .then((res) => {
-        setBuyer(res)
-      })
-      .catch(() => {
-        // do nothing
-      })
-  }, [])
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -61,7 +47,7 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
     setFile(files[0])
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click()
     }
@@ -73,13 +59,28 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
     setFile(files[0])
   }
 
-  const handleContinue = async () => {
-    const data = await readFromFile(file as Blob)
-    const [err, request] = await awaitToError(
-      req.post(`/api/catalogs/${catalogId}/parse-excel`, {
-        data: data.json as Record<string, string>[],
+  const handleContinue = () => {
+    setLoading(true)
+    readFromFile(file as Blob)
+      .then((data) =>
+        req.post(`/api/catalogs/${catalogId}/parse-excel`, {
+          data: data.json as Record<string, string>[],
+        })
+      )
+      .catch(
+        (err: {
+          message: Record<string, string>[]
+          response: { data: { message: Record<string, string>[] } }
+        }) => {
+          const response = err.response
+          setErrors(response.data.message.map((e) => e.message))
+          setModalOpen(false)
+          setFile(null)
+        }
+      )
+      .finally(() => {
+        setLoading(false)
       })
-    )
   }
 
   const checkFile = () => {
@@ -88,11 +89,15 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
 
   return (
     <>
-      <Dialog.Root>
+      <Dialog.Root
+        open={modalOpen}
+        onOpenChange={() => setModalOpen(!modalOpen)}
+      >
         <Dialog.Trigger asChild>
           <Button
             data-testid="trigger-dialog-button"
             className="mb-2 block w-full"
+            onClick={() => setModalOpen(true)}
           >
             Make an Offer
           </Button>
@@ -181,7 +186,32 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
                 className="disabled:cursor-not-allowed"
                 onClick={() => handleContinue()}
               >
-                Upload and Continue
+                {loading && (
+                  <div className="color-white flex">
+                    <svg
+                      className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Processing...
+                  </div>
+                )}
+                {!loading && 'Upload and Continue'}
               </Button>
             </div>
             <Dialog.Close asChild>
@@ -196,13 +226,25 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-      {errors.map((error) => (
-        <Alert
-          key={`${error.split(' ').join('-')}`}
-          message={error}
-          floating={true}
-        />
-      ))}
+
+      {/* alert wrapper */}
+      <div className="fixed bottom-10 w-[500px] sm:right-[10%] md:right-1">
+        {errors.map((error, i) => (
+          <Alert
+            key={`${error.split(' ').join('-')}`}
+            message={error}
+            title={
+              'There was an error importing your XLS file. After you fix the error, try importing the Excel file again'
+            }
+            floating={true}
+            onClose={() => {
+              const err = [...errors]
+              err.splice(i, 1)
+              setErrors(err)
+            }}
+          />
+        ))}
+      </div>
     </>
   )
 }
