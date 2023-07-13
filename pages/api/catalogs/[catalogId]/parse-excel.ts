@@ -31,11 +31,8 @@ export default async function handler(
       if (!decoded) throw new ApiError('Unauthorized', 401)
 
       // get buyer
-      const buyer = JSON.parse(decoded.buyerProfile) as Record<
-        string,
-        { id: string }
-      >
-      const buyerId = buyer.buyer.id
+      const buyer = JSON.parse(decoded.buyerProfile) as { email: string }
+      const buyerEmail = buyer.email
       ;[, catalog] = await awaitToError(
         fetchCatalogDetail(catalogId as string, {
           idToken: idToken,
@@ -47,7 +44,7 @@ export default async function handler(
       if (err) throw new ApiError(JSON.stringify(err), 400)
 
       res.status(200).send({
-        catalogFile: `/catalogs/${catalogId as string}/offers/${buyerId}`,
+        catalogFile: `catalogs/${catalogId as string}/offers/${buyerEmail}`,
         offers: parsed,
       })
     } else {

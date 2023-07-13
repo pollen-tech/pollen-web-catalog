@@ -5,6 +5,7 @@ import type { NodeRouter } from 'next-connect/dist/types/node'
 import { s3Service } from '~/lib/s3'
 import ApiError from '~/utils/error'
 import { config as cfg } from '~/config'
+import awaitToError from '~/utils/awaitToError'
 
 interface UploadRequest {
   path: string
@@ -23,12 +24,19 @@ router.use(
     NextApiResponse
   >
 )
-router.post((req, res) => {
+router.post(async (req, res) => {
   const body: UploadRequest = req.body as UploadRequest
   const file = req.file
   const path = body.path
+  if (!file) throw new ApiError('file is required', 400)
+  const [err] = await awaitToError(
+    s3Svc.uploadFile(file.buffer, `${cfg.environment}/${path}`)
+  )
+  if (err) {
+    throw new ApiError(err.message)
+  }
 
-  res.send({ message: 'hello' })
+  res.send({ path })
 })
 
 export const config = {

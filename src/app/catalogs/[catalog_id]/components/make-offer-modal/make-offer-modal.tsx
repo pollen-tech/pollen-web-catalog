@@ -61,7 +61,7 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
 
   const handleContinue = () => {
     setLoading(true)
-    readFromFile(file as Blob)
+    const parseExcel = readFromFile(file as Blob)
       .then((data) =>
         req.post(`/api/catalogs/${catalogId}/parse-excel`, {
           data: data.json as Record<string, string>[],
@@ -78,6 +78,18 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
           setFile(null)
         }
       )
+    parseExcel
+      .then((res: unknown) => {
+        const response = res as { data: { catalogFile: string } }
+        const catalogFile = response.data.catalogFile
+        const form = new FormData()
+        form.append('file', file as Blob)
+        form.append('path', `${catalogFile}/${file?.name as string}`)
+        return req.post(`/api/files/s3-upload`, form)
+      })
+      .catch((err) => {
+        // do nothing
+      })
       .finally(() => {
         setLoading(false)
       })

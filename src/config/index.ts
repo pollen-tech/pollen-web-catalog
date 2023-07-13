@@ -1,4 +1,5 @@
 export const config = {
+  environment: process.env.NEXT_ENVIRONMENT as string,
   appsync: {
     endpoint: process.env.NEXT_PUBLIC_APPSYNC_ENDPOINT,
   },
