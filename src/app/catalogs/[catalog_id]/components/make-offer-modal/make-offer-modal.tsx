@@ -5,11 +5,15 @@ import { DocumentIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Button } from '~/components/common/button'
 import Link from 'next/link'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { readFromFile } from '~/lib/excel'
 import { useInternalRequest } from '~/hooks/request'
 import awaitToError from '~/utils/awaitToError'
 import Alert from '~/components/alert/alert'
+import { s3Service } from '~/lib/s3'
+import { config } from '~/config'
+import { useUser } from '~/hooks/user'
+import { User } from '~/@types/user'
 
 export interface MakeOfferModalProps {
   catalogId: string
@@ -17,10 +21,22 @@ export interface MakeOfferModalProps {
 
 export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
   const [dragging, setDragging] = useState(false)
+  const { getMe } = useUser()
+  const [buyer, setBuyer] = useState<User & { name: string }>()
   const [file, setFile] = useState<File | null>(null)
   const [errors, setErrors] = useState<string[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { req } = useInternalRequest()
+
+  useEffect(() => {
+    getMe()
+      .then((res) => {
+        setBuyer(res)
+      })
+      .catch(() => {
+        // do nothing
+      })
+  }, [])
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -58,9 +74,11 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
   }
 
   const handleContinue = async () => {
-    const jsonData = await readFromFile(file as Blob)
+    const data = await readFromFile(file as Blob)
     const [err, request] = await awaitToError(
-      req.post(`/api/catalogs/${catalogId}/parse-excel`, { data: jsonData })
+      req.post(`/api/catalogs/${catalogId}/parse-excel`, {
+        data: data.json as Record<string, string>[],
+      })
     )
   }
 

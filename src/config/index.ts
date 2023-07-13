@@ -21,7 +21,7 @@ export const config = {
     accessKeyId: process.env.NEXT_AWS_ACCESS_KEY_ID as string,
     secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY as string,
     s3: {
-      bucket: process.env.NEXT_AWS_S3_BUCKET as string,
+      bucket: process.env.NEXT_AWS_S3_BUCKET ?? 'files.mypollenstore.com',
     },
   },
 }

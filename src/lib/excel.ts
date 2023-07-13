@@ -1,7 +1,12 @@
 import { reject } from 'lodash'
 import { read, utils } from 'xlsx'
 
-export const readFromFile = async (file: Blob) => {
+export interface FileReader {
+  json: any
+  buffer: Buffer | ArrayBuffer | null
+}
+
+export const readFromFile = async (file: Blob): Promise<FileReader> => {
   const reader = new FileReader()
   return new Promise((resolve) => {
     reader.onload = (event) => {
@@ -18,7 +23,7 @@ export const readFromFile = async (file: Blob) => {
 
       const jsonData = utils.sheet_to_json(worksheet, { header: 1, range })
 
-      resolve(jsonData)
+      resolve({ buffer: result as Buffer, json: jsonData })
     }
 
     reader.onerror = (error) => {

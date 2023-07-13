@@ -3,15 +3,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-// import s3 client
-import { S3 } from 'aws-sdk'
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { config } from '../config'
 
 // create s3 client
 const getS3Client = () => {
-  const s3 = new S3({
-    accessKeyId: config.aws.accessKeyId,
-    secretAccessKey: config.aws.secretAccessKey,
+  const s3 = new S3Client({
+    credentials: {
+      accessKeyId: config.aws.accessKeyId,
+      secretAccessKey: config.aws.secretAccessKey,
+    },
     region: config.aws.region,
   })
   return s3
@@ -25,7 +26,8 @@ export const s3Service = (bucketName: string) => ({
       Key: fileName,
       Body: file,
     }
-    const upload = await s3.upload(params).promise()
+    const command = new PutObjectCommand(params)
+    const upload = await s3.send(command)
     return upload
   },
 })

@@ -8,6 +8,7 @@ import awaitToError from '~/utils/awaitToError'
 import { ID_TOKEN_COOKIE_KEY } from '../../auth/constant'
 import { fetchCatalogDetail } from '~/services/catalogs'
 import ApiError from '~/utils/error'
+import { decode } from 'jsonwebtoken'
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,18 +21,36 @@ export default async function handler(
       const catalogId = query.catalogId
       const { data } = body
       const parsedBody = parseUsingHeader(data)
+      const idToken = cookies[ID_TOKEN_COOKIE_KEY]
 
       let err = null,
         parsed = null,
         catalog = null
+      if (!idToken) throw new ApiError('Unauthorized', 401)
 
+      // decode idToken
+      const decoded = decode(idToken) as { buyerProfile: string }
+      if (!decoded) throw new ApiError('Unauthorized', 401)
+
+      // get buyer
+      const buyer = JSON.parse(decoded.buyerProfile)
+      const buyerId = buyer.buyer.id
       ;[, catalog] = await awaitToError(
         fetchCatalogDetail(catalogId as string, {
-          idToken: cookies[ID_TOKEN_COOKIE_KEY] as string,
+          idToken: idToken,
         })
       )
+
+      // check parsing offer excel data
       ;[err, parsed] = await awaitToError(parseOffer(catalog, parsedBody))
       if (err) throw new ApiError(JSON.stringify(err), 400)
+
+      res.status(200).send({
+        catalogFile: `/catalogs/${catalogId as string}/offers/${
+          buyerId as string
+        }`,
+        offers: parsed,
+      })
     } else {
       res.setHeader('Allow', allowedMethod)
       res.status(405).end(`Method ${method ?? ''} Not Allowed`)

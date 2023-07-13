@@ -1,4 +1,5 @@
 import type { Catalog } from '@pollen-tech/appsync-schema'
+import { batch } from 'react-redux'
 import type { OfferError } from '~/@types/catalog'
 import { existsAndNotNaN } from '~/utils/number'
 
@@ -19,28 +20,35 @@ export const parseOffer = async (
     selfLifeRemainingDay: catalog.batches?.map((d) => d?.shelfLifeRemainingDay),
   }
 
-  const availableBatch = excelProp
-    .map((d) => {
-      let isListed = false
-      if (
-        catalogProp.sku?.includes(d?.sku) &&
-        catalogProp.selfLifeRemainingDay?.includes(d?.selfLifeRemainingDay)
-      ) {
-        isListed = true
-      }
-      return { ...d, isListed }
-    })
-    .forEach((d) => {
-      if (!d.isListed) {
-        errors.push({
-          sku: d.sku,
-          message: `SKU Number (${d.sku}) not found on catalog`,
-        })
-      }
-    })
+  /**
+   * Check if catalog available based on skuNumber and shelfLifeRemainingDay
+   */
+  const availableBatch = excelProp.map((d) => {
+    let isListed = false
+    if (
+      catalogProp.sku?.includes(d?.sku) &&
+      catalogProp.selfLifeRemainingDay?.includes(d?.selfLifeRemainingDay)
+    ) {
+      isListed = true
+    }
+    const batch = catalog.batches?.find((dd) => dd?.skuNumber === d?.sku)
+    return { ...d, isListed, batchId: batch?.id, offerUnit: d?.totalUnit }
+  })
+  availableBatch.forEach((d) => {
+    if (!d.isListed) {
+      errors.push({
+        sku: d.sku,
+        message: `SKU Number (${d.sku}) not found on catalog`,
+      })
+    }
+  })
   if (errors.length > 0) {
     return Promise.reject(errors)
   }
+
+  /**
+   * Check if offerPrice and totalUnit is empty
+   */
   excelProp.forEach((d) => {
     if (existsAndNotNaN(d.offerPrice)) {
       errors.push({
