@@ -47,7 +47,7 @@ export default function Pagination({ page = 1, totalPages }: PaginationProps) {
   }
   useEffect(() => {
     init()
-  }, [])
+  }, [page, totalPages])
   const isActiveClass = (_page: number) => {
     if (_page === page) return `bg-polleb-purple-bg text-pollen-purple`
     return ''
