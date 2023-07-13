@@ -129,7 +129,10 @@ export function CatalogInfo({
 
           <div className="grow px-5">
             <ContactSalesModal catalogId={catalogId} />
-            <Link href={`/api/catalogs/${catalogId}/excel-file`}>
+            <Link
+              target="__blank"
+              href={`/api/catalogs/${catalogId}/excel-file`}
+            >
               <Button variant="secondary" className="block w-full">
                 Download Catalog
               </Button>
