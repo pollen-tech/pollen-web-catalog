@@ -23,8 +23,8 @@ export const GET_CATALOG_QUERY = gql`
         skuNumber
         availableUnit
         sellingUnit
-        askingPrice
-        retailPrice
+        askingPriceUsd
+        retailPriceUsd
       }
     }
   }
