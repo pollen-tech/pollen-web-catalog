@@ -56,7 +56,6 @@ export const FETCH_CATALOGS = gql`
         description
         id
         name
-        totalAskingPrice
         totalAskingPriceUsd
         totalWeight
         updatedAt

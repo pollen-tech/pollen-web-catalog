@@ -74,6 +74,8 @@ export function ProductList({ products }: TProductListProps) {
     getCoreRowModel: getCoreRowModel(),
   })
 
+  console.log('products', products)
+
   return (
     <>
       <table

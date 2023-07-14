@@ -25,7 +25,6 @@ type TCatalogInfoProps = {
   companyName?: Seller['companyName']
   companyLogo?: Seller['logo']
   totalAskingPriceUsd?: Catalog['totalAskingPriceUsd']
-  totalAskingPrice?: Catalog['totalAskingPrice']
   totalWeight?: Catalog['totalWeight']
   warehouseLocation?: Catalog['warehouseLocation']
   updatedAt?: Catalog['createdAt']
@@ -37,7 +36,6 @@ export function CatalogInfo({
   companyName,
   companyLogo,
   totalAskingPriceUsd,
-  totalAskingPrice,
   updatedAt,
   totalWeight,
   warehouseLocation,
@@ -100,11 +98,11 @@ export function CatalogInfo({
               <CurrencyDollarIcon className="h-4 w-4 text-gray-500" />
               <span className="text-xs">Total Asking Price</span>
               <span className="text-sm font-semibold">
-                {totalAskingPrice
-                  ? accounting.formatMoney(totalAskingPrice)
-                  : '-'}
                 {totalAskingPriceUsd
-                  ? accounting.formatMoney(totalAskingPriceUsd)
+                  ? accounting.formatMoney(totalAskingPriceUsd, {
+                      symbol: 'USD ',
+                      precision: 0,
+                    })
                   : '-'}
               </span>
             </div>
