@@ -69,7 +69,6 @@ router
       })
     )
     if (err) {
-      console.log(err)
       res.status(400).send({ message: 'bad request' })
       return
     }

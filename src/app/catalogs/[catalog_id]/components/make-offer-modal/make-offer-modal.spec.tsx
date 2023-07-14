@@ -1,5 +1,15 @@
 import { render, screen, act } from '@testing-library/react'
 import { MakeOfferModal } from './make-offer-modal'
+import React from 'react'
+
+
+const mockUseState = jest.spyOn(React, 'useState')
+const mockSetLoading = jest.fn()
+const mockSetError = jest.fn()
+mockUseState.mockImplementationOnce(() => [false, mockSetLoading])
+mockUseState.mockImplementationOnce(() => [false, mockSetError])
+mockUseState.mockImplementationOnce(() => [null, mockSetError])
+mockUseState.mockImplementationOnce(() => [[], mockSetError])
 
 describe('MakeOfferModal', () => {
   it('should renders <MakeOfferModal/> with proper content', () => {

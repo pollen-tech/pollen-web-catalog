@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { fetchCatalogDetail } from '../../../../src/services/catalogs'
 import { parseOffer } from '../../../../src/services/offers'
+import { s3Service } from '../../../../src/lib/s3'
 import { handler } from './parse-excel'
 import {
   ID_TOKEN_COOKIE_KEY,
@@ -146,6 +147,37 @@ describe('pages/api/catalogs/[catalogId]/parse-excel.spec.ts', () => {
 
       expect(res.status).toHaveBeenCalledWith(400)
       expect(res.send).toHaveBeenCalledWith({ message: 'validation error' })
+    })
+
+    it('should return bad request error when offer failed to upload file', async () => {
+      ;(fetchCatalogDetail as jest.Mock).mockResolvedValue({
+        id: '123',
+        name: 'catalog name',
+        description: 'catalog description',
+        catalogType: 'catalog type',
+        catalogStatus: 'catalog status',
+        catalogItems: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      ;(parseOffer as jest.Mock).mockResolvedValue([
+        {
+          id: '123',
+          name: 'catalog name',
+          description: 'catalog description',
+          catalogType: 'catalog type',
+          catalogStatus: 'catalog status',
+          catalogItems: [],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ])
+      ;(s3Service('bucket').uploadFile as jest.Mock).mockRejectedValue(
+        'upload failed'
+      )
+      req.method = 'POST'
+      await handler.run(req, res)
+      expect(res.status).toHaveBeenCalled()
     })
   })
 })
