@@ -153,11 +153,12 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
                 <p className="text-sm text-gray-500">XLS up to 5MB</p>
               </div>
             ) : (
-              <div>
+              <div data-testid="added-file-container">
                 <p className="mb-2 text-xs">Added File:</p>
                 <div className="mb-4 flex items-center justify-between py-2">
                   <p className="text-xs">{file.name}</p>
                   <button
+                    data-testid="replace-file-button"
                     type="button"
                     className="text-sm text-pollen-purple"
                     onClick={() => {
@@ -184,7 +185,10 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
                 onClick={() => handleContinue()}
               >
                 {loading && (
-                  <div className="color-white flex">
+                  <div
+                    className="color-white flex"
+                    data-testid="loading-button"
+                  >
                     <svg
                       className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
                       xmlns="http://www.w3.org/2000/svg"
