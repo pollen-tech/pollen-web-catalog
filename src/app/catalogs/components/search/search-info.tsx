@@ -149,7 +149,7 @@ export function SearchInfo() {
                   className="z-[100] w-80 rounded border border-slate-300 bg-white p-4"
                 >
                   {filterList.map((d, i) => (
-                    <>
+                    <div key={`filter-list-${d.id}`}>
                       <SortOption
                         key={d.id}
                         val={d.val}
@@ -158,7 +158,7 @@ export function SearchInfo() {
                       {i !== filterList.length - 1 && (
                         <hr className="h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
                       )}
-                    </>
+                    </div>
                   ))}
                 </Popover.Content>
               </Popover.Portal>

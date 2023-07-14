@@ -23,8 +23,8 @@ export const GET_CATALOG_QUERY = gql`
         skuNumber
         availableUnit
         sellingUnit
-        askingPrice
-        retailPrice
+        askingPriceUsd
+        retailPriceUsd
       }
     }
   }
@@ -56,7 +56,6 @@ export const FETCH_CATALOGS = gql`
         description
         id
         name
-        totalAskingPrice
         totalAskingPriceUsd
         totalWeight
         updatedAt

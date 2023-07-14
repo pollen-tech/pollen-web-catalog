@@ -36,7 +36,7 @@ const columns = [
     header: () => 'Last Update',
     cell: (props) => props.getValue() ?? '-',
   }),
-  columnHelper.accessor('totalAskingPrice', {
+  columnHelper.accessor('totalAskingPriceUsd', {
     header: () => 'Total Asking Price',
     cell: (props) =>
       accounting.formatMoney(props.getValue() as number, {

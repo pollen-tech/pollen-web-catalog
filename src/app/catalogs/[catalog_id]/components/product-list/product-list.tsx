@@ -45,7 +45,7 @@ const columns = [
     header: () => 'Selling Unit',
     cell: (props) => props.getValue() ?? '-',
   }),
-  columnHelper.accessor('retailPrice', {
+  columnHelper.accessor('retailPriceUsd', {
     header: () => 'Retail Price',
     cell: (props) =>
       accounting.formatMoney(props.getValue() as number, {
@@ -53,7 +53,7 @@ const columns = [
         precision: 0,
       }),
   }),
-  columnHelper.accessor('askingPrice', {
+  columnHelper.accessor('askingPriceUsd', {
     header: () => 'Asking Price',
     cell: (askingPriceUsd) =>
       accounting.formatMoney(askingPriceUsd.getValue() as number, {
