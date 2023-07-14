@@ -74,8 +74,6 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
       setErrors(err.response.data.message.map((e) => e.message))
       setModalOpen(false)
       setFile(null)
-    } else {
-      console.log(res)
     }
     setLoading(false)
   }
@@ -129,6 +127,7 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
             {checkFile() && <Alert message="File type must be .xls or .xlsx" />}
             {!file ? (
               <div
+                data-testid="file-input-container"
                 className={`mb-4 flex cursor-pointer flex-col items-center justify-center rounded border border-solid border-gray-200 px-4 py-8 shadow-sm ${
                   dragging ? 'bg-slate-100' : ''
                 }`}
@@ -178,6 +177,7 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
                 </Button>
               </Dialog.Close>
               <Button
+                data-testid="continue-button"
                 disabled={checkFile()}
                 variant="primary"
                 className="disabled:cursor-not-allowed"
