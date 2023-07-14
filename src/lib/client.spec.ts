@@ -9,6 +9,7 @@ import { FETCH_SELLERS } from '~/services/sellers/query.gql'
 import { query, setIdToken } from './client'
 import { setCookie } from 'cookies-next'
 import { ID_TOKEN_COOKIE_KEY } from '../../pages/api/auth/constant'
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
 const mockQuery = jest.fn()
 jest.mock('@apollo/client', () => ({
@@ -59,9 +60,15 @@ describe(`client.ts`, () => {
       expect(token).toBe(mockJwt)
     })
     it(`should use cookie when id token is not present`, async () => {
-      mockQuery.mockImplementation(() => {})
-      setCookie(ID_TOKEN_COOKIE_KEY, mockJwt)
-      const token = setIdToken({})
+      const token = setIdToken({
+        cookies: {
+          get: jest.fn().mockImplementation(() => {
+            return {
+              value: mockJwt,
+            }
+          }),
+        } as unknown as ReadonlyRequestCookies,
+      })
       expect(token).toBe(mockJwt)
     })
   })
