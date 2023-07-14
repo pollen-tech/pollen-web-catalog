@@ -6,7 +6,6 @@ import { DocumentIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Button } from '~/components/common/button'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
-import { readFromFile } from '~/lib/excel'
 import { useInternalRequest } from '~/hooks/request'
 import { Alert } from '~/components/alert/alert'
 import { useMakeOfferStates } from '~/hooks/states/make-offer'
@@ -82,7 +81,7 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
   }
 
   const checkFile = () => {
-    return !(file?.name.endsWith('.xlsx') || file?.name.endsWith('.xls'))
+    return !(file?.name.endsWith('.xlsx') ?? file?.name.endsWith('.xls'))
   }
 
   return (

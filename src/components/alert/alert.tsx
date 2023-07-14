@@ -25,7 +25,14 @@ const FloatingAlert = ({ message, title, onClose }: IAlert) => (
             {message}
           </div>
         </div>
-        <div className="relative h-5 w-5" onClick={() => onClose && onClose()}>
+        <div
+          className="relative h-5 w-5"
+          onClick={() => {
+            if (onClose) {
+              onClose()
+            }
+          }}
+        >
           <XMarkIcon className="stroke-red-900 hover:cursor-pointer" />
         </div>
       </div>

@@ -32,5 +32,21 @@ describe(`client.ts`, () => {
       expect(InMemoryCache).toBeCalled()
       expect(concat).toBeCalled()
     })
+    it(`should use backend idToken when idToken context is present`, async () => {
+      await query(
+        {
+          query: FETCH_SELLERS,
+          variables: {},
+        },
+        {
+          idToken: 'idToken',
+        }
+      )
+      expect(ApolloClient).toBeCalled()
+      expect(ApolloLink).toBeCalled()
+      expect(HttpLink).toBeCalled()
+      expect(InMemoryCache).toBeCalled()
+      expect(concat).toBeCalled()
+    })
   })
 })

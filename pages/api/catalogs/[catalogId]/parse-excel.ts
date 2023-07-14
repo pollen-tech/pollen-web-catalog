@@ -1,6 +1,6 @@
 import multer from 'multer'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { NextHandler, createRouter } from 'next-connect'
+import { createRouter } from 'next-connect'
 import xlsx from 'node-xlsx'
 import type { NodeRouter } from 'next-connect/dist/types/node'
 import { s3Service } from '~/lib/s3'
@@ -13,14 +13,15 @@ import { decode } from 'jsonwebtoken'
 import { fetchCatalogDetail } from '~/services/catalogs'
 import { parseOffer } from '~/services/offers'
 
-interface UploadRequest {
-  path: string
-}
-
 type RequestWithFile = NextApiRequest & { file: Express.Multer.File }
 
 const router = createRouter<RequestWithFile, NextApiResponse>()
-const fileProcess = multer()
+const fileProcess = multer({
+  limits: {
+    fileSize: 1024 * 1024 * 10, // 10MB
+    files: 1,
+  },
+})
 
 const s3Svc = s3Service(cfg.aws.s3.bucket)
 
