@@ -47,7 +47,7 @@ router
 
     const user = getRequestCookie<User>(
       req,
-      USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY
+      USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY as string
     )
 
     let err = null,

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createRouter } from 'next-connect'
 import { handler } from './parse-excel'
-import { ID_TOKEN_COOKIE_KEY } from '../../auth/constant'
+import { ID_TOKEN_COOKIE_KEY, USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY } from '../../auth/constant'
 
 type RequestWithFile = NextApiRequest & { file: Express.Multer.File }
 
@@ -37,6 +37,8 @@ jest.mock('node-xlsx', () => ({
 
 const mockJwt =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2ODkyOTg2NTMsImV4cCI6MTcyMDgzNDY1MywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsImJ1eWVyUHJvZmlsZSI6InsgXCJlbWFpbFwiOiBcImVjaGFvZW9lbkBnbWFpbC5jb21cIiB9In0.OcnLtCXauGQ7ZRbmAW9CTjKT8_N8w_9G66HcdoAKLqo'
+const mockBuyerCookie =
+  '{"id":"auth0|64a7b8379d26ee7e1403ffaf","firstname":"User Firstname","lastname":"User Laststname","email":"user@gmail.com"}'
 
 describe('pages/api/catalogs/[catalogId]/parse-excel.spec.ts', () => {
   let req: RequestWithFile
@@ -52,6 +54,7 @@ describe('pages/api/catalogs/[catalogId]/parse-excel.spec.ts', () => {
       query: { catalogId: '123' },
       cookies: {
         [ID_TOKEN_COOKIE_KEY]: mockJwt,
+        [USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY]: mockBuyerCookie,
       },
     } as unknown as RequestWithFile
     res = {
