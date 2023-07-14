@@ -6,12 +6,16 @@ import {
   concat,
 } from '@apollo/client'
 import { FETCH_SELLERS } from '~/services/sellers/query.gql'
-import { query } from './client'
+import { query, setIdToken } from './client'
+import { setCookie } from 'cookies-next'
+import { ID_TOKEN_COOKIE_KEY } from '../../pages/api/auth/constant'
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
+const mockQuery = jest.fn()
 jest.mock('@apollo/client', () => ({
   ApolloClient: jest.fn().mockImplementation(() => {
     return {
-      query: jest.fn().mockImplementation(() => {}),
+      query: mockQuery,
     }
   }),
   ApolloLink: jest.fn().mockImplementation(() => {}),
@@ -19,9 +23,14 @@ jest.mock('@apollo/client', () => ({
   InMemoryCache: jest.fn().mockImplementation(() => {}),
   concat: jest.fn().mockImplementation(() => {}),
 }))
+
+const mockJwt =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2ODkyOTg2NTMsImV4cCI6MTcyMDgzNDY1MywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsImJ1eWVyUHJvZmlsZSI6InsgXCJlbWFpbFwiOiBcImVjaGFvZW9lbkBnbWFpbC5jb21cIiB9In0.OcnLtCXauGQ7ZRbmAW9CTjKT8_N8w_9G66HcdoAKLqo'
+
 describe(`client.ts`, () => {
   describe(`query()`, () => {
     it(`should calling the ApolloLink when function is called`, async () => {
+      mockQuery.mockImplementation(() => {})
       await query({
         query: FETCH_SELLERS,
         variables: {},
@@ -31,6 +40,36 @@ describe(`client.ts`, () => {
       expect(HttpLink).toBeCalled()
       expect(InMemoryCache).toBeCalled()
       expect(concat).toBeCalled()
+    })
+    it(`should throw error when query fails to authenticate`, async () => {
+      mockQuery.mockRejectedValueOnce(new Error('401'))
+      try {
+        await query({
+          query: FETCH_SELLERS,
+          variables: {},
+        })
+      } catch (error) {
+        expect(error).toBeDefined()
+      }
+    })
+    it(`should use backend idToken when idToken context is present`, async () => {
+      mockQuery.mockImplementation(() => {})
+      const token = setIdToken({
+        idToken: mockJwt,
+      })
+      expect(token).toBe(mockJwt)
+    })
+    it(`should use cookie when id token is not present`, async () => {
+      const token = setIdToken({
+        cookies: {
+          get: jest.fn().mockImplementation(() => {
+            return {
+              value: mockJwt,
+            }
+          }),
+        } as unknown as ReadonlyRequestCookies,
+      })
+      expect(token).toBe(mockJwt)
     })
   })
 })

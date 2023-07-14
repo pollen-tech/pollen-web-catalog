@@ -1,4 +1,5 @@
 export const config = {
+  environment: process.env.NEXT_ENVIRONMENT as string,
   appsync: {
     endpoint: process.env.NEXT_PUBLIC_APPSYNC_ENDPOINT,
   },
@@ -16,4 +17,12 @@ export const config = {
     secured: !!process.env.NEXT_SMTP_SECURED,
   },
   salesEmails: process.env.NEXT_SALES_EMAILS as string,
+  aws: {
+    region: process.env.NEXT_AWS_REGION as string,
+    accessKeyId: process.env.NEXT_AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY as string,
+    s3: {
+      bucket: process.env.NEXT_AWS_S3_BUCKET ?? 'files.mypollenstore.com',
+    },
+  },
 }

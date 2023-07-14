@@ -3,6 +3,7 @@ import classNames from 'classnames'
 type TButtonProps = {
   variant?: 'primary' | 'secondary'
   className?: string
+  disabled?: boolean
   children: React.ReactNode
   onClick?: () => void
 }
@@ -12,10 +13,12 @@ export function Button({
   onClick,
   className,
   variant = 'primary',
+  disabled = false,
   ...otherProps
 }: TButtonProps) {
   return (
     <button
+      disabled={disabled}
       className={classNames(
         'rounded-md px-4 py-2 text-center',
         {

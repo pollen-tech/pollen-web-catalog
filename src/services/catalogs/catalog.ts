@@ -3,7 +3,7 @@ import type { Catalog } from '@pollen-tech/appsync-schema'
 import { query } from '~/lib/client'
 import { FETCH_CATALOGS, GET_CATALOG_QUERY } from './query.gql'
 import { type Paginated } from '../generic/pagination'
-import { type RequestContext } from '~/@types/request-context'
+import { type ClientRequestContext } from '~/@types/request-context'
 
 type TQueryResponse = {
   catalog: Catalog
@@ -11,7 +11,7 @@ type TQueryResponse = {
 
 export async function fetchCatalogDetail(
   catalogId: string,
-  context?: RequestContext
+  context?: ClientRequestContext
 ) {
   const response = await query<TQueryResponse>(
     {
@@ -36,7 +36,7 @@ export async function fetchCatalogs(
   sort = 'updatedAt',
   sortDirection = 'asc',
   sellerId = '',
-  context?: RequestContext
+  context?: ClientRequestContext
 ) {
   const response = await query<TQueryCatalogsResponse>(
     {
