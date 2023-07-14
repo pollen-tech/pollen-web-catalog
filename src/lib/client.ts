@@ -14,7 +14,7 @@ import { getCookie } from 'cookies-next'
 import { ID_TOKEN_COOKIE_KEY } from '../../pages/api/auth/constant'
 import { type ClientRequestContext } from '~/@types/request-context'
 
-const setIdToken = (context?: ClientRequestContext) => {
+export const setIdToken = (context?: ClientRequestContext) => {
   if (context) {
     if (context.idToken) {
       return context.idToken

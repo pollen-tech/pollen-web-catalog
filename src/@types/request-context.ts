@@ -4,4 +4,4 @@ export interface RequestContext {
   cookies?: ReadonlyRequestCookies
 }
 
-export type ClientRequestContext = RequestContext & { idToken: string }
+export type ClientRequestContext = RequestContext & { idToken?: string }

@@ -1,7 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createRouter } from 'next-connect'
+import { fetchCatalogDetail } from '../../../../src/services/catalogs'
+import { parseOffer } from '../../../../src/services/offers'
 import { handler } from './parse-excel'
-import { ID_TOKEN_COOKIE_KEY, USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY } from '../../auth/constant'
+import {
+  ID_TOKEN_COOKIE_KEY,
+  USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY,
+} from '../../auth/constant'
 
 type RequestWithFile = NextApiRequest & { file: Express.Multer.File }
 
@@ -36,7 +40,7 @@ jest.mock('node-xlsx', () => ({
 }))
 
 const mockJwt =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2ODkyOTg2NTMsImV4cCI6MTcyMDgzNDY1MywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsImJ1eWVyUHJvZmlsZSI6InsgXCJlbWFpbFwiOiBcImVjaGFvZW9lbkBnbWFpbC5jb21cIiB9In0.OcnLtCXauGQ7ZRbmAW9CTjKT8_N8w_9G66HcdoAKLqo'
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2ODkyOTg2NTMsImV4cCI6MjE0NzQ4MzY0NywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsImJ1eWVyUHJvZmlsZSI6InsgXCJlbWFpbFwiOiBcImVjaGFvZW9lbkBnbWFpbC5jb21cIiB9In0.gTWmFsuzNKxeJMp_sviwPpfZjn_xsCzR_1XLhDjMPR8'
 const mockBuyerCookie =
   '{"id":"auth0|64a7b8379d26ee7e1403ffaf","firstname":"User Firstname","lastname":"User Laststname","email":"user@gmail.com"}'
 
@@ -82,6 +86,66 @@ describe('pages/api/catalogs/[catalogId]/parse-excel.spec.ts', () => {
 
       expect(res.status).toHaveBeenCalledWith(405)
       expect(res.json).toHaveBeenCalledWith({ error: 'Method not allowed' })
+    })
+
+    it('should return file is required error when no file is attached', async () => {
+      req.method = 'POST'
+      await handler.run(
+        { ...req, file: undefined } as unknown as RequestWithFile,
+        res
+      )
+
+      expect(res.status).toHaveBeenCalledWith(400)
+      expect(res.send).toHaveBeenCalledWith({ message: 'file is required' })
+    })
+
+    it('should return unauthorized when billing cookie is not exists', async () => {
+      req.method = 'POST'
+      await handler.run(
+        {
+          ...req,
+          cookies: {
+            ...req.cookies,
+            [USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY]: undefined,
+          },
+        } as unknown as RequestWithFile,
+        res
+      )
+
+      expect(res.status).toHaveBeenCalledWith(401)
+      expect(res.send).toHaveBeenCalledWith({ message: 'Unauthorized' })
+    })
+
+    it('should return unauthorized when billing cookie is not exists', async () => {
+      ;(fetchCatalogDetail as jest.Mock).mockRejectedValue(() => {
+        throw new Error('Catalog not found')
+      })
+      req.method = 'POST'
+      await handler.run(req, res)
+
+      expect(res.status).toHaveBeenCalledWith(400)
+      expect(res.send).toHaveBeenCalledWith({ message: 'bad request' })
+    })
+
+    it('should return bad request error when offer excel parse is not pass', async () => {
+      ;(fetchCatalogDetail as jest.Mock).mockResolvedValue(() => {
+        return {
+          id: '123',
+          name: 'catalog name',
+          description: 'catalog description',
+          catalogType: 'catalog type',
+          catalogStatus: 'catalog status',
+          catalogItems: [],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+      })
+      ;(parseOffer as jest.Mock).mockRejectedValue('validation error')
+      req.method = 'POST'
+      await handler.run(req, res)
+
+      expect(res.status).toHaveBeenCalledWith(400)
+      expect(res.send).toHaveBeenCalledWith({ message: 'validation error' })
     })
   })
 })

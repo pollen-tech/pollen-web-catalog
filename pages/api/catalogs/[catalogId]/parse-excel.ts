@@ -17,7 +17,7 @@ import { parseOffer } from '~/services/offers'
 import { getRequestCookie } from '~/utils/cookie'
 import type { User } from '~/@types/user'
 
-type RequestWithFile = NextApiRequest & { file: Express.Multer.File }
+type RequestWithFile = NextApiRequest & { file?: Express.Multer.File }
 
 const router = createRouter<RequestWithFile, NextApiResponse>()
 const fileProcess = multer({
@@ -45,10 +45,13 @@ router
       return
     }
 
-    const user = getRequestCookie<User>(
-      req,
-      USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY as string
-    )
+    let user = null
+    try {
+      user = getRequestCookie<User>(
+        req,
+        USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY as string
+      )
+    } catch (error) {}
 
     let err = null,
       parsed = null,
@@ -66,6 +69,7 @@ router
       })
     )
     if (err) {
+      console.log(err)
       res.status(400).send({ message: 'bad request' })
       return
     }
