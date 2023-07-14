@@ -8,10 +8,14 @@ import ApiError from '~/utils/error'
 import { config as cfg } from '~/config'
 import awaitToError from '~/utils/awaitToError'
 import { parseUsingHeader } from '~/utils/arrayObject'
-import { ID_TOKEN_COOKIE_KEY } from '../../auth/constant'
-import { decode } from 'jsonwebtoken'
+import {
+  ID_TOKEN_COOKIE_KEY,
+  USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY,
+} from '../../auth/constant'
 import { fetchCatalogDetail } from '~/services/catalogs'
 import { parseOffer } from '~/services/offers'
+import { getRequestCookie } from '~/utils/cookie'
+import type { User } from '~/@types/user'
 
 type RequestWithFile = NextApiRequest & { file: Express.Multer.File }
 
@@ -32,7 +36,7 @@ router
       NextApiResponse
     >
   )
-  .post(async (req, res, next) => {
+  .post(async (req, res) => {
     const cookies = req.cookies
     const { catalogId } = req.query
     const file = req.file
@@ -41,31 +45,30 @@ router
       return
     }
 
-    const idToken = cookies[ID_TOKEN_COOKIE_KEY]
+    const user = getRequestCookie<User>(
+      req,
+      USER_CLAIMS_BUYER_PROFILE_COOKIE_KEY
+    )
 
     let err = null,
       parsed = null,
       catalog = null
-    if (!idToken) {
-      res.status(401).send({ message: 'Unauthorized' })
-      return
-    }
-
-    // decode idToken
-    const decoded = decode(idToken) as { buyerProfile: string }
-    if (!decoded) {
+    if (!user) {
       res.status(401).send({ message: 'Unauthorized' })
       return
     }
 
     // get buyer
-    const buyer = JSON.parse(decoded.buyerProfile) as { email: string }
-    const buyerEmail = buyer.email
-    ;[, catalog] = await awaitToError(
+    const buyerEmail = user.email
+    ;[err, catalog] = await awaitToError(
       fetchCatalogDetail(catalogId as string, {
-        idToken: idToken,
+        idToken: cookies[ID_TOKEN_COOKIE_KEY] as string,
       })
     )
+    if (err) {
+      res.status(400).send({ message: 'bad request' })
+      return
+    }
 
     const workSheetsFromBuffer = xlsx.parse(file.buffer)
     const rawData = workSheetsFromBuffer
@@ -107,6 +110,8 @@ export const config = {
     bodyParser: false,
   },
 }
+
+export const handler = router
 
 export default router.handler({
   onError: (err, req, res) => {
