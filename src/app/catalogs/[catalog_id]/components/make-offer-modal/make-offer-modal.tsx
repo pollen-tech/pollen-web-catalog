@@ -5,11 +5,38 @@ import { DocumentIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Button } from '~/components/common/button'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 export interface MakeOfferModalProps {
   catalogId: string
 }
 
 export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
+  const [showSubmitOffer, setShowSubmitOffer] = useState(false)
+  const [formData, setFormData] = useState({
+    catalogId: '',
+    catalogFile: '',
+    pollenShipment: false,
+    deliveryAddress: '',
+    targetResaleMarkets: '',
+    offers: [],
+  })
+
+  function submitOffer(e: {
+    preventDefault: () => void
+    target: HTMLFormElement | undefined
+  }) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const form_values = Object.fromEntries(formData)
+    console.log('form values', form_values)
+  }
+  function toggle() {
+    setShowSubmitOffer((wasOpened) => !wasOpened)
+  }
+
+  useEffect(() => {
+    setShowSubmitOffer(false)
+  }, [])
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -27,37 +54,185 @@ export function MakeOfferModal({ catalogId }: MakeOfferModalProps) {
             Make Offer by Excel File
           </Dialog.Title>
           <Separator.Root className="my-4 h-[1px] w-full bg-gray-100" />
-          <div className="step-1">
-            <h3 className="mb-2 text-sm font-semibold text-gray-900">Step 1</h3>
-            <p className="mb-2 text-xs">
-              Download Catalog as Excel, then fill in the required Offered Unit
-              and Offered Price
-            </p>
-            <Link href={`/api/catalogs/${catalogId}/excel-file`}>
-              <Button variant="secondary" className="block">
-                Download Catalog
-              </Button>
-            </Link>
-          </div>
-          <Separator.Root className="my-4 h-[1px] w-full bg-gray-100" />
-          <h3 className="mb-2 text-sm font-semibold text-gray-900">Step 2</h3>
-          <p className="mb-2 text-xs">Upload the completed XLS below</p>
-          <div className="mb-4 flex cursor-pointer flex-col items-center justify-center rounded border border-solid border-gray-200 px-4 py-8 shadow-sm">
-            <DocumentIcon className="mb-4 h-8 w-8 text-pollen-purple" />
-            <p className="mb-1 block">
-              <span className="text-pollen-purple">Upload a file</span> or drag
-              and drop
-            </p>
-            <p className="text-sm text-gray-500">XLS up to 5MB</p>
-          </div>
-          <div className="flex justify-end">
-            <Dialog.Close asChild>
-              <Button variant="secondary" className="mr-2">
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Button variant="primary">Upload and Continue</Button>
-          </div>
+
+          {!showSubmitOffer ? (
+            <>
+              <div className="page-1">
+                <div className="step-1">
+                  <h3 className="mb-2 text-sm font-semibold text-gray-900">
+                    Step 1
+                  </h3>
+                  <p className="mb-2 text-xs">
+                    Download Catalog as Excel, then fill in the required Offered
+                    Unit and Offered Price
+                  </p>
+                  <Link href={`/api/catalogs/${catalogId}/excel-file`}>
+                    <Button variant="secondary" className="block">
+                      Download Catalog
+                    </Button>
+                  </Link>
+                </div>
+                <Separator.Root className="my-4 h-[1px] w-full bg-gray-100" />
+
+                <div>
+                  <h3 className="mb-2 text-sm font-semibold text-gray-900">
+                    Step 2
+                  </h3>
+                  <p className="mb-2 text-xs">Upload the completed XLS below</p>
+                  <div className="mb-4 flex cursor-pointer flex-col items-center justify-center rounded border border-solid border-gray-200 px-4 py-8 shadow-sm">
+                    <>
+                      <DocumentIcon className="mb-4 h-8 w-8 text-pollen-purple" />
+                      <p className="mb-1 block">
+                        <span className="text-pollen-purple">
+                          Upload a file
+                        </span>{' '}
+                        or drag and drop
+                      </p>
+                      <p className="text-sm text-gray-500">XLS up to 5MB</p>
+                    </>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <Dialog.Close asChild>
+                    <Button variant="secondary" className="mr-2">
+                      Cancel
+                    </Button>
+                  </Dialog.Close>
+                  <Button variant="primary" onClick={toggle}>
+                    Upload and Continue
+                  </Button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <form className="page-2" action="#" onSubmit={submitOffer}>
+                <div>
+                  <h3 className="mb-2 text-sm font-semibold text-gray-900">
+                    Added File:
+                  </h3>
+                  <div className="flex flex-col items-start justify-start gap-2">
+                    <div className="inline-flex h-5 items-center justify-start gap-2 self-stretch">
+                      <div className="flex h-5 shrink grow basis-0 items-start justify-start gap-2">
+                        <div className="text-xs font-normal leading-tight text-gray-900">
+                          UL MY Manifest July.xls
+                        </div>
+                      </div>
+                      <div className="text-sm font-normal leading-tight text-purple-600">
+                        Replace file
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator.Root className="my-4 h-[1px] w-full bg-gray-100" />
+                <div className="w-full text-center text-base font-semibold leading-normal text-gray-900">
+                  Logistic Information
+                </div>
+
+                <div className="mb-4 flex w-full flex-col">
+                  <label
+                    htmlFor="deliveryAddress"
+                    className="my-2 w-60 text-sm font-medium leading-tight text-gray-900"
+                  >
+                    Delivery Address
+                  </label>
+                  <input
+                    type="text"
+                    id="deliveryAddress"
+                    name="deliveryAddress"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-500 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
+                  />
+                </div>
+
+                <div className="mb-4 flex w-full flex-col">
+                  <label
+                    htmlFor="shipping-option"
+                    className="my-2 w-60 text-sm font-medium leading-tight text-gray-900"
+                  >
+                    Shipping Option
+                  </label>
+                  <div className="mb-4 flex items-center">
+                    <input
+                      id="radio-1"
+                      type="radio"
+                      value=""
+                      name="pollenShipment"
+                      className="h-4 w-4 border-gray-300 bg-gray-100 text-purple-600 focus:ring-2 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-purple-600"
+                    />
+                    <label
+                      htmlFor="radio-1"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      I will provide my own shipment
+                    </label>
+                  </div>
+                  <div className="mb-4 flex items-center">
+                    <input
+                      id="radio-2"
+                      type="radio"
+                      value=""
+                      name="pollenShipment"
+                      className="h-4 w-4 border-gray-300 bg-gray-100 text-purple-600 focus:ring-2 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-purple-600"
+                    />
+                    <label
+                      htmlFor="radio-2"
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {' '}
+                      Pollen Assisted Logistic{' '}
+                      <span className="text-sm font-normal leading-tight text-purple-600">
+                        Details
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="mb-4 flex w-full flex-col">
+                  <label
+                    htmlFor="targetResaleMarket"
+                    className="mb-2 w-60 text-sm font-medium leading-tight text-gray-900"
+                  >
+                    Target Resale Market
+                  </label>
+                  <input
+                    type="text"
+                    id="targetResaleMarket"
+                    name="targetResaleMarket"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-500 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
+                  />
+                </div>
+
+                <div className="mb-4 flex w-full flex-col">
+                  <label
+                    htmlFor="noteForSeller"
+                    className="mb-2 w-60 text-sm font-medium leading-tight text-gray-900"
+                  >
+                    Note for Seller
+                  </label>
+                  <input
+                    type="text"
+                    id="noteForSeller"
+                    name="noteForSeller"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-500 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
+                  />
+                </div>
+
+                <div className="flex justify-end">
+                  <Button variant="secondary" className="mr-2" onClick={toggle}>
+                    Back
+                  </Button>
+                  <button
+                    className="rounded-md bg-pollen-purple px-4 py-2 text-center text-white"
+                    type="submit"
+                  >
+                    Submit Offer
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
+
           <Dialog.Close asChild>
             <button
               data-testid="close-dialog-button"
